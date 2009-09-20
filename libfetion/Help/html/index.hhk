@@ -1,0 +1,356 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD></HEAD><BODY>
+<OBJECT type="text/site properties">
+<param name="FrameName" value="right">
+</OBJECT>
+<UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___d_a_t_a___s_t_e_p2.html"><param name="Name" value="_MAKE_PACKET_DATA_STEP2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___d_a_t_a___s_t_e_p2.html#3ca3af6a2fa79af08072ae88e22f36d2"><param name="Name" value="sz_cnonce"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___d_a_t_a___s_t_e_p2.html#db1a096752c2191012e0cf71f0e71c34"><param name="Name" value="sz_response"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___s_e_n_d___s_m_s.html"><param name="Name" value="_MAKE_PACKET_SEND_SMS"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___s_e_n_d___s_m_s.html#42573729d8c1a5d5a778ec23ef42e2ab"><param name="Name" value="sz_message"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___s_e_n_d___s_m_s.html#db38f9502688a2b27183665c5ae50cc0"><param name="Name" value="sz_uri"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html"><param name="Name" value="_struc_get_login_data"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#2d4361ba1edf6305a826e80e6ae0a0a9"><param name="Name" value="nstatu_code"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#a7804b8251ce1a03a86f8a91397d8b69"><param name="Name" value="nstatu_user"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#79be3b9b778002eb5074b903cf06093c"><param name="Name" value="sz_domain"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#4cc4bda504e8c213aed7017dda146f21"><param name="Name" value="sz_phone_num"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#2a4c56449f638ff15aacef40885a3f4b"><param name="Name" value="sz_sid"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#07ed95a923e1c066aba99ed9ce3603d4"><param name="Name" value="sz_uri"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#2ee1d42aae48ef23a8c129eced2704a0"><param name="Name" value="sz_user_id"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#21d3847941458bd9c2d57ac870b47c6a"><param name="Name" value="add_contect_info_to_link"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#21d3847941458bd9c2d57ac870b47c6a"><param name="Name" value="g_libfetion.h"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#21d3847941458bd9c2d57ac870b47c6a"><param name="Name" value="libfetion.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#b6517ad9e623368dcb89be611386a2de"><param name="Name" value="add_group_info_to_link"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#b6517ad9e623368dcb89be611386a2de"><param name="Name" value="g_libfetion.h"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#b6517ad9e623368dcb89be611386a2de"><param name="Name" value="libfetion.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#ef0b5cc3381567c1b5d6994cc1838156"><param name="Name" value="clean_link"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#ef0b5cc3381567c1b5d6994cc1838156"><param name="Name" value="g_libfetion.h"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#ef0b5cc3381567c1b5d6994cc1838156"><param name="Name" value="libfetion.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html"><param name="Name" value="contact.cpp"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#a643c45549f9d8da49ad3d709cbd313a"><param name="Name" value="fx_get_contact"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#b15edefb3573a84dd2c64d765d2d0a79"><param name="Name" value="fx_get_personal_info"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#e6519fe1a96624d75191148c29f722dc"><param name="Name" value="fx_select_correct_response"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#f15cb021b2216a37fa97fc69a6f79da0"><param name="Name" value="g_p_group_list"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#4999d598ce51f0333a53eae6b12aedac"><param name="Name" value="g_socket"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#4dde636982ddd4e3e70b88ff8312a7a1"><param name="Name" value="ConvertGBKToUtf8"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#4dde636982ddd4e3e70b88ff8312a7a1"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#4dde636982ddd4e3e70b88ff8312a7a1"><param name="Name" value="register.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#e1a6c492cb41d9d509a57de26bd0dcaa"><param name="Name" value="ConvertUtf8ToGBK"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#e1a6c492cb41d9d509a57de26bd0dcaa"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#e1a6c492cb41d9d509a57de26bd0dcaa"><param name="Name" value="register.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#0643553c4675e5818a8a61564a5e7ebd"><param name="Name" value="fx_close"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#0643553c4675e5818a8a61564a5e7ebd"><param name="Name" value="libfetion.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#0643553c4675e5818a8a61564a5e7ebd"><param name="Name" value="libfetion.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#280e408444b78476e4642882e3bc2835"><param name="Name" value="FX_ERROR_INIT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#7d133286701d71402399dd5444e31ce4"><param name="Name" value="FX_ERROR_LOGIN"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#bda891b5656fe4fc1d985da8ba14e620"><param name="Name" value="FX_ERROR_OK"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#43647d37e220cfaf14d64fd39e8240cc"><param name="Name" value="FX_ERROR_REGISTER"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#f910fe5f23a3b0d30540b1cb842043ce"><param name="Name" value="FX_ERROR_SEND_SMS"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#e2e7484e208a0394ba65d866a61ba88d"><param name="Name" value="FX_ERROR_SOCKET"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#c9185fe5c160ae476a32fd9d045064fb"><param name="Name" value="fx_get_arg_length"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#c9185fe5c160ae476a32fd9d045064fb"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#c9185fe5c160ae476a32fd9d045064fb"><param name="Name" value="register.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#a643c45549f9d8da49ad3d709cbd313a"><param name="Name" value="fx_get_contact"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#a643c45549f9d8da49ad3d709cbd313a"><param name="Name" value="contact.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#a643c45549f9d8da49ad3d709cbd313a"><param name="Name" value="libfetion.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#6a8517c35ccc6c071edcdc51f6fc3c83"><param name="Name" value="fx_get_next_call"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#6a8517c35ccc6c071edcdc51f6fc3c83"><param name="Name" value="g_libfetion.h"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#6a8517c35ccc6c071edcdc51f6fc3c83"><param name="Name" value="libfetion.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#b15edefb3573a84dd2c64d765d2d0a79"><param name="Name" value="fx_get_personal_info"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#dac0bb1fdeb568dbbb601c12f7dda765"><param name="Name" value="FX_GET_PERSONAL_INFO"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#b15edefb3573a84dd2c64d765d2d0a79"><param name="Name" value="fx_get_personal_info"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#e9e9df45f6a5843c2cd402c23456e273"><param name="Name" value="fx_get_response_arg"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#e9e9df45f6a5843c2cd402c23456e273"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#fd9402c391a515f6ed6ee2d59c16b73f"><param name="Name" value="register.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#f8955af7e61ab1fea63078c9377b5d85"><param name="Name" value="FX_GET_RESPONSE_ARG"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#bcec6e9a1e1615f34486fb2255d4bd8c"><param name="Name" value="FX_GET_RESPONSE_CNONCE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#859d2b821d3fd3e36ec39260dc6d5c1c"><param name="Name" value="fx_get_response_code"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#859d2b821d3fd3e36ec39260dc6d5c1c"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#859d2b821d3fd3e36ec39260dc6d5c1c"><param name="Name" value="register.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#8f365bb93a333c703bdecb7ed02d7a22"><param name="Name" value="FX_GET_RESPONSE_CODE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#9cb2470f914c05a93945683fe68a0bc4"><param name="Name" value="fx_get_response_header_length"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#9cb2470f914c05a93945683fe68a0bc4"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#9cb2470f914c05a93945683fe68a0bc4"><param name="Name" value="register.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#7b5f0b7e0d0e9dcdc3e752355eddbfb9"><param name="Name" value="fx_get_response_nonce"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#7b5f0b7e0d0e9dcdc3e752355eddbfb9"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#57d012f2b2044b0b278a1367d95d0a32"><param name="Name" value="register.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#1130626ac8080461423d841cf12c4eae"><param name="Name" value="FX_GET_RESPONSE_TYPE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#7eee8f939fc52b02d8ec11da6f899841"><param name="Name" value="fx_get_server_response"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#7eee8f939fc52b02d8ec11da6f899841"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#7eee8f939fc52b02d8ec11da6f899841"><param name="Name" value="register.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#83fd8b922c44539a027f699d6f4fbc8b"><param name="Name" value="fx_get_sid"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#83fd8b922c44539a027f699d6f4fbc8b"><param name="Name" value="libfetion.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#68df99dc87f4047e2bb3e6274efe2321"><param name="Name" value="libfetion.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#3c5f684e95a321d56f7130fcd3577908"><param name="Name" value="FX_GETCONTACT_ARG"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#7bbd701b4c964efc22fd5405a0bab9f4"><param name="Name" value="fx_init"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#7bbd701b4c964efc22fd5405a0bab9f4"><param name="Name" value="libfetion.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#7bbd701b4c964efc22fd5405a0bab9f4"><param name="Name" value="libfetion.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#924c192d24c5d39cdbbe4e847b347bab"><param name="Name" value="fx_login"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#924c192d24c5d39cdbbe4e847b347bab"><param name="Name" value="libfetion.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#924c192d24c5d39cdbbe4e847b347bab"><param name="Name" value="libfetion.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#0b9de14ac4b5ecefcc9651cfcef4ca67"><param name="Name" value="FX_LOGIN_REQUEST_ARG"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#ee7d7d171b6ab53c8fe4ec5c810a2fb1"><param name="Name" value="FX_LOGIN_URL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#73cafdb21b49b10d43f7009538f4986e"><param name="Name" value="fx_make_cnonce"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#73cafdb21b49b10d43f7009538f4986e"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#11afc99fe8bb16b2c044997d16738898"><param name="Name" value="register.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#13e4a0aa89027e32699634c7d63c8842"><param name="Name" value="fx_make_packet"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#13e4a0aa89027e32699634c7d63c8842"><param name="Name" value="g_libfetion.h"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#13e4a0aa89027e32699634c7d63c8842"><param name="Name" value="libfetion.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#87622f1bf47f702824c2676bdf5d3038"><param name="Name" value="FX_MAKE_PACKET_GET_CONTACT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#01de8de0e850199bee8eaea690a69015"><param name="Name" value="FX_MAKE_PACKET_GET_PERSONAL_INFO"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#fdc979cd9d0c79fd845f4c409d7d3489"><param name="Name" value="FX_MAKE_PACKET_REGISTER_STEP_1"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#740f578995bf89c212e0c2c75d12f2c2"><param name="Name" value="FX_MAKE_PACKET_REGISTER_STEP_2"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#a32c4ec7180c6e7705718f3f80491b6b"><param name="Name" value="FX_MAKE_PACKET_REGISTER_STEP_3"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#c99347a540cdf7ce835bb3d96dcc6f0f"><param name="Name" value="FX_MAKE_PACKET_SEND_SMS"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#26d8b338b073042b88fd04fd5bd6d3cd"><param name="Name" value="FX_MAKE_PACKET_SEND_SMS_SELF"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#f67292c2483ff49aa0c8034a3c69a572"><param name="Name" value="FX_MAKE_PACKET_TYPE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#13c8d470d84ee40cf6ac046f65d977f6"><param name="Name" value="fx_make_response"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#13c8d470d84ee40cf6ac046f65d977f6"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#e58bcd5f537400fabffd8515df1a0b7a"><param name="Name" value="register.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#d5a2ee1481addcd6202baaca29858838"><param name="Name" value="FX_PAESE_XML_LOGIN_DATA"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#7d78f37e1eebbbd2a9acb4ef04498c11"><param name="Name" value="fx_parse_xml"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#7d78f37e1eebbbd2a9acb4ef04498c11"><param name="Name" value="g_libfetion.h"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#7d78f37e1eebbbd2a9acb4ef04498c11"><param name="Name" value="libfetion.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#6783be4adbdc0f3b81b5b8c09785f84f"><param name="Name" value="FX_PARSE_XML_CONTACT_DATA"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#f09b5647b8505cf6fe9d7ac0a0a407c0"><param name="Name" value="FX_PARSE_XML_STEP"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#89aee6472ccbf412f97e6756625a5082"><param name="Name" value="fx_registe_to_server"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#89aee6472ccbf412f97e6756625a5082"><param name="Name" value="libfetion.h"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#89aee6472ccbf412f97e6756625a5082"><param name="Name" value="register.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#90ec4847deb129f955eade953ddc81ef"><param name="Name" value="FX_REGISTER_TYPE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#5cca718591e9318f4c1d828695f63cda"><param name="Name" value="FX_RET_CODE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#e6519fe1a96624d75191148c29f722dc"><param name="Name" value="fx_select_correct_response"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#e6519fe1a96624d75191148c29f722dc"><param name="Name" value="contact.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#4ca72935c31645b365d573f7c737e208"><param name="Name" value="g_libfetion.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#8276cbb71f6c08890c6c17f43165fd45"><param name="Name" value="FX_SEND_SMS_SUCCESSED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#eb547e924713a9e098c25cf62061f233"><param name="Name" value="fx_send_sms_to_others"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#eb547e924713a9e098c25cf62061f233"><param name="Name" value="libfetion.h"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="send_s_m_s_8cpp.html#eb547e924713a9e098c25cf62061f233"><param name="Name" value="sendSMS.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#1a314918e815a2964aaee844cb98149b"><param name="Name" value="fx_send_sms_to_yourself"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#1a314918e815a2964aaee844cb98149b"><param name="Name" value="libfetion.h"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="send_s_m_s_8cpp.html#1a314918e815a2964aaee844cb98149b"><param name="Name" value="sendSMS.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#4c5c187cbb193e37807aa058d5b4d9e2"><param name="Name" value="g_curl"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html"><param name="Name" value="g_libfetion.h"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#21d3847941458bd9c2d57ac870b47c6a"><param name="Name" value="add_contect_info_to_link"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#b6517ad9e623368dcb89be611386a2de"><param name="Name" value="add_group_info_to_link"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#ef0b5cc3381567c1b5d6994cc1838156"><param name="Name" value="clean_link"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#6a8517c35ccc6c071edcdc51f6fc3c83"><param name="Name" value="fx_get_next_call"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#dac0bb1fdeb568dbbb601c12f7dda765"><param name="Name" value="FX_GET_PERSONAL_INFO"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#3c5f684e95a321d56f7130fcd3577908"><param name="Name" value="FX_GETCONTACT_ARG"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#0b9de14ac4b5ecefcc9651cfcef4ca67"><param name="Name" value="FX_LOGIN_REQUEST_ARG"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#ee7d7d171b6ab53c8fe4ec5c810a2fb1"><param name="Name" value="FX_LOGIN_URL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#13e4a0aa89027e32699634c7d63c8842"><param name="Name" value="fx_make_packet"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#87622f1bf47f702824c2676bdf5d3038"><param name="Name" value="FX_MAKE_PACKET_GET_CONTACT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#01de8de0e850199bee8eaea690a69015"><param name="Name" value="FX_MAKE_PACKET_GET_PERSONAL_INFO"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#fdc979cd9d0c79fd845f4c409d7d3489"><param name="Name" value="FX_MAKE_PACKET_REGISTER_STEP_1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#740f578995bf89c212e0c2c75d12f2c2"><param name="Name" value="FX_MAKE_PACKET_REGISTER_STEP_2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#a32c4ec7180c6e7705718f3f80491b6b"><param name="Name" value="FX_MAKE_PACKET_REGISTER_STEP_3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#c99347a540cdf7ce835bb3d96dcc6f0f"><param name="Name" value="FX_MAKE_PACKET_SEND_SMS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#26d8b338b073042b88fd04fd5bd6d3cd"><param name="Name" value="FX_MAKE_PACKET_SEND_SMS_SELF"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#f67292c2483ff49aa0c8034a3c69a572"><param name="Name" value="FX_MAKE_PACKET_TYPE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#7d78f37e1eebbbd2a9acb4ef04498c11"><param name="Name" value="fx_parse_xml"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#4ca72935c31645b365d573f7c737e208"><param name="Name" value="fx_select_correct_response"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#8276cbb71f6c08890c6c17f43165fd45"><param name="Name" value="FX_SEND_SMS_SUCCESSED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#52b9f1ee7cf3c3553411f140290a9e14"><param name="Name" value="MAKE_PACKET_DATA_STEP2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#1c63afe9c85bbf2fc04fe681bfbe8f85"><param name="Name" value="MAKE_PACKET_SEND_SMS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#b805ac7f06d939d1433d1958f1cc24db"><param name="Name" value="MAX_SMS_LENGTH"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#463dc625a34bcc2b5bb0b45c60baf2f5"><param name="Name" value="PMAKE_PACKET_DATA_STEP2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#881c74caa8338681fbc081d9ea924019"><param name="Name" value="PMAKE_PACKET_SEND_SMS"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#f15cb021b2216a37fa97fc69a6f79da0"><param name="Name" value="g_p_group_list"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#f15cb021b2216a37fa97fc69a6f79da0"><param name="Name" value="contact.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#f15cb021b2216a37fa97fc69a6f79da0"><param name="Name" value="libfetion.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#cf2069ccb10c2b39d64ed1a9a4fb04e5"><param name="Name" value="g_ret_code"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#4999d598ce51f0333a53eae6b12aedac"><param name="Name" value="g_socket"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="contact_8cpp.html#4999d598ce51f0333a53eae6b12aedac"><param name="Name" value="contact.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#4999d598ce51f0333a53eae6b12aedac"><param name="Name" value="libfetion.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#4999d598ce51f0333a53eae6b12aedac"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="send_s_m_s_8cpp.html#4999d598ce51f0333a53eae6b12aedac"><param name="Name" value="sendSMS.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#6a8ea2a89c3812ac687b8f9db21aa115"><param name="Name" value="g_struc_get_login_data"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#6a8ea2a89c3812ac687b8f9db21aa115"><param name="Name" value="libfetion.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#0232aa2760aed56a32ceab0f0803bde3"><param name="Name" value="register.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="send_s_m_s_8cpp.html#0232aa2760aed56a32ceab0f0803bde3"><param name="Name" value="sendSMS.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#c941ad508a71f9875bf8fd414efab702"><param name="Name" value="g_sz_user_pwd"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#c941ad508a71f9875bf8fd414efab702"><param name="Name" value="libfetion.cpp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#c941ad508a71f9875bf8fd414efab702"><param name="Name" value="register.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#4ff275bba830c3b0ff19061c69c13a16"><param name="Name" value="GETLOGINDATA"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html"><param name="Name" value="libfetion.cpp"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#21d3847941458bd9c2d57ac870b47c6a"><param name="Name" value="add_contect_info_to_link"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#b6517ad9e623368dcb89be611386a2de"><param name="Name" value="add_group_info_to_link"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#ef0b5cc3381567c1b5d6994cc1838156"><param name="Name" value="clean_link"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#0643553c4675e5818a8a61564a5e7ebd"><param name="Name" value="fx_close"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#6a8517c35ccc6c071edcdc51f6fc3c83"><param name="Name" value="fx_get_next_call"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#83fd8b922c44539a027f699d6f4fbc8b"><param name="Name" value="fx_get_sid"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#7bbd701b4c964efc22fd5405a0bab9f4"><param name="Name" value="fx_init"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#924c192d24c5d39cdbbe4e847b347bab"><param name="Name" value="fx_login"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#13e4a0aa89027e32699634c7d63c8842"><param name="Name" value="fx_make_packet"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#7d78f37e1eebbbd2a9acb4ef04498c11"><param name="Name" value="fx_parse_xml"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#4c5c187cbb193e37807aa058d5b4d9e2"><param name="Name" value="g_curl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#f15cb021b2216a37fa97fc69a6f79da0"><param name="Name" value="g_p_group_list"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#4999d598ce51f0333a53eae6b12aedac"><param name="Name" value="g_socket"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#6a8ea2a89c3812ac687b8f9db21aa115"><param name="Name" value="g_struc_get_login_data"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8cpp.html#c941ad508a71f9875bf8fd414efab702"><param name="Name" value="g_sz_user_pwd"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html"><param name="Name" value="libfetion.h"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#0643553c4675e5818a8a61564a5e7ebd"><param name="Name" value="fx_close"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#280e408444b78476e4642882e3bc2835"><param name="Name" value="FX_ERROR_INIT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#7d133286701d71402399dd5444e31ce4"><param name="Name" value="FX_ERROR_LOGIN"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#bda891b5656fe4fc1d985da8ba14e620"><param name="Name" value="FX_ERROR_OK"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#43647d37e220cfaf14d64fd39e8240cc"><param name="Name" value="FX_ERROR_REGISTER"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#f910fe5f23a3b0d30540b1cb842043ce"><param name="Name" value="FX_ERROR_SEND_SMS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#e2e7484e208a0394ba65d866a61ba88d"><param name="Name" value="FX_ERROR_SOCKET"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#a643c45549f9d8da49ad3d709cbd313a"><param name="Name" value="fx_get_contact"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#b15edefb3573a84dd2c64d765d2d0a79"><param name="Name" value="fx_get_personal_info"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#68df99dc87f4047e2bb3e6274efe2321"><param name="Name" value="fx_get_sid"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#7bbd701b4c964efc22fd5405a0bab9f4"><param name="Name" value="fx_init"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#924c192d24c5d39cdbbe4e847b347bab"><param name="Name" value="fx_login"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#d5a2ee1481addcd6202baaca29858838"><param name="Name" value="FX_PAESE_XML_LOGIN_DATA"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#6783be4adbdc0f3b81b5b8c09785f84f"><param name="Name" value="FX_PARSE_XML_CONTACT_DATA"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#f09b5647b8505cf6fe9d7ac0a0a407c0"><param name="Name" value="FX_PARSE_XML_STEP"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#89aee6472ccbf412f97e6756625a5082"><param name="Name" value="fx_registe_to_server"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#5cca718591e9318f4c1d828695f63cda"><param name="Name" value="FX_RET_CODE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#eb547e924713a9e098c25cf62061f233"><param name="Name" value="fx_send_sms_to_others"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#1a314918e815a2964aaee844cb98149b"><param name="Name" value="fx_send_sms_to_yourself"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#4ff275bba830c3b0ff19061c69c13a16"><param name="Name" value="GETLOGINDATA"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#de0fcb47e0c3a42945c1c06d619d3954"><param name="Name" value="PGETLOGINDATA"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#52b9f1ee7cf3c3553411f140290a9e14"><param name="Name" value="MAKE_PACKET_DATA_STEP2"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#1c63afe9c85bbf2fc04fe681bfbe8f85"><param name="Name" value="MAKE_PACKET_SEND_SMS"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#b805ac7f06d939d1433d1958f1cc24db"><param name="Name" value="MAX_SMS_LENGTH"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#2d4361ba1edf6305a826e80e6ae0a0a9"><param name="Name" value="nstatu_code"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#a7804b8251ce1a03a86f8a91397d8b69"><param name="Name" value="nstatu_user"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="libfetion_8h.html#de0fcb47e0c3a42945c1c06d619d3954"><param name="Name" value="PGETLOGINDATA"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#463dc625a34bcc2b5bb0b45c60baf2f5"><param name="Name" value="PMAKE_PACKET_DATA_STEP2"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="g__libfetion_8h.html#881c74caa8338681fbc081d9ea924019"><param name="Name" value="PMAKE_PACKET_SEND_SMS"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html"><param name="Name" value="register.cpp"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#4dde636982ddd4e3e70b88ff8312a7a1"><param name="Name" value="ConvertGBKToUtf8"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#e1a6c492cb41d9d509a57de26bd0dcaa"><param name="Name" value="ConvertUtf8ToGBK"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#c9185fe5c160ae476a32fd9d045064fb"><param name="Name" value="fx_get_arg_length"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#e9e9df45f6a5843c2cd402c23456e273"><param name="Name" value="fx_get_response_arg"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#859d2b821d3fd3e36ec39260dc6d5c1c"><param name="Name" value="fx_get_response_code"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#9cb2470f914c05a93945683fe68a0bc4"><param name="Name" value="fx_get_response_header_length"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#7b5f0b7e0d0e9dcdc3e752355eddbfb9"><param name="Name" value="fx_get_response_nonce"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#7eee8f939fc52b02d8ec11da6f899841"><param name="Name" value="fx_get_server_response"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#73cafdb21b49b10d43f7009538f4986e"><param name="Name" value="fx_make_cnonce"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#13c8d470d84ee40cf6ac046f65d977f6"><param name="Name" value="fx_make_response"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#89aee6472ccbf412f97e6756625a5082"><param name="Name" value="fx_registe_to_server"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#cf2069ccb10c2b39d64ed1a9a4fb04e5"><param name="Name" value="g_ret_code"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#4999d598ce51f0333a53eae6b12aedac"><param name="Name" value="g_socket"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#0232aa2760aed56a32ceab0f0803bde3"><param name="Name" value="g_struc_get_login_data"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#c941ad508a71f9875bf8fd414efab702"><param name="Name" value="g_sz_user_pwd"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#b58c9f1017eac200c93ff67f6bf01378"><param name="Name" value="sz_cnonce"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html"><param name="Name" value="register.h"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#4dde636982ddd4e3e70b88ff8312a7a1"><param name="Name" value="ConvertGBKToUtf8"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#e1a6c492cb41d9d509a57de26bd0dcaa"><param name="Name" value="ConvertUtf8ToGBK"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#c9185fe5c160ae476a32fd9d045064fb"><param name="Name" value="fx_get_arg_length"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#fd9402c391a515f6ed6ee2d59c16b73f"><param name="Name" value="fx_get_response_arg"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#f8955af7e61ab1fea63078c9377b5d85"><param name="Name" value="FX_GET_RESPONSE_ARG"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#bcec6e9a1e1615f34486fb2255d4bd8c"><param name="Name" value="FX_GET_RESPONSE_CNONCE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#859d2b821d3fd3e36ec39260dc6d5c1c"><param name="Name" value="fx_get_response_code"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#8f365bb93a333c703bdecb7ed02d7a22"><param name="Name" value="FX_GET_RESPONSE_CODE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#9cb2470f914c05a93945683fe68a0bc4"><param name="Name" value="fx_get_response_header_length"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#57d012f2b2044b0b278a1367d95d0a32"><param name="Name" value="fx_get_response_nonce"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#1130626ac8080461423d841cf12c4eae"><param name="Name" value="FX_GET_RESPONSE_TYPE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#7eee8f939fc52b02d8ec11da6f899841"><param name="Name" value="fx_get_server_response"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#11afc99fe8bb16b2c044997d16738898"><param name="Name" value="fx_make_cnonce"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#e58bcd5f537400fabffd8515df1a0b7a"><param name="Name" value="fx_make_response"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8h.html#90ec4847deb129f955eade953ddc81ef"><param name="Name" value="FX_REGISTER_TYPE"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="send_s_m_s_8cpp.html"><param name="Name" value="sendSMS.cpp"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="send_s_m_s_8cpp.html#eb547e924713a9e098c25cf62061f233"><param name="Name" value="fx_send_sms_to_others"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="send_s_m_s_8cpp.html#1a314918e815a2964aaee844cb98149b"><param name="Name" value="fx_send_sms_to_yourself"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="send_s_m_s_8cpp.html#4999d598ce51f0333a53eae6b12aedac"><param name="Name" value="g_socket"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="send_s_m_s_8cpp.html#0232aa2760aed56a32ceab0f0803bde3"><param name="Name" value="g_struc_get_login_data"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___d_a_t_a___s_t_e_p2.html#3ca3af6a2fa79af08072ae88e22f36d2"><param name="Name" value="sz_cnonce"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___d_a_t_a___s_t_e_p2.html#3ca3af6a2fa79af08072ae88e22f36d2"><param name="Name" value="_MAKE_PACKET_DATA_STEP2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="register_8cpp.html#b58c9f1017eac200c93ff67f6bf01378"><param name="Name" value="register.cpp"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#79be3b9b778002eb5074b903cf06093c"><param name="Name" value="sz_domain"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___s_e_n_d___s_m_s.html#42573729d8c1a5d5a778ec23ef42e2ab"><param name="Name" value="sz_message"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#4cc4bda504e8c213aed7017dda146f21"><param name="Name" value="sz_phone_num"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___d_a_t_a___s_t_e_p2.html#db1a096752c2191012e0cf71f0e71c34"><param name="Name" value="sz_response"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#2a4c56449f638ff15aacef40885a3f4b"><param name="Name" value="sz_sid"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___s_e_n_d___s_m_s.html#db38f9502688a2b27183665c5ae50cc0"><param name="Name" value="sz_uri"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct___m_a_k_e___p_a_c_k_e_t___s_e_n_d___s_m_s.html#db38f9502688a2b27183665c5ae50cc0"><param name="Name" value="_MAKE_PACKET_SEND_SMS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#07ed95a923e1c066aba99ed9ce3603d4"><param name="Name" value="_struc_get_login_data"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct__struc__get__login__data.html#2ee1d42aae48ef23a8c129eced2704a0"><param name="Name" value="sz_user_id"></OBJECT>
+</UL>
+</BODY>
+</HTML>

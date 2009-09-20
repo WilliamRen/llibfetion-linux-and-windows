@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>libfetion: D:/MyProgramme/VC++/libfetion/libfetion_test/g_libfetion.h源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css">
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- 制作者 Doxygen 1.5.9 -->
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>首页</span></a></li>
+      <li><a href="annotated.html"><span>类</span></a></li>
+      <li class="current"><a href="files.html"><span>文件</span></a></li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>文件列表</span></a></li>
+      <li><a href="globals.html"><span>文件成员</span></a></li>
+    </ul>
+  </div>
+<h1>D:/MyProgramme/VC++/libfetion/libfetion_test/g_libfetion.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#include &lt;winsock2.h&gt;</span>
+<a name="l00002"></a>00002 <span class="preprocessor">#include &lt;curl\curl.h&gt;</span>
+<a name="l00003"></a>00003 <span class="preprocessor">#include "libfetion.h"</span>
+<a name="l00004"></a>00004 
+<a name="l00005"></a>00005 <span class="comment">//</span>
+<a name="l00006"></a>00006 <span class="comment">// 结构体</span>
+<a name="l00007"></a>00007 <span class="comment">//</span>
+<a name="l00008"></a>00008 
+<a name="l00014"></a>00014 <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct__struc__get__login__data.html" title="这个结构体是在从服务器返回的信息中提取出来的.">_struc_get_login_data</a>
+<a name="l00015"></a>00015 {
+<a name="l00016"></a>00016         <span class="keywordtype">int</span>             nstatu_code;
+<a name="l00017"></a>00017         <span class="keywordtype">char</span>    sz_sid[20];
+<a name="l00018"></a>00018         <span class="keywordtype">char</span>    sz_uri[50];
+<a name="l00019"></a>00019         <span class="keywordtype">char</span>    sz_domain[20];
+<a name="l00020"></a>00020         <span class="keywordtype">char</span>    sz_phone_num[20];
+<a name="l00021"></a>00021         <span class="keywordtype">char</span>    sz_user_id[20];
+<a name="l00022"></a>00022         <span class="keywordtype">int</span>             nstatu_user;
+<a name="l00023"></a>00023         
+<a name="l00024"></a>00024 }<a class="code" href="struct__struc__get__login__data.html" title="这个结构体是在从服务器返回的信息中提取出来的.">GETLOGINDATA</a>,*<a class="code" href="struct__struc__get__login__data.html" title="这个结构体是在从服务器返回的信息中提取出来的.">PGETLOGINDATA</a>;
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 
+<a name="l00032"></a>00032 <span class="preprocessor">#define FX_LOGIN_URL            "http://nav.fetion.com.cn/ssiportal/SSIAppSignIn.aspx"</span>
+<a name="l00033"></a>00033 <span class="preprocessor"></span>
+<a name="l00034"></a>00034 <span class="comment">//</span>
+<a name="l00035"></a>00035 <span class="comment">// 全局变量</span>
+<a name="l00036"></a>00036 <span class="comment">//</span>
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 
+<a name="l00043"></a>00043 SOCKET  g_socket;
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045 
+<a name="l00050"></a>00050 CURL*   g_curl = NULL;
+<a name="l00051"></a>00051 
+<a name="l00056"></a>00056 PGETLOGINDATA g_struc_get_login_data;
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058 FX_RET_CODE             fx_parse_xml( FX_PARSE_XML_STEP n_step_code, LPVOID p_xml_data, LPVOID  p_struct );
+</pre></div></div>
+<hr size="1"><address style="text-align: right;"><small>Generated at Thu Aug 6 12:55:13 2009 for libfetion by&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.9 </small></address>
+</body>
+</html>

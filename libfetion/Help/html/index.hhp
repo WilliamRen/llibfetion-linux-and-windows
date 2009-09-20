@@ -1,0 +1,43 @@
+[OPTIONS]
+Compatibility=1.1
+Full-text search=Yes
+Contents file=index.hhc
+Default Window=main
+Default topic=index.html
+Index file=index.hhk
+Language=0x804 Chinese (PRC)
+Title=libfetion
+
+[WINDOWS]
+main="libfetion","index.hhc","index.hhk","index.html","index.html",,,,,0x23520,,0x10387e,,,,,,,,0
+
+[FILES]
+index.html
+g__libfetion_8h_source.html
+libfetion_8h_source.html
+register_8h_source.html
+contact_8cpp.html
+g__libfetion_8h.html
+libfetion_8cpp.html
+libfetion_8h.html
+register_8cpp.html
+register_8h.html
+send_s_m_s_8cpp.html
+annotated.html
+classes.html
+struct___c_o_n_t_a_c_t___l_i_s_t.html
+struct___m_a_k_e___p_a_c_k_e_t___d_a_t_a___s_t_e_p2.html
+struct___m_a_k_e___p_a_c_k_e_t___d_a_t_a___s_t_e_p2-members.html
+struct___m_a_k_e___p_a_c_k_e_t___s_e_n_d___s_m_s.html
+struct___m_a_k_e___p_a_c_k_e_t___s_e_n_d___s_m_s-members.html
+struct__struc__get__login__data.html
+struct__struc__get__login__data-members.html
+files.html
+globals.html
+globals_func.html
+globals_vars.html
+globals_defs.html
+tabs.css
+tab_b.gif
+tab_l.gif
+tab_r.gif
