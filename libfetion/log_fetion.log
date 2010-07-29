@@ -1,0 +1,56 @@
+34:53:15 18,3,2010: R fetion.com.cn SIP-C/2.0
+F: 879534138
+I: 1
+Q: 1 R
+L: 289
+
+<args><device type="PC" version="284571220" client-version="3.3.0370" /><caps value="simple-im;im-session;temp-group;personal-group" /><events value="contact;permission;system-message;personal-group" /><user-info attributes="all" /><presence><basic value="400" desc="" /></presence></args>
+34:53:15 18,3,2010: SIP-C/2.0 401 Unauthoried
+F: 879534138
+I: 1
+Q: 1 R
+W: Digest algorithm="MD5-sess;SHA1-sess",nonce="1CC99089450ABA456844963A5A9765A1"
+
+
+17:55:15 18,3,2010: R fetion.com.cn SIP-C/2.0
+F: 879534138
+I: 1
+Q: 1 R
+L: 289
+
+<args><device type="PC" version="284571220" client-version="3.3.0370" /><caps value="simple-im;im-session;temp-group;personal-group" /><events value="contact;permission;system-message;personal-group" /><user-info attributes="all" /><presence><basic value="400" desc="" /></presence></args>
+23:55:15 18,3,2010: SIP-C/2.0 401 Unauthoried
+F: 879534138
+I: 1
+Q: 1 R
+W: Digest algorithm="MD5-sess;SHA1-sess",nonce="1E2C984915E791773726F2C911845061"
+
+
+36:59:15 18,3,2010: R fetion.com.cn SIP-C/2.0
+F: 879534138
+I: 1
+Q: 1 R
+L: 289
+
+<args><device type="PC" version="284571220" client-version="3.3.0370" /><caps value="simple-im;im-session;temp-group;personal-group" /><events value="contact;permission;system-message;personal-group" /><user-info attributes="all" /><presence><basic value="400" desc="" /></presence></args>
+36:59:15 18,3,2010: SIP-C/2.0 401 Unauthoried
+F: 879534138
+I: 1
+Q: 1 R
+W: Digest algorithm="MD5-sess;SHA1-sess",nonce="6EE82C2A495FEB82714FF3E765136715"
+
+
+13:3:16 18,3,2010: R fetion.com.cn SIP-C/2.0
+F: 879534138
+I: 1
+Q: 1 R
+L: 289
+
+<args><device type="PC" version="284571220" client-version="3.3.0370" /><caps value="simple-im;im-session;temp-group;personal-group" /><events value="contact;permission;system-message;personal-group" /><user-info attributes="all" /><presence><basic value="400" desc="" /></presence></args>
+13:3:16 18,3,2010: SIP-C/2.0 401 Unauthoried
+F: 879534138
+I: 1
+Q: 1 R
+W: Digest algorithm="MD5-sess;SHA1-sess",nonce="2B18A59554F61FBC65F657517350D3DC"
+
+
