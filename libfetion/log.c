@@ -41,7 +41,7 @@ void log_string( char* sz_fmt, ... )
     time_t timep;
     struct tm* t_p;
     char sz_time[100] = {0};
-    char sz_log_full[512] = {0};
+    char sz_log_full[1024] = {0};
 
     va_list args;
     char sz_sprintf[1024] = {0};
@@ -50,7 +50,7 @@ void log_string( char* sz_fmt, ... )
     vsnprintf( sz_sprintf, 1024, sz_fmt, args );
     va_end( args );
 
-    sz_sprintf[1024] = 0;
+    sz_sprintf[1023] = 0;
     /*look at the g_file_log isn't NULL*/
     if (g_log_file == NULL){
 #ifdef _DEBUG

@@ -16,5 +16,6 @@ enum make_type
 
 char* fx_pro_build_package( int n_type, void* l_data );
 char* fx_ssi_get_v4digest_1( char* sz_password );
+char* fx_generate_cnonce();
 
 #endif // PROTOCOL_H_INCLUDED

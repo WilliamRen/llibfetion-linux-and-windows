@@ -38,21 +38,21 @@ void* thread_recv( void* lparam )
         if( fx_socket_recv2( socket, &mem ) == -1 ){
             log_string( "thread_recv error!\n" );
             //break;
-            return;
+            return NULL;
         }
 
         /*
          *  下面就是解析服务器发来的消息
          */
 
-        log_string( mem.mem_ptr );
+        log_string( "%s", mem.mem_ptr );
 
         myfree( &mem );
 
 
     //}
 
-    //return NULL;
+    return NULL;
 }
 
 FX_RET_CODE fx_login( struct login_data* l_data  )
@@ -123,7 +123,7 @@ FX_RET_CODE fx_login( struct login_data* l_data  )
     }
     log_string(sz_pack);
 
-    sleep( 5 );
+    sleep( 50 );
     pthread_cancel( g_recv_thread_id );
 
     return FX_ERROR_OK;

@@ -111,12 +111,12 @@ FX_RET_CODE fx_get_user_conf( __in struct sys_conf_data* sys_data, \
     /*set the head of protocol*/
     head = curl_slist_append( head, "Accept: Agent-007" );
     /*set libcurl*/
-    /*curl_easy_setopt( g_curl, CURLOPT_COOKIEJAR, "cookie.txt" );*/
     curl_easy_setopt( g_curl, CURLOPT_URL, sz_login_url );
     curl_easy_setopt( g_curl, CURLOPT_HTTPHEADER, head );
     curl_easy_setopt( g_curl, CURLOPT_CONNECTTIMEOUT, 8 ); /*time out 8s*/
     curl_easy_setopt( g_curl, CURLOPT_WRITEFUNCTION, write_mem_call_back );
     curl_easy_setopt( g_curl, CURLOPT_WRITEDATA, (void*)mem );
+    curl_easy_setopt( g_curl, CURLOPT_COOKIEJAR, "cookie.txt" );
     /*execute curl*/
     curl_ret = curl_easy_perform( g_curl );
     if( curl_ret != CURLE_OK ){

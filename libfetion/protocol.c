@@ -4,6 +4,7 @@
  */
 
 #include <stdio.h>
+#include <time.h>
 
 #include <openssl/sha.h>
 
@@ -14,10 +15,12 @@
 
 #define FX_MAX_PACKAGE_SIZE 1024
 
-#define  MAKE_LABLE_RM  "%c fetion.com.cn SIP-C/2.0\r\n"
+#define  MAKE_LABLE_RM  "%c fetion.com.cn SIP-C/4.0\r\n"
 #define  MAKE_LABLE_NUM "%c: %d\r\n"
 #define  MAKE_LABLE_Q   "Q: %d %c\r\n"
 #define  MAKE_LABLE_X   "%c: %s\r\n"
+#define  MAKE_LABLE_CN  "CN: %s\r\n"
+#define  MAKE_LABLE_CL  "CL: type=\"pc\",version=\"4.0.2510\"\r\n"
 
 int fx_get_next_call()
 {
@@ -38,6 +41,7 @@ char* fx_pro_build_package( int n_type, void* l_data )
         char sz_tmp[512] = {0};
     	case FX_BUILD_LOGIN_1:
             {
+                char* sz_cnonce = fx_generate_cnonce();
                 n_call_id = fx_get_next_call();
                 /*--1--*/
                 sprintf( sz_tmp, MAKE_LABLE_RM, 'R' );
@@ -52,11 +56,13 @@ char* fx_pro_build_package( int n_type, void* l_data )
                 sprintf( sz_tmp, MAKE_LABLE_Q, 1, 'R' );
                 strcat( sz_pack, sz_tmp );
                 /*--5--*/
-                sprintf( sz_tmp, MAKE_LABLE_NUM, 'L', strlen(FX_LOGIN_DATA) );
+                sprintf( sz_tmp, MAKE_LABLE_CN, sz_cnonce );
                 strcat( sz_pack, sz_tmp );
-                strcat( sz_pack, "\r\n" );
+                free( sz_cnonce );
                 /*--6--*/
-                strcat( sz_pack, FX_LOGIN_DATA );
+                //sprintf( sz_tmp, MAKE_LABLE_NUM, 'L', strlen(FX_LOGIN_DATA) );
+                strcat( sz_pack, MAKE_LABLE_CL );
+                strcat( sz_pack, "\r\n" );
             }
     		break;
         case FX_BUILD_LOGIN_2:
@@ -103,4 +109,81 @@ char* fx_ssi_get_v4digest_1( char* sz_password )
     }
     else
         return szSHA1;
+}
+
+int fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
+{
+    char sz_module[256+1] = {0};
+    char sz_exponent[6+1] = {0};
+
+    if( sz_key == NULL || sz_nonce == NULL || sz_ase_key == NULL )
+        return -1;
+    /*first we should get the moudle and the publicExponent*/
+    if( strlen( sz_key ) != 262 )
+        return -1;
+
+    memset( sz_module, sz_key, 256 );
+    memset( sz_exponent, sz_key, 6 );
+
+    /*do RSA*/
+    {
+        int ret = 0, flen = 0;
+        BIGNUM *bnn, *bne, *bnd;
+        unsigned char *in = "qiupeng501";
+        unsigned char *out;
+
+         bnn = BN_new();
+         bne = BN_new();
+        // bnd = BN_new();
+         BN_hex2bn(&bnn, sz_module);
+         BN_set_word(bne, sz_exponent);
+        // BN_hex2bn(&bnd, PRIVATE_EXPONENT);
+
+         RSA *r = RSA_new();
+         r->n = bnn;
+         r->e = bne;
+        // r->d = bnd;
+
+         flen = RSA_size(r);
+
+         out = (char *)malloc(flen);
+         bzero(out, flen);
+
+         ret = RSA_public_encrypt(flen, in, out, r,   RSA_NO_PADDING);
+         if (ret < 0)
+         {
+            printf("Encrypt failed!\n");
+            return 1;
+         }
+
+         printf("Size:%d\n", ret);
+         printf("ClearText:%s\n", in);
+         printf("CipherText(Hex):\n");
+         int i;
+         for (i=0; i<ret; i++)
+         {
+            printf("0x%02x, ", *out);
+             out++;
+         }
+         printf("\n");
+
+        //free(out);
+
+         RSA_free(r);
+    }
+
+    return 0;
+}
+
+char* fx_generate_cnonce()
+{
+	srand( (unsigned)time( NULL ) );
+	char* sz_conce = (char*)malloc( 33 );
+	memset( sz_conce, 0, 33 );
+	sprintf( sz_conce, "%04X%04X%04X%04X%04X%04X%04X%04X", \
+				rand() & 0xFFFF, rand() & 0xFFFF,\
+				rand() & 0xFFFF, rand() & 0xFFFF,\
+				rand() & 0xFFFF, rand() & 0xFFFF,\
+				rand() & 0xFFFF, rand() & 0xFFFF );
+	return sz_conce;
 }
