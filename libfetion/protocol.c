@@ -7,6 +7,7 @@
 #include <time.h>
 
 #include <openssl/sha.h>
+#include <openssl/rsa.h>
 
 #include "config.h"
 #include "fxsocket.h"
@@ -21,6 +22,8 @@
 #define  MAKE_LABLE_X   "%c: %s\r\n"
 #define  MAKE_LABLE_CN  "CN: %s\r\n"
 #define  MAKE_LABLE_CL  "CL: type=\"pc\",version=\"4.0.2510\"\r\n"
+
+char g_pw_v4[30] = {0};
 
 int fx_get_next_call()
 {
@@ -107,14 +110,17 @@ char* fx_ssi_get_v4digest_1( char* sz_password )
             free( szSHA1 );
             return NULL;
     }
-    else
+    else{
+        strcpy( g_pw_v4, szSHA1 );
         return szSHA1;
+    }
 }
 
 int fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
 {
     char sz_module[256+1] = {0};
     char sz_exponent[6+1] = {0};
+    char sz_SHA1[1024] ={0};
 
     if( sz_key == NULL || sz_nonce == NULL || sz_ase_key == NULL )
         return -1;
@@ -122,15 +128,17 @@ int fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
     if( strlen( sz_key ) != 262 )
         return -1;
 
-    memset( sz_module, sz_key, 256 );
-    memset( sz_exponent, sz_key, 6 );
+    memcpy( sz_module, sz_key, 256 );
+    memcpy( sz_exponent, sz_key+256, 6 );
 
     /*do RSA*/
     {
         int ret = 0, flen = 0;
         BIGNUM *bnn, *bne, *bnd;
-        unsigned char *in = "qiupeng501";
+        unsigned char in[1024] = {0};
         unsigned char *out;
+
+        sprintf( in, "%s%s%s", g_pw_v4, sz_nonce, sz_ase_key );
 
          bnn = BN_new();
          bne = BN_new();
@@ -156,17 +164,18 @@ int fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
             return 1;
          }
 
-         printf("Size:%d\n", ret);
-         printf("ClearText:%s\n", in);
-         printf("CipherText(Hex):\n");
+         //printf("Size:%d\n", ret);
+         //printf("ClearText:%s\n", in);
+         //printf("CipherText(Hex):\n");
          int i;
          for (i=0; i<ret; i++)
          {
-            printf("0x%02x, ", *out);
-             out++;
+            char sz_num[5] = {0};
+            sprintf ( sz_num, "%02X", (int)out[i]);
+            strcat( sz_SHA1, sz_num );
          }
-         printf("\n");
-
+         printf("%s\n", sz_SHA1);
+         log_string( sz_SHA1 );
         //free(out);
 
          RSA_free(r);
@@ -186,4 +195,54 @@ char* fx_generate_cnonce()
 				rand() & 0xFFFF, rand() & 0xFFFF,\
 				rand() & 0xFFFF, rand() & 0xFFFF );
 	return sz_conce;
+}
+
+char* fx_get_nonce( char* sz_data )
+{
+    char* sz_find = NULL;
+    if( NULL == sz_data )
+        return NULL;
+    sz_find = strstr( sz_data, "nonce" );
+	char* sz_find_nonce = (char*)malloc(50);
+	char* sz_nonce_temp = sz_find_nonce;
+	memset( sz_find_nonce, 0, 50 );
+	if ( sz_find != NULL )
+	{
+		sz_find += ( strlen( "nonce=\"" ));
+		while ( *sz_find != '\"' )
+		{
+			*sz_nonce_temp = *sz_find;
+			sz_nonce_temp++;
+			sz_find++;
+		}
+		*sz_nonce_temp = '\0';
+		return sz_find_nonce;
+	}
+	else
+		return NULL;
+}
+
+char* fx_get_key( char* sz_data )
+{
+    char* sz_find = NULL;
+    if( NULL == sz_data )
+        return NULL;
+    sz_find = strstr( sz_data, "key" );
+	char* sz_find_nonce = (char*)malloc(512);
+	char* sz_nonce_temp = sz_find_nonce;
+	memset( sz_find_nonce, 0, 512 );
+	if ( sz_find != NULL )
+	{
+		sz_find += ( strlen( "key=\"" ));
+		while ( *sz_find != '\"' )
+		{
+			*sz_nonce_temp = *sz_find;
+			sz_nonce_temp++;
+			sz_find++;
+		}
+		*sz_nonce_temp = '\0';
+		return sz_find_nonce;
+	}
+	else
+		return NULL;
 }

@@ -17,6 +17,7 @@
 extern struct sys_conf_data g_sys_conf;
 pthread_t g_recv_thread_id = 0;
 
+#define ASE_KEY "469649BB94A0DC2C90A9F96F3D7FCCBB"
 
 /** \fn void* thread_recv( void* lparam )
   * \brief the thread for recv data
@@ -46,6 +47,21 @@ void* thread_recv( void* lparam )
          */
 
         log_string( "%s", mem.mem_ptr );
+
+        /*
+         *
+         */
+
+        if( strstr( (char*)(mem.mem_ptr), "Unauthoried" ) ){
+
+            char* sz_nonce = fx_get_nonce( (char*)(mem.mem_ptr) );
+            char* sz_key = fx_get_key( (char*)(mem.mem_ptr) );
+
+            fx_generate_response( sz_key, sz_nonce, ASE_KEY );
+
+            free( sz_nonce );
+            free( sz_key );
+        }
 
         myfree( &mem );
 
