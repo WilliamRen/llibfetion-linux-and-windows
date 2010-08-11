@@ -19,6 +19,16 @@ pthread_t g_recv_thread_id = 0;
 
 #define ASE_KEY "469649BB94A0DC2C90A9F96F3D7FCCBB"
 
+/*only for test*/
+
+#define LOGIN_STEP2     "R fetion.com.cn SIP-C/4.0\r\n" \
+                        "F: 879534138\r\n" \
+                        "I: 1\r\n" \
+                        "Q: 2 R\r\n" \
+                        "A: Digest algorithm=\"SHA1-sess-v4\",response=\"%s\"\r\n" \
+                        "L: 527\r\n\r\n" \
+                        "<args><device accept-language=\"default\" machine-code=\"2F6E7CD33AA1F6928E69DEDD7D6C50B1\" /><caps value=\"3FF\" /><events value=\"7F\" /><user-info mobile-no=\"15210281153\" user-id=\"639717376\"><personal version=\"0\" attributes=\"v4default;alv2-version;alv2-warn\" /><custom-config version=\"0\" /><contact-list version=\"0\" buddy-attributes=\"v4default\" /></user-info><credentials domains=\"fetion.com.cn;m161.com.cn;www.ikuwa.cn;games.fetion.com.cn;turn.fetion.com.cn\" /><presence><basic value=\"400\" desc=\"\" /><extendeds /></presence></args>"
+
 /** \fn void* thread_recv( void* lparam )
   * \brief the thread for recv data
   * \param lparam parameter
@@ -30,7 +40,7 @@ void* thread_recv( void* lparam )
     int socket = (int)lparam;
     struct mem_struct mem = {0};
 
-    //while( 1 ){
+    while( 1 ){
 
         /*
          *  接收数据
@@ -38,8 +48,8 @@ void* thread_recv( void* lparam )
 
         if( fx_socket_recv2( socket, &mem ) == -1 ){
             log_string( "thread_recv error!\n" );
-            //break;
-            return NULL;
+            break;
+            //return NULL;
         }
 
         /*
@@ -56,9 +66,21 @@ void* thread_recv( void* lparam )
 
             char* sz_nonce = fx_get_nonce( (char*)(mem.mem_ptr) );
             char* sz_key = fx_get_key( (char*)(mem.mem_ptr) );
+            char sz_response[1024] = {0};
 
-            fx_generate_response( sz_key, sz_nonce, ASE_KEY );
+            char* sz_SHA1 = fx_generate_response( sz_key, sz_nonce, ASE_KEY );
 
+            sprintf( sz_response, LOGIN_STEP2, sz_SHA1 );
+
+            log_string( "len = %d:%s", strlen( sz_response ), sz_response );
+
+            int n_ret = fx_socket_send( socket, sz_response, strlen(sz_response) );
+            if ( n_ret == -1 ){
+                log_string( "fx_login:send data to server error!" );
+                return FX_ERROR_SOCKET;
+            }
+
+            free( sz_SHA1 );
             free( sz_nonce );
             free( sz_key );
         }
@@ -66,7 +88,7 @@ void* thread_recv( void* lparam )
         myfree( &mem );
 
 
-    //}
+    }
 
     return NULL;
 }
@@ -137,7 +159,7 @@ FX_RET_CODE fx_login( struct login_data* l_data  )
         log_string( "fx_login:send data to server error!" );
         return FX_ERROR_SOCKET;
     }
-    log_string(sz_pack);
+    //log_string(sz_pack);
 
     sleep( 50 );
     pthread_cancel( g_recv_thread_id );

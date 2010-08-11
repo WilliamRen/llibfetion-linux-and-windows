@@ -116,17 +116,19 @@ char* fx_ssi_get_v4digest_1( char* sz_password )
     }
 }
 
-int fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
+char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
 {
     char sz_module[256+1] = {0};
     char sz_exponent[6+1] = {0};
-    char sz_SHA1[1024] ={0};
+    char* sz_SHA1 = (char*)malloc( 1024 );
+
+    memset( sz_SHA1, 0, 1024 );
 
     if( sz_key == NULL || sz_nonce == NULL || sz_ase_key == NULL )
-        return -1;
+        return NULL;
     /*first we should get the moudle and the publicExponent*/
     if( strlen( sz_key ) != 262 )
-        return -1;
+        return NULL;
 
     memcpy( sz_module, sz_key, 256 );
     memcpy( sz_exponent, sz_key+256, 6 );
@@ -161,12 +163,9 @@ int fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
          if (ret < 0)
          {
             printf("Encrypt failed!\n");
-            return 1;
+            return NULL;
          }
 
-         //printf("Size:%d\n", ret);
-         //printf("ClearText:%s\n", in);
-         //printf("CipherText(Hex):\n");
          int i;
          for (i=0; i<ret; i++)
          {
@@ -181,7 +180,7 @@ int fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
          RSA_free(r);
     }
 
-    return 0;
+    return sz_SHA1;
 }
 
 char* fx_generate_cnonce()
