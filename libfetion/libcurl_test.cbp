@@ -75,6 +75,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="protocol.h" />
+		<Unit filename="sip/sip_head.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="utf8.c">
 			<Option compilerVar="CC" />
 		</Unit>

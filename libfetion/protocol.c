@@ -243,17 +243,6 @@ char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
             return NULL;
          }
 
-         /*int i;
-         for (i=0; i<ret; i++)
-         {
-            char sz_num[5] = {0};
-            sprintf ( sz_num, "%02X", (int)out[i]);
-            strcat( sz_SHA1, sz_num );
-         }
-         printf("%s\n", sz_SHA1);
-         log_string( sz_SHA1 );*/
-        //free(out);
-
         char* sz = hextostr( out, ret);
         strcpy( sz_SHA1, sz );
         free( sz );
@@ -325,49 +314,6 @@ char* fx_get_key( char* sz_data )
 	else
 		return NULL;
 }
-
-uint HEX2BYTE(uint hex_ch)
-{
-    if (hex_ch >= '0' && hex_ch <= '9')
-    {
-        return hex_ch - '0';
-    }
-
-    if (hex_ch >= 'a' && hex_ch <= 'f')
-    {
-        return hex_ch - 'a' + 10;
-    }
-
-    if (hex_ch >= 'A' && hex_ch <= 'F')
-    {
-        return hex_ch - 'A' + 10;
-    }
-
-    return 0x00;
-}
-
-int hex_str_2_byte( char* sz_hex, byte* p_byte, int* n_len )
-{
-    uint bin_len = 0;
-    uint hex_len = strlen(sz_hex);
-    uint index = 0;
-
-    if (hex_len % 2 == 1)
-    {
-        hex_len -= 1;
-    }
-
-    bin_len = hex_len / 2;
-
-    for(index = 0; index < hex_len; index+=2)
-    {
-        p_byte[index/2] = ((HEX2BYTE(sz_hex[index]) << 4) & 0xF0) + HEX2BYTE(sz_hex[index + 1]);
-    }
-
-    *n_len = bin_len;
-    return bin_len;
-}
-
 unsigned char* strtohex(char* in , int* len)
 {
 	unsigned char* out = (unsigned char*)malloc(strlen(in)/2 );
@@ -413,8 +359,8 @@ char* generate_aes_key()
 {
         char* key = (char*)malloc(65);
         memset( key , 0 , 65 );
-        sprintf( key , "%04x%04x%04x%04x%04x%04x%04x"
-                        "%04x%04x%04x%04x%04x%04x%04x%04x%04x" ,
+        sprintf( key , "%04X%04X%04X%04X%04X%04X%04X"
+                       "%04X%04X%04X%04X%04X%04X%04X%04X%04X" ,
                         rand() & 0xFFFF , rand() & 0xFFFF ,
                         rand() & 0xFFFF , rand() & 0xFFFF ,
                         rand() & 0xFFFF , rand() & 0xFFFF ,
