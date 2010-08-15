@@ -17,7 +17,7 @@
 extern struct sys_conf_data g_sys_conf;
 pthread_t g_recv_thread_id = 0;
 
-#define ASE_KEY "469649BB94A0DC2C90A9F96F3D7FCCBB"
+#define ASE_KEY "4A026855890197CFDF768597D07200B346F3D676411C6F87368B5C2276DCEDD2"
 
 /*only for test*/
 
@@ -67,7 +67,7 @@ void* thread_recv( void* lparam )
             char* sz_nonce = fx_get_nonce( (char*)(mem.mem_ptr) );
             char* sz_key = fx_get_key( (char*)(mem.mem_ptr) );
             char sz_response[1024] = {0};
-
+            //char* sz_aes = generate_aes_key();
             char* sz_SHA1 = fx_generate_response( sz_key, sz_nonce, ASE_KEY );
 
             sprintf( sz_response, LOGIN_STEP2, sz_SHA1 );

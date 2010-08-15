@@ -1,58 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="config.c" open="1" top="0" tabpos="1">
-		<Cursor position="3053" topLine="97" />
+	<File name="config.c" open="1" top="0" tabpos="2">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="config.h" open="1" top="0" tabpos="2">
-		<Cursor position="421" topLine="0" />
+	<File name="fxsocket.c" open="1" top="1" tabpos="7">
+		<Cursor position="3716" topLine="141" />
 	</File>
-	<File name="fxsocket.c" open="1" top="1" tabpos="12">
-		<Cursor position="4341" topLine="199" />
+	<File name="log.c" open="1" top="0" tabpos="4">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="fxsocket.h" open="1" top="0" tabpos="13">
-		<Cursor position="262" topLine="0" />
+	<File name="login.c" open="1" top="0" tabpos="5">
+		<Cursor position="1642" topLine="37" />
 	</File>
-	<File name="initial.c" open="1" top="0" tabpos="3">
-		<Cursor position="595" topLine="0" />
+	<File name="main.c" open="1" top="0" tabpos="3">
+		<Cursor position="1455" topLine="48" />
 	</File>
-	<File name="initial.h" open="1" top="0" tabpos="6">
-		<Cursor position="416" topLine="0" />
+	<File name="protocol.c" open="1" top="0" tabpos="1">
+		<Cursor position="6513" topLine="217" />
 	</File>
-	<File name="log.c" open="1" top="0" tabpos="5">
-		<Cursor position="1144" topLine="47" />
-	</File>
-	<File name="log.h" open="1" top="0" tabpos="11">
-		<Cursor position="129" topLine="0" />
-	</File>
-	<File name="login.c" open="1" top="0" tabpos="14">
-		<Cursor position="1610" topLine="39" />
-	</File>
-	<File name="login.h" open="0" top="0" tabpos="15">
-		<Cursor position="386" topLine="0" />
-	</File>
-	<File name="main.c" open="1" top="0" tabpos="4">
-		<Cursor position="1124" topLine="40" />
-	</File>
-	<File name="mem.c" open="1" top="0" tabpos="9">
-		<Cursor position="1250" topLine="33" />
-	</File>
-	<File name="mem.h" open="1" top="0" tabpos="10">
-		<Cursor position="98" topLine="0" />
-	</File>
-	<File name="protocol.c" open="1" top="0" tabpos="15">
-		<Cursor position="4621" topLine="162" />
-	</File>
-	<File name="protocol.h" open="1" top="0" tabpos="16">
-		<Cursor position="357" topLine="0" />
-	</File>
-	<File name="utf8.c" open="1" top="0" tabpos="17">
-		<Cursor position="1684" topLine="21" />
-	</File>
-	<File name="xml.c" open="1" top="0" tabpos="7">
-		<Cursor position="1602" topLine="44" />
-	</File>
-	<File name="xml.h" open="1" top="0" tabpos="8">
-		<Cursor position="114" topLine="0" />
+	<File name="protocol.h" open="1" top="0" tabpos="6">
+		<Cursor position="689" topLine="6" />
 	</File>
 </CodeBlocks_layout_file>

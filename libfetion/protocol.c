@@ -25,6 +25,61 @@
 
 char g_pw_v4[30] = {0};
 
+unsigned char* strtohex(char* in , int* len);
+char* hextostr(unsigned char* in , int len);
+
+char* hash_password_v1( unsigned char* b0 , int b0len, const unsigned char* password , int psdlen)
+{
+	unsigned char* dst = (unsigned char*)malloc(b0len + psdlen + 1);
+	unsigned char tmp[20];
+	char* res;
+	memset(tmp , 0 , sizeof(tmp));
+	memset(dst , 0 , b0len + psdlen + 1);
+	memcpy(dst , b0 , b0len);
+	memcpy(dst + b0len , password , psdlen);
+	SHA_CTX ctx;
+	SHA1_Init(&ctx);
+	SHA1_Update(&ctx , dst , b0len + psdlen );
+	SHA1_Final(tmp , &ctx);
+	free(dst);
+	res = hextostr(tmp , 20);
+	return res;
+}
+char* hash_password_v2(char* userid , const char* passwordhex)
+{
+	int id = atoi(userid);
+	char* res;
+	unsigned char* bid = (unsigned char*)(&id);
+	unsigned char ubid[4];
+	int bpsd_len;
+	unsigned char* bpsd = strtohex(passwordhex , &bpsd_len);
+	memcpy(ubid , bid , 4);
+	res = hash_password_v1(ubid , sizeof(id) , bpsd , bpsd_len);
+	free(bpsd);
+	return res;
+}
+char* hash_password_v4(char* userid , char* password)
+{
+	char* domain = "fetion.com.cn:";
+	char *res , *dst;
+	unsigned char* udomain = (unsigned char*)malloc(strlen(domain));
+	unsigned char* upassword = (unsigned char*)malloc(strlen(password));
+	memset(udomain , 0 , strlen(domain));
+	memcpy(udomain , (unsigned char*)domain , strlen(domain));
+	memset(upassword , 0 , strlen(password));
+	memcpy(upassword , (unsigned char*)password , strlen(password));
+	res = hash_password_v1(udomain , strlen(domain) , upassword , strlen(password));
+	free(udomain);
+	free(upassword);
+	if(userid == NULL || strlen(userid) == 0)
+	{
+		return res;
+	}
+	dst = hash_password_v2(userid , res);
+	free(res);
+	return dst;
+}
+
 int fx_get_next_call()
 {
 	static	int	n_call = 0;
@@ -135,38 +190,60 @@ char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
 
     /*do RSA*/
     {
-        int ret = 0, flen = 0;
+        int ret = 0, flen = 0, flen1 = 0;
         BIGNUM *bnn, *bne, *bnd;
         unsigned char in[1024] = {0};
         unsigned char *out;
 
-        sprintf( in, "%s%s%s", g_pw_v4, sz_nonce, sz_ase_key );
+        //sprintf( in, "%s%s%s", g_pw_v4, sz_nonce, sz_ase_key );
+
+        int n1 = 0, n2 = 0, n3 = strlen( sz_nonce );
+
+        char* sz_pw = hash_password_v4( "639717376", "qiupeng501");
+
+        unsigned char* p_byte = strtohex( sz_pw, &n1 );
+        unsigned char* p_byte1= strtohex( sz_ase_key, &n2 );
+
+
+        //hex_str_2_byte( g_pw_v4, p_byte, &n1 );
+        //hex_str_2_byte( sz_ase_key, p_byte1, &n2 );
+
+        //in = (unsigned char*)malloc( 1024 );
+
+        //memcpy( in, p_byte, n1 );
+        //memcpy( in + n1, sz_nonce, n3);
+        memcpy( in, sz_nonce, n3);
+        memcpy( in + n3, p_byte, n1 );
+        memcpy( in + n1 + n3, p_byte1, n2 );
 
          bnn = BN_new();
          bne = BN_new();
         // bnd = BN_new();
          BN_hex2bn(&bnn, sz_module);
-         BN_set_word(bne, sz_exponent);
+        // BN_set_word(bne, sz_exponent);
+         BN_hex2bn(&bne, sz_exponent);
         // BN_hex2bn(&bnd, PRIVATE_EXPONENT);
 
          RSA *r = RSA_new();
          r->n = bnn;
          r->e = bne;
-        // r->d = bnd;
+         r->d = NULL;
 
          flen = RSA_size(r);
+         //flen1 = strlen(in);
+         flen1 = n1 + n2 + n3;
 
          out = (char *)malloc(flen);
          bzero(out, flen);
 
-         ret = RSA_public_encrypt(flen, in, out, r,   RSA_NO_PADDING);
+         ret = RSA_public_encrypt(flen1, in, out, r,   RSA_PKCS1_PADDING);
          if (ret < 0)
          {
             printf("Encrypt failed!\n");
             return NULL;
          }
 
-         int i;
+         /*int i;
          for (i=0; i<ret; i++)
          {
             char sz_num[5] = {0};
@@ -174,9 +251,12 @@ char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
             strcat( sz_SHA1, sz_num );
          }
          printf("%s\n", sz_SHA1);
-         log_string( sz_SHA1 );
+         log_string( sz_SHA1 );*/
         //free(out);
 
+        char* sz = hextostr( out, ret);
+        strcpy( sz_SHA1, sz );
+        free( sz );
          RSA_free(r);
     }
 
@@ -244,4 +324,104 @@ char* fx_get_key( char* sz_data )
 	}
 	else
 		return NULL;
+}
+
+uint HEX2BYTE(uint hex_ch)
+{
+    if (hex_ch >= '0' && hex_ch <= '9')
+    {
+        return hex_ch - '0';
+    }
+
+    if (hex_ch >= 'a' && hex_ch <= 'f')
+    {
+        return hex_ch - 'a' + 10;
+    }
+
+    if (hex_ch >= 'A' && hex_ch <= 'F')
+    {
+        return hex_ch - 'A' + 10;
+    }
+
+    return 0x00;
+}
+
+int hex_str_2_byte( char* sz_hex, byte* p_byte, int* n_len )
+{
+    uint bin_len = 0;
+    uint hex_len = strlen(sz_hex);
+    uint index = 0;
+
+    if (hex_len % 2 == 1)
+    {
+        hex_len -= 1;
+    }
+
+    bin_len = hex_len / 2;
+
+    for(index = 0; index < hex_len; index+=2)
+    {
+        p_byte[index/2] = ((HEX2BYTE(sz_hex[index]) << 4) & 0xF0) + HEX2BYTE(sz_hex[index + 1]);
+    }
+
+    *n_len = bin_len;
+    return bin_len;
+}
+
+unsigned char* strtohex(char* in , int* len)
+{
+	unsigned char* out = (unsigned char*)malloc(strlen(in)/2 );
+	int i = 0 , j = 0 , k = 0 ,length = 0;
+	char tmp[3] = { 0 };
+	memset(out , 0 , strlen(in) / 2);
+	while(i < (int)strlen(in))
+	{
+		tmp[k++] = in[i++];
+		tmp[k] = '\0';
+		if(k == 2)
+		{
+			out[j++] = (unsigned char)strtol(tmp , (char**)NULL , 16);
+			k = 0;
+			length ++;
+		}
+	}
+	if(len != NULL )
+		*len = length;
+	return out;
+}
+
+char* hextostr(unsigned char* in , int len)
+{
+	char* res = (char*)malloc(len * 2 + 1);
+	int i = 0;
+	memset(res , 0 , len * 2 + 1);
+	while(i < len)
+	{
+		sprintf(res + i * 2 , "%02x" , in[i]);
+		i ++;
+	};
+	i = 0;
+	while(i < (int)strlen(res))
+	{
+		res[i] = toupper(res[i]);
+		i ++;
+	};
+	return res;
+}
+
+char* generate_aes_key()
+{
+        char* key = (char*)malloc(65);
+        memset( key , 0 , 65 );
+        sprintf( key , "%04x%04x%04x%04x%04x%04x%04x"
+                        "%04x%04x%04x%04x%04x%04x%04x%04x%04x" ,
+                        rand() & 0xFFFF , rand() & 0xFFFF ,
+                        rand() & 0xFFFF , rand() & 0xFFFF ,
+                        rand() & 0xFFFF , rand() & 0xFFFF ,
+                        rand() & 0xFFFF , rand() & 0xFFFF ,
+                        rand() & 0xFFFF , rand() & 0xFFFF ,
+                        rand() & 0xFFFF , rand() & 0xFFFF ,
+                        rand() & 0xFFFF , rand() & 0xFFFF,
+                        rand() & 0xFFFF , rand() & 0xFFFF );
+        return key;
 }
