@@ -1,0 +1,229 @@
+# depslib dependency file v1.0
+1281970219 source:/home/programmeboy/prgramm/libfetionsip/main.c
+	<stdio.h>
+	<stdlib.h>
+	"sip_cseq.h"
+	"sip_parser.h"
+
+1281961047 source:/home/programmeboy/prgramm/libfetionsip/sip_cseq.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"sip_port.h"
+	"sip_cseq.h"
+
+1281973656 /home/programmeboy/prgramm/libfetionsip/sip_port.h
+	"sip_const.h"
+	"sip_list.h"
+
+1281973814 /home/programmeboy/prgramm/libfetionsip/sip_cseq.h
+
+1281971740 source:/home/programmeboy/prgramm/libfetionsip/sip_port.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"sip_port.h"
+	<limits.h>
+
+1281967964 source:/home/programmeboy/prgramm/libfetionsip/sip_content_type.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+	"parser.h"
+
+1281968788 /home/programmeboy/prgramm/libfetionsip/sip_message.h
+	"sip_const.h"
+	"sip_headers.h"
+	"sip_body.h"
+
+1281969853 /home/programmeboy/prgramm/libfetionsip/sip_parser.h
+	"sip_message.h"
+
+1281966668 /home/programmeboy/prgramm/libfetionsip/parser.h
+
+1281891857 /home/programmeboy/prgramm/libfetionsip/sip_const.h
+
+1281970211 /home/programmeboy/prgramm/libfetionsip/sip_headers.h
+	"sip_port.h"
+	"sip_const.h"
+	"sip_uri.h"
+	"sip_header.h"
+	"sip_authorization.h"
+	"sip_call_id.h"
+	"sip_contact.h"
+	"sip_content_length.h"
+	"sip_content_type.h"
+	"sip_cseq.h"
+	"sip_error_info.h"
+	"sip_from.h"
+	"sip_mime_version.h"
+	"sip_to.h"
+	"sip_via.h"
+	"sip_www_authenticate.h"
+
+1281969069 /home/programmeboy/prgramm/libfetionsip/sip_uri.h
+	"sip_const.h"
+	"sip_list.h"
+
+1221738571 /home/programmeboy/prgramm/libfetionsip/sip_list.h
+	<mpatrol.h>
+
+1281968716 /home/programmeboy/prgramm/libfetionsip/sip_header.h
+	"sip_uri.h"
+
+1221738571 /home/programmeboy/prgramm/libfetionsip/sip_authorization.h
+
+1221738571 /home/programmeboy/prgramm/libfetionsip/sip_call_id.h
+
+1221738571 /home/programmeboy/prgramm/libfetionsip/sip_content_length.h
+
+1281968716 /home/programmeboy/prgramm/libfetionsip/sip_content_type.h
+	"sip_list.h"
+
+1281968716 /home/programmeboy/prgramm/libfetionsip/sip_from.h
+	"sip_list.h"
+	"sip_uri.h"
+
+1281968866 /home/programmeboy/prgramm/libfetionsip/sip_mime_version.h
+	"sip_list.h"
+	"sip_uri.h"
+
+1281969069 /home/programmeboy/prgramm/libfetionsip/sip_to.h
+	"sip_from.h"
+
+1281968716 /home/programmeboy/prgramm/libfetionsip/sip_via.h
+	"sip_list.h"
+
+1221738571 /home/programmeboy/prgramm/libfetionsip/sip_www_authenticate.h
+
+1281968716 /home/programmeboy/prgramm/libfetionsip/sip_body.h
+	"sip_content_type.h"
+
+1221738571 /home/programmeboy/prgramm/libfetionsip/sip_error_info.h
+	<osipparser2/headers/osip_call_info.h>
+
+1281970002 /home/programmeboy/prgramm/libfetionsip/sip_contact.h
+	"sip_from.h"
+
+1281968003 source:/home/programmeboy/prgramm/libfetionsip/sip_authorization.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+	"parser.h"
+
+1281967757 source:/home/programmeboy/prgramm/libfetionsip/sip_body.c
+	<stdio.h>
+	<stdlib.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+	"sip_body.h"
+	"parser.h"
+
+1281967904 source:/home/programmeboy/prgramm/libfetionsip/sip_call_id.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+
+1281970002 source:/home/programmeboy/prgramm/libfetionsip/sip_contact.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+
+1281967936 source:/home/programmeboy/prgramm/libfetionsip/sip_content_length.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+
+1281968140 source:/home/programmeboy/prgramm/libfetionsip/sip_from.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+	"parser.h"
+
+1281968166 source:/home/programmeboy/prgramm/libfetionsip/sip_header.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+
+1281968185 source:/home/programmeboy/prgramm/libfetionsip/sip_list.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_list.h"
+
+1281972257 source:/home/programmeboy/prgramm/libfetionsip/sip_message.c
+	<stdio.h>
+	<stdlib.h>
+	"sip_port.h"
+	"sip_message.h"
+
+1281971085 source:/home/programmeboy/prgramm/libfetionsip/sip_message_parse.c
+	<stdio.h>
+	<stdlib.h>
+	"sip_port.h"
+	"sip_parser.h"
+	"parser.h"
+
+1281971227 source:/home/programmeboy/prgramm/libfetionsip/sip_message_to_str.c
+	<stdio.h>
+	<stdlib.h>
+	"sip_port.h"
+	"sip_parser.h"
+
+1281968284 source:/home/programmeboy/prgramm/libfetionsip/sip_mime_version.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+
+1281968284 source:/home/programmeboy/prgramm/libfetionsip/sip_to.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+
+1281968425 source:/home/programmeboy/prgramm/libfetionsip/sip_uri.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+
+1281968462 source:/home/programmeboy/prgramm/libfetionsip/sip_via.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+	"parser.h"
+
+1281968485 source:/home/programmeboy/prgramm/libfetionsip/sip_www_authenticate.c
+	<stdlib.h>
+	<stdio.h>
+	"sip_port.h"
+	"sip_message.h"
+	"sip_parser.h"
+	"parser.h"
+
+1281973269 source:/home/programmeboy/prgramm/libfetionsip/sip_parser_cfg.c
+	<stdio.h>
+	"sip_port.h"
+	"sip_parser.h"
+	"parser.h"
+
