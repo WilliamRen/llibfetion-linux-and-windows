@@ -118,7 +118,15 @@
 		<Unit filename="sip_www_authenticate.h" />
 		<Extensions>
 			<envvars />
-			<code_completion />
+			<code_completion>
+				<search_path add="/home/programmeboy/svn/llibfetion/libfetion/sip_test/libfetionsip/" />
+				<search_path add="/usr/include" />
+				<search_path add="/usr/include/bits" />
+				<search_path add="/usr/local/include" />
+				<search_path add="/usr/include/sys" />
+				<search_path add="/usr/include/netinet" />
+				<search_path add="/usr/include/arpa" />
+			</code_completion>
 			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>

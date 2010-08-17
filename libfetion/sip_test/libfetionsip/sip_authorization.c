@@ -479,44 +479,41 @@ osip_authorization_to_str (const osip_authorization_t * auth, char **dest)
   *dest = tmp;
 
   tmp = osip_str_append (tmp, auth->auth_type);
-
+/* commented by programmeboy
   if (auth->username != NULL)
     {
       tmp = osip_strn_append (tmp, " username=", 10);
-      /* !! username-value must be a quoted string !! */
+
       tmp = osip_str_append (tmp, auth->username);
     }
 
   if (auth->realm != NULL)
     {
       tmp = osip_strn_append (tmp, ", realm=", 8);
-      /* !! realm-value must be a quoted string !! */
+
       tmp = osip_str_append (tmp, auth->realm);
     }
   if (auth->nonce != NULL)
     {
       tmp = osip_strn_append (tmp, ", nonce=", 8);
-      /* !! nonce-value must be a quoted string !! */
+
       tmp = osip_str_append (tmp, auth->nonce);
     }
 
   if (auth->uri != NULL)
     {
       tmp = osip_strn_append (tmp, ", uri=", 6);
-      /* !! domain-value must be a list of URI in a quoted string !! */
       tmp = osip_str_append (tmp, auth->uri);
     }
   if (auth->response != NULL)
     {
       tmp = osip_strn_append (tmp, ", response=", 11);
-      /* !! domain-value must be a list of URI in a quoted string !! */
       tmp = osip_str_append (tmp, auth->response);
     }
 
   if (auth->digest != NULL)
     {
       tmp = osip_strn_append (tmp, ", digest=", 9);
-      /* !! domain-value must be a list of URI in a quoted string !! */
       tmp = osip_str_append (tmp, auth->digest);
     }
   if (auth->algorithm != NULL)
@@ -543,6 +540,40 @@ osip_authorization_to_str (const osip_authorization_t * auth, char **dest)
     {
       tmp = osip_strn_append (tmp, ", nc=", 5);
       tmp = osip_str_append (tmp, auth->nonce_count);
+    }*/
+
+    /*for sip-c only have two members*/
+
+      if (auth->algorithm != NULL)
+    {
+      tmp = osip_strn_append (tmp, " algorithm=", 11);
+      tmp = osip_str_append (tmp, auth->algorithm);
+    }
+      if (auth->response != NULL)
+    {
+      tmp = osip_strn_append (tmp, ", response=", 11);
+      tmp = osip_str_append (tmp, auth->response);
+    }
+      if (auth->cnonce != NULL)
+    {
+      tmp = osip_strn_append (tmp, ", cnonce=", 9);
+      tmp = osip_str_append (tmp, auth->cnonce);
+    }
+      if (auth->digest != NULL)
+    {
+      tmp = osip_strn_append (tmp, ", digest=", 9);
+      tmp = osip_str_append (tmp, auth->digest);
+    }
+      if (auth->nonce != NULL)
+    {
+      tmp = osip_strn_append (tmp, ", nonce=", 8);
+      tmp = osip_str_append (tmp, auth->nonce);
+    }
+    if (auth->algorithm == NULL)
+    {
+      len = strlen (auth->auth_type);
+      if ((*dest)[len] == ',')
+        (*dest)[len] = ' ';
     }
   return OSIP_SUCCESS;
 }

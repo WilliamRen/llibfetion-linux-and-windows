@@ -336,6 +336,28 @@ osip_www_authenticate_parse (osip_www_authenticate_t * wwwa, const char *hvalue)
           space = next;
           parse_ok++;
         }
+     /************add by programmeboy****************/
+     i = __osip_quoted_string_set ("key", space, &(wwwa->key), &next);
+      if (i!=0)
+        return i;
+      if (next == NULL)
+        return OSIP_SUCCESS;               /* end of header detected! */
+      else if (next != space)
+        {
+          space = next;
+          parse_ok++;
+        }
+     i = __osip_quoted_string_set ("signature", space, &(wwwa->signature), &next);
+      if (i!=0)
+        return i;
+      if (next == NULL)
+        return OSIP_SUCCESS;               /* end of header detected! */
+      else if (next != space)
+        {
+          space = next;
+          parse_ok++;
+        }
+    /*************add end*****************/
       if (0 == parse_ok)
         {
           char *quote1, *quote2, *tmp;
@@ -526,14 +548,19 @@ osip_www_authenticate_to_str (const osip_www_authenticate_t * wwwa, char **dest)
     len = len + strlen (wwwa->algorithm) + 12;
   if (wwwa->qop_options != NULL)
     len = len + strlen (wwwa->qop_options) + 6;
-
+  /*******add by programmeboy******/
+  if(wwwa->key != NULL)
+    len = len + strlen( wwwa->key ) + 6;
+  if(wwwa->signature!=NULL)
+    len = len + strlen( wwwa->signature ) + 12;
+  /*******add end*****************/
   tmp = (char *) osip_malloc (len);
   if (tmp == NULL)
     return OSIP_NOMEM;
   *dest = tmp;
 
   tmp = osip_str_append (tmp, wwwa->auth_type);
-
+  /* commented by programmeboy
   if (wwwa->realm != NULL)
     {
       tmp = osip_strn_append (tmp, " realm=", 7);
@@ -569,14 +596,44 @@ osip_www_authenticate_to_str (const osip_www_authenticate_t * wwwa, char **dest)
       tmp = osip_strn_append (tmp, ", qop=", 6);
       tmp = osip_str_append (tmp, wwwa->qop_options);
     }
-
-  if (wwwa->realm == NULL)
+  */
+  /*********add by programmeboy*************/
+    if (wwwa->algorithm != NULL)
     {
-      /* remove comma */
+      tmp = osip_strn_append (tmp, " algorithm=", 11);
+      tmp = osip_str_append (tmp, wwwa->algorithm);
+    }
+    if (wwwa->nonce != NULL)
+    {
+      tmp = osip_strn_append (tmp, ", nonce=", 8);
+      tmp = osip_str_append (tmp, wwwa->nonce);
+    }
+    if (wwwa->nonce != NULL)
+    {
+      tmp = osip_strn_append (tmp, ", key=", 6);
+      tmp = osip_str_append (tmp, wwwa->key);
+    }
+    if (wwwa->signature != NULL)
+    {
+      tmp = osip_strn_append (tmp, ", signature=", 12);
+      tmp = osip_str_append (tmp, wwwa->signature);
+    }
+
+    if (wwwa->algorithm == NULL)
+    {
       len = strlen (wwwa->auth_type);
       if ((*dest)[len] == ',')
         (*dest)[len] = ' ';
     }
+  /*********add end*************************/
+  /*commented by programmeboy
+  if (wwwa->realm == NULL)
+    {
+      len = strlen (wwwa->auth_type);
+      if ((*dest)[len] == ',')
+        (*dest)[len] = ' ';
+    }
+    */
 
   return OSIP_SUCCESS;
 }
