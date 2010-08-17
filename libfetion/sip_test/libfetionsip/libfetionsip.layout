@@ -2,132 +2,132 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
 	<File name="main.c" open="1" top="0" tabpos="1">
-		<Cursor position="63" topLine="0" />
+		<Cursor position="796" topLine="8" />
 	</File>
-	<File name="parser.h" open="1" top="0" tabpos="11">
-		<Cursor position="1068" topLine="21" />
+	<File name="parser.h" open="1" top="0" tabpos="9">
+		<Cursor position="1068" topLine="35" />
 	</File>
-	<File name="sip_authorization.c" open="1" top="0" tabpos="10">
-		<Cursor position="6965" topLine="57" />
+	<File name="sip_authorization.c" open="1" top="1" tabpos="43">
+		<Cursor position="13669" topLine="556" />
 	</File>
-	<File name="sip_authorization.h" open="1" top="0" tabpos="25">
-		<Cursor position="0" topLine="33" />
+	<File name="sip_authorization.h" open="1" top="0" tabpos="24">
+		<Cursor position="1720" topLine="39" />
 	</File>
-	<File name="sip_body.c" open="1" top="0" tabpos="12">
-		<Cursor position="964" topLine="13" />
+	<File name="sip_body.c" open="1" top="0" tabpos="10">
+		<Cursor position="964" topLine="31" />
 	</File>
-	<File name="sip_body.h" open="1" top="0" tabpos="26">
+	<File name="sip_body.h" open="1" top="0" tabpos="12">
 		<Cursor position="964" topLine="12" />
 	</File>
-	<File name="sip_call_id.c" open="1" top="0" tabpos="13">
+	<File name="sip_call_id.c" open="1" top="0" tabpos="11">
 		<Cursor position="999" topLine="12" />
 	</File>
-	<File name="sip_call_id.h" open="1" top="0" tabpos="27">
+	<File name="sip_call_id.h" open="1" top="0" tabpos="25">
 		<Cursor position="0" topLine="18" />
 	</File>
 	<File name="sip_const.h" open="1" top="0" tabpos="5">
-		<Cursor position="3041" topLine="0" />
+		<Cursor position="481" topLine="6" />
 	</File>
-	<File name="sip_contact.c" open="1" top="0" tabpos="41">
+	<File name="sip_contact.c" open="1" top="0" tabpos="39">
 		<Cursor position="951" topLine="6" />
 	</File>
-	<File name="sip_contact.h" open="1" top="0" tabpos="42">
+	<File name="sip_contact.h" open="1" top="0" tabpos="40">
 		<Cursor position="991" topLine="12" />
 	</File>
-	<File name="sip_content_length.c" open="1" top="0" tabpos="14">
+	<File name="sip_content_length.c" open="1" top="0" tabpos="13">
 		<Cursor position="999" topLine="24" />
 	</File>
-	<File name="sip_content_length.h" open="1" top="0" tabpos="28">
+	<File name="sip_content_length.h" open="1" top="0" tabpos="26">
 		<Cursor position="0" topLine="18" />
 	</File>
-	<File name="sip_content_type.c" open="1" top="0" tabpos="39">
+	<File name="sip_content_type.c" open="1" top="0" tabpos="37">
 		<Cursor position="1019" topLine="111" />
 	</File>
-	<File name="sip_content_type.h" open="1" top="0" tabpos="29">
+	<File name="sip_content_type.h" open="1" top="0" tabpos="27">
 		<Cursor position="973" topLine="21" />
 	</File>
 	<File name="sip_cseq.c" open="1" top="0" tabpos="2">
 		<Cursor position="137" topLine="0" />
 	</File>
-	<File name="sip_cseq.h" open="1" top="1" tabpos="3">
-		<Cursor position="1113" topLine="42" />
+	<File name="sip_cseq.h" open="1" top="0" tabpos="3">
+		<Cursor position="545" topLine="0" />
 	</File>
-	<File name="sip_error_info.h" open="1" top="0" tabpos="43">
+	<File name="sip_error_info.h" open="1" top="0" tabpos="41">
 		<Cursor position="1576" topLine="46" />
 	</File>
-	<File name="sip_from.c" open="1" top="0" tabpos="15">
+	<File name="sip_from.c" open="1" top="0" tabpos="14">
 		<Cursor position="1086" topLine="21" />
 	</File>
-	<File name="sip_from.h" open="1" top="0" tabpos="30">
+	<File name="sip_from.h" open="1" top="0" tabpos="28">
 		<Cursor position="956" topLine="18" />
 	</File>
-	<File name="sip_header.c" open="1" top="0" tabpos="16">
+	<File name="sip_header.c" open="1" top="0" tabpos="15">
 		<Cursor position="951" topLine="15" />
 	</File>
-	<File name="sip_header.h" open="1" top="0" tabpos="31">
+	<File name="sip_header.h" open="1" top="0" tabpos="29">
 		<Cursor position="959" topLine="18" />
 	</File>
-	<File name="sip_headers.h" open="1" top="0" tabpos="24">
+	<File name="sip_headers.h" open="1" top="0" tabpos="23">
 		<Cursor position="1308" topLine="25" />
 	</File>
-	<File name="sip_list.c" open="1" top="0" tabpos="9">
+	<File name="sip_list.c" open="1" top="0" tabpos="8">
 		<Cursor position="1155" topLine="27" />
 	</File>
-	<File name="sip_list.h" open="1" top="0" tabpos="32">
-		<Cursor position="0" topLine="166" />
+	<File name="sip_list.h" open="1" top="0" tabpos="30">
+		<Cursor position="0" topLine="165" />
 	</File>
-	<File name="sip_message.c" open="1" top="0" tabpos="8">
-		<Cursor position="4680" topLine="138" />
+	<File name="sip_message.c" open="1" top="0" tabpos="7">
+		<Cursor position="4696" topLine="36" />
 	</File>
-	<File name="sip_message.h" open="1" top="0" tabpos="40">
+	<File name="sip_message.h" open="1" top="0" tabpos="38">
 		<Cursor position="1010" topLine="81" />
 	</File>
-	<File name="sip_message_parse.c" open="1" top="0" tabpos="17">
+	<File name="sip_message_parse.c" open="1" top="0" tabpos="16">
 		<Cursor position="994" topLine="12" />
 	</File>
-	<File name="sip_message_to_str.c" open="1" top="0" tabpos="18">
+	<File name="sip_message_to_str.c" open="1" top="0" tabpos="17">
 		<Cursor position="16664" topLine="526" />
 	</File>
-	<File name="sip_mime_version.c" open="1" top="0" tabpos="19">
+	<File name="sip_mime_version.c" open="1" top="0" tabpos="18">
 		<Cursor position="950" topLine="12" />
 	</File>
-	<File name="sip_mime_version.h" open="1" top="0" tabpos="33">
+	<File name="sip_mime_version.h" open="1" top="0" tabpos="31">
 		<Cursor position="1083" topLine="33" />
 	</File>
 	<File name="sip_parser.h" open="1" top="0" tabpos="6">
 		<Cursor position="10239" topLine="293" />
 	</File>
-	<File name="sip_parser_cfg.c" open="1" top="0" tabpos="44">
+	<File name="sip_parser_cfg.c" open="1" top="0" tabpos="42">
 		<Cursor position="1330" topLine="19" />
 	</File>
 	<File name="sip_port.c" open="1" top="0" tabpos="4">
-		<Cursor position="6085" topLine="290" />
+		<Cursor position="1058" topLine="44" />
 	</File>
-	<File name="sip_port.h" open="1" top="0" tabpos="34">
+	<File name="sip_port.h" open="1" top="0" tabpos="32">
 		<Cursor position="1336" topLine="57" />
 	</File>
-	<File name="sip_to.c" open="1" top="0" tabpos="20">
+	<File name="sip_to.c" open="1" top="0" tabpos="19">
 		<Cursor position="950" topLine="6" />
 	</File>
-	<File name="sip_to.h" open="1" top="0" tabpos="35">
+	<File name="sip_to.h" open="1" top="0" tabpos="33">
 		<Cursor position="952" topLine="15" />
 	</File>
-	<File name="sip_uri.c" open="1" top="0" tabpos="21">
+	<File name="sip_uri.c" open="1" top="0" tabpos="20">
 		<Cursor position="16746" topLine="678" />
 	</File>
-	<File name="sip_uri.h" open="1" top="0" tabpos="36">
+	<File name="sip_uri.h" open="1" top="0" tabpos="34">
 		<Cursor position="993" topLine="27" />
 	</File>
-	<File name="sip_via.c" open="1" top="0" tabpos="22">
+	<File name="sip_via.c" open="1" top="0" tabpos="21">
 		<Cursor position="999" topLine="9" />
 	</File>
-	<File name="sip_via.h" open="1" top="0" tabpos="37">
+	<File name="sip_via.h" open="1" top="0" tabpos="35">
 		<Cursor position="954" topLine="12" />
 	</File>
-	<File name="sip_www_authenticate.c" open="1" top="0" tabpos="23">
-		<Cursor position="5311" topLine="147" />
+	<File name="sip_www_authenticate.c" open="1" top="0" tabpos="22">
+		<Cursor position="2249" topLine="66" />
 	</File>
-	<File name="sip_www_authenticate.h" open="1" top="0" tabpos="38">
+	<File name="sip_www_authenticate.h" open="1" top="0" tabpos="36">
 		<Cursor position="1284" topLine="12" />
 	</File>
 </CodeBlocks_layout_file>

@@ -281,12 +281,14 @@ extern "C"
  * @param pos The index of the element to get.
  * @param dest A pointer on the header found.
  */
+ /*
 #ifndef MINISIZE
   int osip_message_get_call_info (const osip_message_t * sip, int pos,
                                   osip_call_info_t ** dest);
 #else
 #define osip_message_get_call_info(sip,pos,dest)          osip_message_header_get_byname(( osip_message_t *)sip,(const char *)"call-info",pos,(osip_header_t **)dest)
 #endif
+*/
 /**
  * Set the Contact header.
  * @param sip The element to work on.
@@ -393,12 +395,14 @@ extern "C"
  * @param pos The index of the element to get.
  * @param dest A pointer on the header found.
  */
+ /*
 #ifndef MINISIZE
   int osip_message_get_error_info (const osip_message_t * sip, int pos,
                                    osip_error_info_t ** dest);
 #else
 #define osip_message_get_error_info(sip,pos,dest)          osip_message_header_get_byname(( osip_message_t *)sip,(const char *)"error-info",pos,(osip_header_t **)dest)
 #endif
+*/
 /**
  * Set the From header.
  * @param sip The element to work on.

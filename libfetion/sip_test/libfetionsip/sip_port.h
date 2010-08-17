@@ -72,6 +72,16 @@ extern "C"
     unsigned long
     osip_hash (const char *str);
 
+    void *
+    osip_malloc (size_t size);
+
+    void
+    osip_free (void *ptr);
+
+    char *
+    osip_strncpy (char *dest, const char *src, size_t length);
+
+
 #ifdef __cplusplus
 }
 #endif

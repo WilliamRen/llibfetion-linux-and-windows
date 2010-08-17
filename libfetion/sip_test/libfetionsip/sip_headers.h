@@ -42,7 +42,7 @@
 #include "sip_content_length.h"
 #include "sip_content_type.h"
 #include "sip_cseq.h"
-#include "sip_error_info.h"
+//#include "sip_error_info.h"
 #include "sip_from.h"
 #include "sip_mime_version.h"
 //#include "sip_proxy_authenticate.h"
