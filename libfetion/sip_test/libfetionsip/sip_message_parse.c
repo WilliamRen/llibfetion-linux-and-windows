@@ -154,7 +154,8 @@ __osip_message_startline_parsereq (osip_message_t * dest, const char *buf,
 
     osip_strncpy (dest->sip_version, p1 + 1, (hp - p1 - 1));
 
-    if (0 != osip_strcasecmp (dest->sip_version, "SIP/2.0"))
+    /*if (0 != osip_strcasecmp (dest->sip_version, "SIP/2.0")) modified by programmeboy*/
+    if (0 != osip_strcasecmp (dest->sip_version, "SIP-C/4.0"))
       {
         OSIP_TRACE (osip_trace
                     (__FILE__, __LINE__, OSIP_ERROR, NULL,
@@ -244,7 +245,8 @@ __osip_message_startline_parse (osip_message_t * dest, const char *buf,
                                 const char **headers)
 {
 
-  if (0 == strncmp ((const char *) buf, (const char *) "SIP/", 4))
+  /*if (0 == strncmp ((const char *) buf, (const char *) "SIP/", 4)) modified by programmeboy*/
+  if (0 == strncmp ((const char *) buf, (const char *) "SIP-C/", 6))
     return __osip_message_startline_parseresp (dest, buf, headers);
   else
     return __osip_message_startline_parsereq (dest, buf, headers);
@@ -466,7 +468,7 @@ osip_message_set_multiple_header (osip_message_t * sip, char *hname, char *hvalu
   size_t hname_len;
 
   /* Find header based upon lowercase comparison */
-  osip_tolower (hname);
+  //osip_tolower (hname);
 
   if (hvalue == NULL)
     {
@@ -481,7 +483,7 @@ osip_message_set_multiple_header (osip_message_t * sip, char *hname, char *hvalu
 
   hname_len = strlen (hname);
 
-  if (comma == NULL
+  /*if (comma == NULL
       || (hname_len == 4 && strncmp (hname, "date", 4) == 0)
       || (hname_len == 2 && strncmp (hname, "to", 2) == 0)
       || (hname_len == 4 && strncmp (hname, "from", 4) == 0)
@@ -498,7 +500,16 @@ osip_message_set_multiple_header (osip_message_t * sip, char *hname, char *hvalu
       || (hname_len == 25
           && strncmp (hname, "proxy-authentication-info", 25) == 0)
       || (hname_len == 12 && strncmp (hname, "organization", 12) == 0)
-      || (hname_len == 13 && strncmp (hname, "authorization", 13) == 0))
+      || (hname_len == 13 && strncmp (hname, "authorization", 13) == 0))*/
+     if (comma == NULL
+      || (hname_len == 1 && strncmp (hname, "T", 1) == 0)
+      || (hname_len == 1 && strncmp (hname, "F", 1) == 0)
+      || (hname_len == 1 && strncmp (hname, "I", 1) == 0)
+      || (hname_len == 1 && strncmp (hname, "Q", 1) == 0)
+      || (hname_len == 1 && strncmp (hname, "S", 1) == 0)
+      || (hname_len == 1 && strncmp (hname, "X", 1) == 0)
+      || (hname_len == 1 && strncmp (hname, "W", 1) == 0)
+      || (hname_len == 1 && strncmp (hname, "A", 1) == 0))
     /* there is no multiple header! likely      */
     /* to happen most of the time...            */
     /* or hname is a TEXT-UTF8-TRIM and may     */

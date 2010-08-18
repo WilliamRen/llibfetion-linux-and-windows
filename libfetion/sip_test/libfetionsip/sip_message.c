@@ -27,6 +27,7 @@
 /* enable logging of memory accesses */
 
 const char *osip_protocol_version = "SIP/2.0";
+const char *osip_protocol_version_china_mobile = "SIP-C/4.0";
 
 
 int
@@ -63,6 +64,7 @@ osip_message_init (osip_message_t ** sip)
   osip_list_init (&(*sip)->error_infos);
 #endif
   (*sip)->from = NULL;
+  (*sip)->cn = NULL;
   (*sip)->mime_version = NULL;
 //  osip_list_init (&(*sip)->proxy_authenticates);
 #ifndef MINISIZE
@@ -133,21 +135,21 @@ osip_message_free (osip_message_t * sip)
 /*
 #ifndef MINISIZE
   osip_list_special_free(&sip->accepts, (void *(*)(void *)) &osip_accept_free);
-#endif
-*/
+#endif*/
+
   osip_list_special_free(&sip->authorizations, (void *(*)(void *)) &osip_authorization_free);
   if (sip->call_id != NULL)
       osip_call_id_free (sip->call_id);
 #ifndef MINISIZE
-//  osip_list_special_free(&sip->accept_encodings, (void *(*)(void *)) &osip_accept_encoding_free);
-//  osip_list_special_free(&sip->accept_languages, (void *(*)(void *)) &osip_accept_language_free);
-//  osip_list_special_free(&sip->alert_infos, (void *(*)(void *)) &osip_alert_info_free);
-//  osip_list_special_free(&sip->allows, (void *(*)(void *)) &osip_allow_free);
-//  osip_list_special_free(&sip->authentication_infos, (void *(*)(void *)) &osip_authentication_info_free);
-//  osip_list_special_free(&sip->call_infos, (void *(*)(void *)) &osip_call_info_free);
-//  osip_list_special_free(&sip->content_encodings, (void *(*)(void *)) &osip_content_encoding_free);
-//  osip_list_special_free(&sip->error_infos, (void *(*)(void *)) &osip_error_info_free);
-//  osip_list_special_free(&sip->proxy_authentication_infos, (void *(*)(void *)) &osip_proxy_authentication_info_free);
+ // osip_list_special_free(&sip->accept_encodings, (void *(*)(void *)) &osip_accept_encoding_free);
+ // osip_list_special_free(&sip->accept_languages, (void *(*)(void *)) &osip_accept_language_free);
+ // osip_list_special_free(&sip->alert_infos, (void *(*)(void *)) &osip_alert_info_free);
+ // osip_list_special_free(&sip->allows, (void *(*)(void *)) &osip_allow_free);
+ // osip_list_special_free(&sip->authentication_infos, (void *(*)(void *)) &osip_authentication_info_free);
+ // osip_list_special_free(&sip->call_infos, (void *(*)(void *)) &osip_call_info_free);
+ // osip_list_special_free(&sip->content_encodings, (void *(*)(void *)) &osip_content_encoding_free);
+ // osip_list_special_free(&sip->error_infos, (void *(*)(void *)) &osip_error_info_free);
+ // osip_list_special_free(&sip->proxy_authentication_infos, (void *(*)(void *)) &osip_proxy_authentication_info_free);
 #endif
   osip_list_special_free(&sip->contacts, (void *(*)(void *)) &osip_contact_free);
   if (sip->content_length != NULL)
@@ -160,10 +162,10 @@ osip_message_free (osip_message_t * sip)
       osip_from_free (sip->from);
   if (sip->mime_version != NULL)
       osip_mime_version_free (sip->mime_version);
-//  osip_list_special_free(&sip->proxy_authenticates, (void *(*)(void *)) &osip_proxy_authenticate_free);
-//  osip_list_special_free(&sip->proxy_authorizations, (void *(*)(void *)) &osip_proxy_authorization_free);
-//  osip_list_special_free(&sip->record_routes, (void *(*)(void *)) &osip_record_route_free);
-//  osip_list_special_free(&sip->routes, (void *(*)(void *)) &osip_route_free);
+ // osip_list_special_free(&sip->proxy_authenticates, (void *(*)(void *)) &osip_proxy_authenticate_free);
+ // osip_list_special_free(&sip->proxy_authorizations, (void *(*)(void *)) &osip_proxy_authorization_free);
+ // osip_list_special_free(&sip->record_routes, (void *(*)(void *)) &osip_record_route_free);
+ // osip_list_special_free(&sip->routes, (void *(*)(void *)) &osip_route_free);
   if (sip->to != NULL)
       osip_to_free (sip->to);
   osip_list_special_free(&sip->vias, (void *(*)(void *)) &osip_via_free);

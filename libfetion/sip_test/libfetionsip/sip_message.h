@@ -99,6 +99,7 @@ extern "C"
     osip_list_t www_authenticates;   /**< WWW-Authenticate headers */
 
     osip_list_t headers;             /**< Other headers */
+    osip_cn_t *cn;
 
     osip_list_t bodies;              /**< List of attachements */
 

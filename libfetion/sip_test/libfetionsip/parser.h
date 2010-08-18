@@ -27,6 +27,8 @@
 #define NUMBER_OF_HEADERS 22
 #endif
 
+#define NUMBER_OF_HEADERS_C 13
+
 /* internal type for parser's config */
 typedef struct ___osip_message_config_t
 {

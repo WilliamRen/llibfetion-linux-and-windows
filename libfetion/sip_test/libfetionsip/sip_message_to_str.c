@@ -517,12 +517,14 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
     table[15] =
 #endif
 	{
-	  { "Via: ", 5, NULL, NULL,
+	  /*{ "Via: ", 5, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_via_to_str },
-/*	  { "Record-Route: ", 14, NULL, NULL,
-	    (int (*)(void *, char **)) &osip_record_route_to_str },*/
-/*	  { "Route: ", 7, NULL, NULL,
-	    (int (*)(void *, char **)) &osip_route_to_str },*/
+	  { "Record-Route: ", 14, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_record_route_to_str },
+	  { "Route: ", 7, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_route_to_str },
+      { "Via: ", 5, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_via_to_str },
 	  { "From: ", 6, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_from_to_str },
 	  { "To: ", 4, NULL, NULL,
@@ -537,16 +539,16 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
 	    (int (*)(void *, char **)) &osip_authorization_to_str },
 	  { "WWW-Authenticate: ", 18, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_www_authenticate_to_str },
-/*	  { "Proxy-Authenticate: ", 20, NULL, NULL,
+	  { "Proxy-Authenticate: ", 20, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_www_authenticate_to_str },
 	  { "Proxy-Authorization: ", 21, NULL, NULL,
-	    (int (*)(void *, char **)) &osip_authorization_to_str },*/
+	    (int (*)(void *, char **)) &osip_authorization_to_str },
 	  { "Content-Type: ", 14, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_content_type_to_str },
 	  { "Mime-Version: ", 14, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_content_length_to_str },
 #ifndef MINISIZE
-/*	  { "Allow: ", 7, NULL, NULL,
+	  { "Allow: ", 7, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_allow_to_str },
 	  { "Content-Encoding: ", 18, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_content_encoding_to_str },
@@ -566,40 +568,89 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
 	    (int (*)(void *, char **)) &osip_authentication_info_to_str },
 	  { "Proxy-Authentication-Info: ", 27, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_authentication_info_to_str },*/
+	  /*{ "Record-Route: ", 14, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_record_route_to_str },
+	  { "Route: ", 7, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_route_to_str },*/
+      { "V: ", 3, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_via_to_str },
+	  { "F: ", 3, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_from_to_str },
+	  { "T: ", 3, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_to_to_str },
+	  { "I: ", 3, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_call_id_to_str },
+	  { "Q: ", 3, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_cseq_to_str },
+	  { "M: ", 3, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_contact_to_str },
+	  { "A: ", 3, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_authorization_to_str },
+	  { "W: ", 3, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_www_authenticate_to_str },
+	  /*{ "Proxy-Authenticate: ", 20, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_www_authenticate_to_str },
+	  { "Proxy-Authorization: ", 21, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_authorization_to_str },*/
+	  { "C: ", 3, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_content_type_to_str },
+	  { "Mime-Version: ", 14, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_content_length_to_str },
+#ifndef MINISIZE
+	  /*{ "Allow: ", 7, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_allow_to_str },*/
+	  { "E: ", 3, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_content_encoding_to_str },
+	  /*{ "Call-Info: ", 11, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_call_info_to_str },
+	  { "Alert-Info: ", 12, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_call_info_to_str },
+	  { "Error-Info: ", 12, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_call_info_to_str },
+	  { "Accept: ", 8, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_accept_to_str },
+	  { "Accept-Encoding: ", 17, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_accept_encoding_to_str },
+	  { "Accept-Language: ", 17, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_accept_language_to_str },
+	  { "Authentication-Info: ", 21, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_authentication_info_to_str },
+	  { "Proxy-Authentication-Info: ", 27, NULL, NULL,
+	    (int (*)(void *, char **)) &osip_authentication_info_to_str },*/
 #endif
 	  { { '\0' }, 0, NULL, NULL, NULL }
 	};
     table[0].header_list = &sip->vias;
-    table[1].header_list = &sip->record_routes;
-    table[2].header_list = &sip->routes;
-    table[3].header_data = sip->from;
-    table[4].header_data = sip->to;
-    table[5].header_data = sip->call_id;
-    table[6].header_data = sip->cseq;
-    table[7].header_list = &sip->contacts;
-    table[8].header_list = &sip->authorizations;
-    table[9].header_list = &sip->www_authenticates;
-    table[10].header_list = &sip->proxy_authenticates;
-    table[11].header_list = &sip->proxy_authorizations;
-    table[12].header_data = sip->content_type;
-    table[13].header_data = sip->mime_version;
+    //table[1].header_list = &sip->record_routes;
+    //table[2].header_list = &sip->routes;
+    table[1].header_data = sip->from;
+    table[2].header_data = sip->to;
+    table[3].header_data = sip->call_id;
+    table[4].header_data = sip->cseq;
+    table[5].header_list = &sip->contacts;
+    table[6].header_list = &sip->authorizations;
+    table[7].header_list = &sip->www_authenticates;
+    //table[10].header_list = &sip->proxy_authenticates;
+    //table[11].header_list = &sip->proxy_authorizations;
+    table[8].header_data = sip->content_type;
+    table[9].header_data = sip->mime_version;
 #ifndef MINISIZE
-    table[14].header_list = &sip->allows;
-    table[15].header_list = &sip->content_encodings;
-    table[16].header_list = &sip->call_infos;
-    table[17].header_list = &sip->alert_infos;
-    table[18].header_list = &sip->error_infos;
-    table[19].header_list = &sip->accepts;
-    table[20].header_list = &sip->accept_encodings;
-    table[21].header_list = &sip->accept_languages;
-    table[22].header_list = &sip->authentication_infos;
-    table[23].header_list = &sip->proxy_authentication_infos;
+    //table[14].header_list = &sip->allows;
+    table[10].header_list = &sip->content_encodings;
+    //table[16].header_list = &sip->call_infos;
+    //table[17].header_list = &sip->alert_infos;
+    //table[18].header_list = &sip->error_infos;
+    //table[19].header_list = &sip->accepts;
+    //table[20].header_list = &sip->accept_encodings;
+    //table[21].header_list = &sip->accept_languages;
+    //table[22].header_list = &sip->authentication_infos;
+    //table[23].header_list = &sip->proxy_authentication_infos;
 #endif
 
     pos = 0;
     while (table[pos].header_name[0]!='\0')
       {
-	if (table[13].header_list==NULL)
+	if (table[9].header_list==NULL)
 	  i = strcat_simple_header (dest, &malloc_size, &message,
 				    table[pos].header_data,
 				    table[pos].header_name,
@@ -678,8 +729,9 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
       return OSIP_SUCCESS;                 /* it's all done */
     }
 
-  osip_strncpy (message, "Content-Length: ", 16);
-  message = message + 16;
+  /*osip_strncpy (message, "Content-Length: ", 16);modified by programmeboy*/
+  osip_strncpy (message, "L: ", 3);
+  message = message + 3;
 
   /* SIPit Day1
      ALWAYS RECALCULATE?

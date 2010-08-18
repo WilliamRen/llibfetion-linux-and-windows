@@ -59,7 +59,7 @@
 #define SIPDATE			        "date"
 #define ERROR_INFO		        "error-info"
 
-//#define EXPIRES			        "expires"
+//#define EXPIRES			    "expires"
 #define  EXPIRES                "X"
 
 /*modify by SIP2.0-c*/
@@ -113,6 +113,11 @@
 //#define WWW_AUTHENTICATE	    "www-authenticate"
 #define WWW_AUTHENTICATE        "W"
 
+/*
+ *  SIP-C add
+ */
+
+#define CNONCE                  "CN"
 
 #define RESPONSE_CODES 51
 

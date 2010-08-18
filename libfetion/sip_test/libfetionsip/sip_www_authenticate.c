@@ -654,7 +654,12 @@ osip_www_authenticate_free (osip_www_authenticate_t * www_authenticate)
   osip_free (www_authenticate->stale);
   osip_free (www_authenticate->algorithm);
   osip_free (www_authenticate->qop_options);
+  /***************add by programmeboy**************/
 
+  osip_free (www_authenticate->key);
+  osip_free (www_authenticate->signature);
+
+  /**************add end**************************/
   osip_free (www_authenticate);
 }
 

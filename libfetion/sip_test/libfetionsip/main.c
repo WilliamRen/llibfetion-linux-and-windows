@@ -9,6 +9,15 @@
 #define TEST_W "Digest algorithm=\"SHA1-sess-v4\",nonce=\"660702E04DB7BC69666436271C4D9F7B\",key=\"AD3D7038\",signature=\"D528EC02689AD6D4656CC\""
 #define TEST_URL "sip:588955498@fetion.com.cn;p=737"
 #define TEST_FORM "15565345"
+#define TEST_TO "sip:588955498@fetion.com.cn;p=737"
+#define TEST_CALL_ID "12"
+
+#define TEST_MESSAGE  "SIP-C/4.0 401 Unauthoried\r\n"\
+                      "F: 879534138\r\n"\
+                      "I: 1\r\n"\
+                      "Q: 1 R\r\n"\
+                      "W: Digest algorithm=\"SHA1-sess-v4\",nonce=\"660702E04DB7BC69666436271C4D9F7B\",key=\"AD3D7038\",signature=\"D528E11\"\r\n"\
+                      "\r\n\r\n"
 int main()
 {
     /* test for "A"
@@ -70,23 +79,78 @@ int main()
     }
     */
 
+    /*TEST for "F\CN"
     char sz[] = TEST_FORM;
     char* sz_str = NULL;
 
-    osip_from_t* p_sipauth = NULL;
-    osip_from_init( &p_sipauth );
+    osip_from_c_t* p_sipauth = NULL;
+    osip_from_init_c( &p_sipauth );
 
-    osip_from_parse( p_sipauth, sz );
+    osip_from_parse_c( p_sipauth, sz );
 
-    //printf( "scheme %s\n", p_sipauth->scheme );
-    //printf( "username %s\n", p_sipauth->username );
-    //printf( "password %s\n", p_sipauth->password );
+    printf( "uid %s\n", p_sipauth->uid );
+
+    if( OSIP_SUCCESS == osip_from_to_str_c( p_sipauth, &sz_str )){
+        printf( "str = %s\n", sz_str );
+        osip_free( sz_str );
+    }*/
+    /*TEST "T"
+    char sz[] = TEST_TO;
+    char* sz_str = NULL;
+
+    osip_to_t* p_sipauth = NULL;
+    osip_to_init( &p_sipauth );
+
+    osip_to_parse( p_sipauth, sz );
+
+    printf( "display name %s\n", p_sipauth->displayname );
+    printf( "scheme %s\n", p_sipauth->url->scheme );
+    printf( "username %s\n", p_sipauth->url->username );
+    printf( "password %s\n", p_sipauth->url->password );
+    printf( "host %s\n", p_sipauth->url->host );
+    printf( "port %s\n", p_sipauth->url->port );
+
+
+    if( OSIP_SUCCESS == osip_to_to_str( p_sipauth, &sz_str )){
+        printf( "str = %s\n", sz_str );
+        osip_free( sz_str );
+    }*/
+
+    /*TEST "I"
+    char sz[] = TEST_CALL_ID;
+    char* sz_str = NULL;
+
+    osip_call_id_t* p_sipauth = NULL;
+    osip_call_id_init( &p_sipauth );
+
+    osip_call_id_parse( p_sipauth, sz );
+
+    printf( "number %s\n", p_sipauth->number );
+    printf( "host %s\n", p_sipauth->host );
+
+    if( OSIP_SUCCESS == osip_call_id_to_str( p_sipauth, &sz_str )){
+        printf( "str = %s\n", sz_str );
+        osip_free( sz_str );
+    }*/
+
+    char sz[] = TEST_MESSAGE;
+    char* sz_str = NULL;
+    size_t len = 0;
+
+    parser_init();
+
+    osip_message_t* p_sipauth = NULL;
+    osip_message_init( &p_sipauth );
+
+    osip_message_parse( p_sipauth, sz, strlen(TEST_MESSAGE) );
+
+    //printf( "number %s\n", p_sipauth->number );
     //printf( "host %s\n", p_sipauth->host );
-    printf( "displayname %s\n", p_sipauth->displayname );
 
-    if( OSIP_SUCCESS == osip_from_to_str( p_sipauth, &sz_str )){
+    if( OSIP_SUCCESS == osip_message_to_str( p_sipauth, &sz_str, &len )){
         printf( "str = %s\n", sz_str );
         osip_free( sz_str );
     }
+
     return 0;
 }

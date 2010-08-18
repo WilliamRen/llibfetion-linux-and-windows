@@ -47,11 +47,19 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="sip_call_id.h" />
+		<Unit filename="sip_cn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sip_cn.h" />
 		<Unit filename="sip_const.h" />
 		<Unit filename="sip_contact.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="sip_contact.h" />
+		<Unit filename="sip_content_encoding.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sip_content_encoding.h" />
 		<Unit filename="sip_content_length.c">
 			<Option compilerVar="CC" />
 		</Unit>

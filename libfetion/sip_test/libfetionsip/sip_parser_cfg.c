@@ -23,7 +23,9 @@
 #include "sip_parser.h"
 #include "parser.h"
 
-static __osip_message_config_t pconfig[NUMBER_OF_HEADERS];
+/*
+static __osip_message_config_t pconfig[NUMBER_OF_HEADERS]; modified by programmeboy*/
+static __osip_message_config_t pconfig[NUMBER_OF_HEADERS_C];
 
 /* The size of the hash table seems large for a limited number of possible entries
  * The 'problem' is that the header name are too much alike for the osip_hash() function
@@ -115,10 +117,10 @@ parser_init (void)
   pconfig[i].ignored_when_invalid = 0;
   pconfig[i++].setheader = (&osip_message_set_cseq);
 #ifndef MINISIZE
-/*  pconfig[i].hname = CONTENT_ENCODING_SHORT;
+  pconfig[i].hname = CONTENT_ENCODING;
   pconfig[i].ignored_when_invalid = 1;
   pconfig[i++].setheader = (&osip_message_set_content_encoding);
-  pconfig[i].hname = ERROR_INFO;
+/*pconfig[i].hname = ERROR_INFO;
   pconfig[i].ignored_when_invalid = 1;
   pconfig[i++].setheader = (&osip_message_set_error_info);*/
 #endif
@@ -127,7 +129,10 @@ parser_init (void)
   pconfig[i++].setheader = (&osip_message_set_from);*/
   pconfig[i].hname = FROM;
   pconfig[i].ignored_when_invalid = 0;
-  pconfig[i++].setheader = (&osip_message_set_from);
+  pconfig[i++].setheader = (&osip_message_set_from_c);
+  pconfig[i].hname = CNONCE;
+  pconfig[i].ignored_when_invalid = 0;
+  pconfig[i++].setheader = (&osip_message_set_cn);
  /* pconfig[i].hname = CALL_ID_SHORT;
   pconfig[i].ignored_when_invalid = 0;
   pconfig[i++].setheader = (&osip_message_set_call_id);
@@ -181,7 +186,8 @@ parser_init (void)
       hdr_ref_table[i] = -1;    /* -1 -> no entry */
     }
 
-  for (i = 0; i < NUMBER_OF_HEADERS; i++)
+  /*for (i = 0; i < NUMBER_OF_HEADERS; i++) modified by programmeboy*/
+    for (i = 0; i < NUMBER_OF_HEADERS_C; i++)
     {
       unsigned int hash;
 

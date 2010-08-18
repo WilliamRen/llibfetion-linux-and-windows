@@ -312,27 +312,27 @@ extern "C"
  * @param sip The element to work on.
  * @param hvalue The string describing the element.
  */
- /*
+
 #ifndef MINISIZE
   int osip_message_set_content_encoding (osip_message_t * sip, const char *hvalue);
 #else
 #define osip_message_set_content_encoding(sip,value)            osip_message_set_header((osip_message_t *)sip,(const char *)"Content-Encoding",value)
 #endif
-*/
+
 /**
  * Get one Content-encoding header.
  * @param sip The element to work on.
  * @param pos The index of the element to get.
  * @param dest A pointer on the header found.
  */
- /*
+
 #ifndef MINISIZE
   int osip_message_get_content_encoding (const osip_message_t * sip, int pos,
                                          osip_content_encoding_t ** dest);
 #else
 #define osip_message_get_content_encoding(sip,pos,dest)          osip_message_header_get_byname(( osip_message_t *)sip,(const char *)"content-encoding",pos,(osip_header_t **)dest)
 #endif
-*/
+
 /**
  * Set the Content-length header.
  * @param sip The element to work on.
@@ -414,10 +414,34 @@ extern "C"
  * @param sip The element to work on.
  */
 #ifndef MINISIZE
+
+  /*
+   *  modified by programmeboy
+   */
+
   osip_from_t *osip_message_get_from (const osip_message_t * sip);
+  osip_from_c_t *osip_message_get_from_c (const osip_message_t * sip);
+  int osip_message_set_from_c(osip_message_t * sip, const char *hvalue);
+
 #else
 #define osip_message_get_from(sip)   ((sip)->from)
+#define osip_message_get_from_c(sip)   ((sip)->from)
 #endif
+
+/*
+ *  add by programmeboy
+ */
+
+/**************************************************************/
+
+int
+osip_message_set_cn (osip_message_t * sip, const char *hvalue);
+
+osip_cn_t *
+osip_message_get_cn (const osip_message_t * sip);
+
+/**************************************************************/
+
 /**
  * Set the mime-version header.
  * @param sip The element to work on.
