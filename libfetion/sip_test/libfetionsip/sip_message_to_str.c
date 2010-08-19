@@ -512,9 +512,9 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
       int (*to_str) (void *, char **);
     }
 #ifndef MINISIZE
-    table[25] =
+    table[13] =
 #else
-    table[15] =
+    table[13] =
 #endif
 	{
 	  /*{ "Via: ", 5, NULL, NULL,
@@ -575,7 +575,7 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
       { "V: ", 3, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_via_to_str },
 	  { "F: ", 3, NULL, NULL,
-	    (int (*)(void *, char **)) &osip_from_to_str },
+	    (int (*)(void *, char **)) &osip_from_to_str_c },
 	  { "T: ", 3, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_to_to_str },
 	  { "I: ", 3, NULL, NULL,
@@ -586,6 +586,8 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
 	    (int (*)(void *, char **)) &osip_contact_to_str },
 	  { "A: ", 3, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_authorization_to_str },
+      { "CN: ", 4, NULL, NULL,
+        (int (*)(void *, char **)) &osip_cn_to_str },
 	  { "W: ", 3, NULL, NULL,
 	    (int (*)(void *, char **)) &osip_www_authenticate_to_str },
 	  /*{ "Proxy-Authenticate: ", 20, NULL, NULL,
@@ -629,14 +631,15 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
     table[4].header_data = sip->cseq;
     table[5].header_list = &sip->contacts;
     table[6].header_list = &sip->authorizations;
-    table[7].header_list = &sip->www_authenticates;
+    table[7].header_data = sip->cn;
+    table[8].header_list = &sip->www_authenticates;
     //table[10].header_list = &sip->proxy_authenticates;
     //table[11].header_list = &sip->proxy_authorizations;
-    table[8].header_data = sip->content_type;
-    table[9].header_data = sip->mime_version;
+    table[9].header_data = sip->content_type;
+    table[10].header_data = sip->mime_version;
 #ifndef MINISIZE
     //table[14].header_list = &sip->allows;
-    table[10].header_list = &sip->content_encodings;
+    table[11].header_list = &sip->content_encodings;
     //table[16].header_list = &sip->call_infos;
     //table[17].header_list = &sip->alert_infos;
     //table[18].header_list = &sip->error_infos;
@@ -650,7 +653,7 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
     pos = 0;
     while (table[pos].header_name[0]!='\0')
       {
-	if (table[9].header_list==NULL)
+	if (table[10].header_list==NULL)
 	  i = strcat_simple_header (dest, &malloc_size, &message,
 				    table[pos].header_data,
 				    table[pos].header_name,
@@ -713,7 +716,8 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
   if (_osip_message_realloc (&message, dest, 16, &malloc_size) < 0)
     return OSIP_NOMEM;
 
-  if (sipfrag && osip_list_eol (&sip->bodies, 0))
+  /*if (sipfrag && osip_list_eol (&sip->bodies, 0))*/
+  if (sipfrag && sip->bodies == NULL)
     {
       /* end of headers */
       osip_strncpy (message, CRLF, 2);
@@ -748,7 +752,8 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
      }
      else
      { */
-  if (osip_list_eol (&sip->bodies, 0))   /* no body */
+  /*if (osip_list_eol (&sip->bodies, 0)) modified by programmeboy*/   /* no body */
+  if( sip->bodies == NULL )
     message = osip_strn_append (message, "0", 1);
   else
     {
@@ -774,7 +779,8 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
   start_of_bodies = message;
   total_length = start_of_bodies - *dest;
 
-  if (osip_list_eol (&sip->bodies, 0))
+  /*if (osip_list_eol (&sip->bodies, 0))*/
+    if(sip->bodies == NULL)
     {
       /* same remark as at the beginning of the method */
       sip->message_property = 1;
@@ -785,14 +791,22 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
 
       return OSIP_SUCCESS;                 /* it's all done */
     }
+    {
+        size_t len = 0;
+        char* sz_body;
+        int i = 0;
+        i = osip_body_to_str_c( sip->bodies, &sz_body, &len );
+        message = osip_strn_append( message, sz_body. len );
 
+    }
+
+ /*
   if (sip->mime_version != NULL && sip->content_type
       && sip->content_type->type
       && !osip_strcasecmp (sip->content_type->type, "multipart"))
     {
       osip_generic_param_t *ct_param = NULL;
 
-      /* find the boundary */
       i = osip_generic_param_get_byname (&sip->content_type->gen_params,
                                          "boundary", &ct_param);
       if ((i >= 0) && ct_param && ct_param->gvalue)
@@ -834,8 +848,6 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
 
       if (boundary)
         {
-          /* Needs at most 77 bytes,
-             last realloc allocate at least 100 bytes extra */
           message = osip_str_append (message, boundary);
           message = osip_strn_append (message, CRLF, 2);
         }
@@ -864,7 +876,7 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
           *dest = osip_realloc (*dest, malloc_size);
           if (*dest == NULL)
             {
-              osip_free (tmp);  /* fixed 09/Jun/2005 */
+              osip_free (tmp);
               if (boundary)
                 osip_free (boundary);
               return OSIP_NOMEM;
@@ -885,8 +897,6 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
 
   if (boundary)
     {
-      /* Needs at most 79 bytes,
-         last realloc allocate at least 100 bytes extra */
       message = osip_str_append (message, boundary);
       message = osip_strn_append (message, "--", 2);
       message = osip_strn_append (message, CRLF, 2);
@@ -902,18 +912,15 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
       return OSIP_SYNTAXERROR;
     }
 
-  /* we NOW have the length of bodies: */
   {
     size_t size = message - start_of_bodies;
     char tmp2[15];
 
     total_length += size;
     sprintf (tmp2, "%i", size);
-    /* do not use osip_strncpy here! */
     strncpy (content_length_to_modify + 5 - strlen (tmp2), tmp2, strlen (tmp2));
   }
 
-  /* same remark as at the beginning of the method */
   sip->message_property = 1;
   sip->message = osip_malloc (total_length + 1);
   if (sip->message != NULL)
@@ -923,7 +930,7 @@ _osip_message_to_str (osip_message_t * sip, char **dest,
       sip->message_length = total_length;
       if (message_length != NULL)
         *message_length = total_length;
-    }
+    }*/
   return OSIP_SUCCESS;
 }
 

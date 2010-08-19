@@ -101,8 +101,8 @@ extern "C"
     osip_list_t headers;             /**< Other headers */
     osip_cn_t *cn;
 
-    osip_list_t bodies;              /**< List of attachements */
-
+    /*osip_list_t bodies;*/              /**< List of attachements */
+    osip_body_c_t *bodies;
     /*
        1: structure and buffer "message" are identical.
        2: buffer "message" is not up to date with the structure info (call osip_message_to_str to update it).

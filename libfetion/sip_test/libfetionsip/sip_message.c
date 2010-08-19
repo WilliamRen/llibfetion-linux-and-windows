@@ -77,7 +77,9 @@ osip_message_init (osip_message_t ** sip)
   osip_list_init (&(*sip)->vias);
   osip_list_init (&(*sip)->www_authenticates);
 
-  osip_list_init (&(*sip)->bodies);
+  /*modified by programmeboy*/
+  //osip_list_init (&(*sip)->bodies);
+  (*sip)->bodies = NULL;
 
   osip_list_init (&(*sip)->headers);
 
@@ -171,7 +173,10 @@ osip_message_free (osip_message_t * sip)
   osip_list_special_free(&sip->vias, (void *(*)(void *)) &osip_via_free);
   osip_list_special_free(&sip->www_authenticates, (void *(*)(void *)) &osip_www_authenticate_free);
   osip_list_special_free(&sip->headers, (void *(*)(void *)) &osip_header_free);
-  osip_list_special_free(&sip->bodies, (void *(*)(void *)) &osip_body_free);
+/*modified by programmebpy*/
+//  osip_list_special_free(&sip->bodies, (void *(*)(void *)) &osip_body_free);
+  if(sip->bodies != NULL)
+    osip_body_free_c( sip->bodies );
   osip_free (sip->message);
   osip_free (sip);
 }

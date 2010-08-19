@@ -53,6 +53,12 @@ struct osip_body
   osip_content_type_t *content_type; /**< Content-Type (when mime is used) */
 };
 
+typedef struct osip_body_c osip_body_c_t;
+struct osip_body_c
+{
+  char *body;                        /**< buffer containing data */
+  size_t length;                     /**< length of data */
+};
 
 #ifdef __cplusplus
 extern "C"
@@ -112,6 +118,19 @@ extern "C"
  */
   int osip_body_set_header (osip_body_t * body, const char *hname,
                             const char *hvalue);
+
+
+/*
+ *  add by programmeboy
+ */
+
+ int osip_body_init_c (osip_body_c_t ** body);
+ void osip_body_free_c (osip_body_c_t * body);
+ int osip_body_parse_c (osip_body_c_t * body, const char *buf, size_t length);
+ int osip_body_to_str_c (const osip_body_c_t * body, char **dest, size_t * length);
+
+int
+osip_message_set_body_c (osip_message_t * sip, const char *buf, size_t length);
 
 #ifdef __cplusplus
 }

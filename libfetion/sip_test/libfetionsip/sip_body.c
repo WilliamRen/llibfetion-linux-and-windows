@@ -484,3 +484,73 @@ osip_body_free (osip_body_t * body)
   osip_free (body->headers);
   osip_free (body);
 }
+
+/*
+ *  add by programmeboy
+ */
+
+ int osip_body_init_c (osip_body_c_t ** body)
+ {
+  *body = (osip_body_c_t *) osip_malloc (sizeof (osip_body_c_t));
+  if (*body == NULL)
+    return OSIP_NOMEM;
+  (*body)->body = NULL;
+  (*body)->length = 0;
+
+  return OSIP_SUCCESS;
+ }
+ void osip_body_free_c (osip_body_c_t * body)
+ {
+  if (body == NULL)
+    return;
+
+  osip_free (body->body);
+
+  osip_free (body);
+ }
+ int osip_body_parse_c (osip_body_c_t * body, const char *buf, size_t length)
+ {
+  if( body == NULL || buf == NULL || buf[0] == '\0' )
+    return OSIP_BADPARAMETER;
+  size_t n_len = strlen( buf );
+  body->body = (char*)osip_malloc( n_len + 1 );
+  memset( body->body, 0, n_len + 1 );
+  osip_strncpy( body->body, buf, n_len );
+  return OSIP_SUCCESS;
+ }
+ int osip_body_to_str_c (const osip_body_c_t * body, char **dest, size_t * length)
+ {
+  char *buf;
+  size_t len = 0;
+
+  *dest = NULL;
+  if ((body == NULL) || (body->body== NULL))
+    return OSIP_BADPARAMETER;
+  len = strlen( body->body );
+  buf = (char*)osip_malloc( len + 1 );
+  osip_strncpy( buf, body->body, len);
+  *dest = buf;
+  return OSIP_SUCCESS;
+ }
+
+int
+osip_message_set_body_c (osip_message_t * sip, const char *buf, size_t length)
+{
+  int i;
+  if (buf == NULL || buf[0] == '\0')
+    return OSIP_SUCCESS;
+
+  if (sip->bodies != NULL)
+    return OSIP_SYNTAXERROR;
+  i = osip_body_init_c (&sip->bodies);
+  if (i != 0)
+    return i;
+  i = osip_body_parse_c (sip->bodies, buf, length);
+  if (i != 0)
+    {
+      osip_body_free_c (sip->bodies);
+      return i;
+    }
+  sip->message_property = 2;
+  return OSIP_SUCCESS;
+}

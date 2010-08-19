@@ -509,6 +509,7 @@ osip_message_set_multiple_header (osip_message_t * sip, char *hname, char *hvalu
       || (hname_len == 1 && strncmp (hname, "S", 1) == 0)
       || (hname_len == 1 && strncmp (hname, "X", 1) == 0)
       || (hname_len == 1 && strncmp (hname, "W", 1) == 0)
+      || (hname_len == 2 && strncmp (hname, "CN",2) == 0)
       || (hname_len == 1 && strncmp (hname, "A", 1) == 0))
     /* there is no multiple header! likely      */
     /* to happen most of the time...            */
@@ -761,6 +762,7 @@ msg_osip_body_parse (osip_message_t * sip, const char *start_of_buf,
   const char *start_of_body;
   const char *end_of_body;
   const char *end_of_buf;
+
   char *tmp;
   int i;
 
@@ -768,17 +770,23 @@ msg_osip_body_parse (osip_message_t * sip, const char *start_of_buf,
   size_t len_sep_boundary;
   osip_generic_param_t *ct_param;
 
-  if (sip->content_type == NULL
-      || sip->content_type->type == NULL || sip->content_type->subtype == NULL)
-    return OSIP_SUCCESS;                   /* no body is attached */
+  /*modified by programmeboy
+    if (sip->content_type == NULL
+      || sip->content_type->type == NULL || sip->content_type->subtype == NULL)*/
+    if (sip->content_length == NULL || \
+        sip->content_length[0] == '0' || \
+        (osip_strncasecmp( start_of_buf, "\r\n\r\n" , 4) != NULL)
+    return OSIP_SUCCESS;
 
-  if (0 != osip_strcasecmp (sip->content_type->type, "multipart"))
+    osip_message_set_body_c( sip, (char*)(start_of_buf + 4), length - 4 );
+  /* modified by programmeboy
+    if (0 != osip_strcasecmp (sip->content_type->type, "multipart"))
     {
       size_t osip_body_len;
 
       if (start_of_buf[0] == '\0')
-        return OSIP_SYNTAXERROR;              /* final CRLF is missing */
-      /* get rid of the first CRLF */
+        return OSIP_SYNTAXERROR;
+
       if ('\r' == start_of_buf[0])
         {
           if ('\n' == start_of_buf[1])
@@ -788,10 +796,9 @@ msg_osip_body_parse (osip_message_t * sip, const char *start_of_buf,
       } else if ('\n' == start_of_buf[0])
         start_of_body = start_of_buf + 1;
       else
-        return OSIP_SYNTAXERROR;              /* message does not end with CRLFCRLF, CRCR or LFLF */
+        return OSIP_SYNTAXERROR;
 
-      /* update length (without CRLFCRLF */
-      length = length - (start_of_body - start_of_buf); /* fixed 24 08 2004 */
+      length = length - (start_of_body - start_of_buf);
       if (length <= 0)
         return OSIP_SYNTAXERROR;
 
@@ -799,11 +806,8 @@ msg_osip_body_parse (osip_message_t * sip, const char *start_of_buf,
         osip_body_len = osip_atoi (sip->content_length->value);
       else
         {
-          /* if content_length does not exist, set it. */
           char tmp[16];
 
-          /* case where content-length is missing but the
-             body only contains non-binary data */
           if (0 == osip_strcasecmp (sip->content_type->type, "application")
               && 0 == osip_strcasecmp (sip->content_type->subtype, "sdp"))
             {
@@ -813,7 +817,7 @@ msg_osip_body_parse (osip_message_t * sip, const char *start_of_buf,
               if (i != 0)
                 return i;
           } else
-            return OSIP_SYNTAXERROR;          /* Content-type may be non binary data */
+            return OSIP_SYNTAXERROR;
         }
 
       if (length < osip_body_len)
@@ -839,7 +843,6 @@ msg_osip_body_parse (osip_message_t * sip, const char *start_of_buf,
       return OSIP_SUCCESS;
     }
 
-  /* find the boundary */
   i = osip_generic_param_get_byname (&sip->content_type->gen_params,
                                      "boundary", &ct_param);
   if (i != 0)
@@ -848,7 +851,7 @@ msg_osip_body_parse (osip_message_t * sip, const char *start_of_buf,
   if (ct_param == NULL)
     return OSIP_SYNTAXERROR;
   if (ct_param->gvalue == NULL)
-    return OSIP_SYNTAXERROR;                  /* No boundary but multiple headers??? */
+    return OSIP_SYNTAXERROR;
 
   {
     const char *boundary_prefix = "\n--";
@@ -894,15 +897,12 @@ msg_osip_body_parse (osip_message_t * sip, const char *start_of_buf,
           osip_free (sep_boundary);
           return i;
         }
-
-      /* this is the real beginning of body */
       start_of_body = start_of_body + len_sep_boundary + 1;
       if ('\n' == start_of_body[0] || '\r' == start_of_body[0])
         start_of_body++;
 
       body_len = end_of_body - start_of_body;
 
-      /* Skip CR before end boundary. */
       if (*(end_of_body - 1) == '\r')
         body_len--;
 
@@ -924,15 +924,14 @@ msg_osip_body_parse (osip_message_t * sip, const char *start_of_buf,
         }
 
       if (strncmp (end_of_body + len_sep_boundary, "--", 2) == 0)
-        {                       /* end of all bodies */
+        {
           *next_body = end_of_body;
           osip_free (sep_boundary);
           return OSIP_SUCCESS;
         }
 
-      /* continue on the next body */
       start_of_body = end_of_body;
-    }
+    }*/
   /* Unreachable code */
   /* osip_free (sep_boundary); */
   return OSIP_SYNTAXERROR;

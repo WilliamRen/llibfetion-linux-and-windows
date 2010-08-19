@@ -15,9 +15,12 @@
 #define TEST_MESSAGE  "SIP-C/4.0 401 Unauthoried\r\n"\
                       "F: 879534138\r\n"\
                       "I: 1\r\n"\
+                      "CN: 123456\r\n" \
                       "Q: 1 R\r\n"\
                       "W: Digest algorithm=\"SHA1-sess-v4\",nonce=\"660702E04DB7BC69666436271C4D9F7B\",key=\"AD3D7038\",signature=\"D528E11\"\r\n"\
-                      "\r\n\r\n"
+                      "L: 13\r\n" \
+                      "\r\n\r\n"\
+                      "<test></test>"
 int main()
 {
     /* test for "A"
