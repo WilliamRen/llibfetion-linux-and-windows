@@ -20,7 +20,7 @@
 /*! \file sip_common.h
 	\brief 这个文件中包含了对于具有类似属性method进行处理.
            例如F和T都只有一个element.The method include
-           'F' 'I' 'CN' 'L' 'E'
+           'F' 'I' 'CN' 'L' 'E' 'N'
 
 */
 
@@ -40,6 +40,7 @@ typedef sip_common_t sip_from_t;
 typedef sip_common_t sip_context_length_t;
 typedef sip_common_t sip_context_encode_t;
 typedef sip_common_t sip_expires_t;
+typedef sip_common_t sip_event_t;
 
 /** \fn int sip_common_init( sip_common_t** common )
 	\brief Allocate a common element.

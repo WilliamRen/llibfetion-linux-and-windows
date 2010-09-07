@@ -40,6 +40,7 @@ typedef struct sip_message
     sip_client_t* client;                   /*'CL'*/
     sip_to_t* to;                           /*'T'*/
     sip_expires_t* expires;                 /*'X'*/
+    sip_event_t*   event;                   /*'N'*/
     sip_authorization_t* authorization;     /*'A'*/
     sip_www_authenticate_t* www_authenticate;/*'W'*/
     char* body;

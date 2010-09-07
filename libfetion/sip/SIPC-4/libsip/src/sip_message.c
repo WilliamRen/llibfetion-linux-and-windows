@@ -476,6 +476,37 @@ sip_message_to_str( sip_message_t* message, char** dest )
     return LIBSIP_SUCCESS;
 }
 
+void
+sip_message_free( sip_message_t* message )
+{
+    if ( message->startline )
+    	sip_startline_free( message->startline );
+    if ( message->from )
+        sip_common_free( message->from );
+    if ( message->call_id )
+        sip_common_free( message->call_id );
+    if ( message->cnonce )
+        sip_common_free( message->cnonce );
+    if ( message->context_len )
+        sip_common_free( message->context_len );
+    if ( message->context_encode )
+        sip_common_free( message->context_encode );
+    if ( message->client )
+        sip_client_free( message->client );
+    if ( message->to )
+        sip_to_free( message->to );
+    if ( message->expires )
+        sip_common_free( message->expires );
+    if ( message->event )
+        sip_common_free( message->event );
+    if ( message->authorization )
+        sip_authorization_free( message->authorization );
+    if ( message->www_authenticate )
+        sip_www_authenticate_free( message->www_authenticate );
+    if ( message->body )
+    	sip_free( message->body );
+}
+
 int
 sip_message_parse( sip_message_t* message, const char *value )
 {
@@ -617,7 +648,9 @@ sip_message_parse( sip_message_t* message, const char *value )
             break;
         case 'N':
             {
-
+                n_ret = sip_message_set_common( &(message->event), sz_line + 3 );
+                if( LIBSIP_SUCCESS != n_ret )
+                    return n_ret;
             }
             break;
         case 'E':
