@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="libsip/include/sip.h" open="1" top="0" tabpos="6">
+		<Cursor position="1733" topLine="21" />
+	</File>
+	<File name="libsip/include/sip_authorization.h" open="0" top="0" tabpos="0">
+		<Cursor position="1589" topLine="20" />
+	</File>
+	<File name="libsip/include/sip_common.h" open="1" top="0" tabpos="3">
+		<Cursor position="2308" topLine="53" />
+	</File>
+	<File name="libsip/include/sip_cseq.h" open="0" top="0" tabpos="7">
+		<Cursor position="1419" topLine="0" />
+	</File>
+	<File name="libsip/include/sip_def.h" open="0" top="0" tabpos="5">
+		<Cursor position="1540" topLine="11" />
+	</File>
+	<File name="libsip/include/sip_message.h" open="1" top="0" tabpos="1">
+		<Cursor position="2360" topLine="44" />
+	</File>
+	<File name="libsip/include/sip_www_authenticate.h" open="0" top="0" tabpos="0">
+		<Cursor position="1581" topLine="16" />
+	</File>
+	<File name="libsip/src/sip_authorization.c" open="1" top="0" tabpos="4">
+		<Cursor position="6120" topLine="188" />
+	</File>
+	<File name="libsip/src/sip_common.c" open="1" top="0" tabpos="7">
+		<Cursor position="3283" topLine="88" />
+	</File>
+	<File name="libsip/src/sip_cseq.c" open="0" top="0" tabpos="6">
+		<Cursor position="2335" topLine="138" />
+	</File>
+	<File name="libsip/src/sip_def.c" open="0" top="0" tabpos="4">
+		<Cursor position="4457" topLine="123" />
+	</File>
+	<File name="libsip/src/sip_message.c" open="1" top="1" tabpos="2">
+		<Cursor position="5533" topLine="261" />
+	</File>
+	<File name="libsip/src/sip_startline.c" open="1" top="0" tabpos="9">
+		<Cursor position="3555" topLine="197" />
+	</File>
+	<File name="libsip/src/sip_to.c" open="0" top="0" tabpos="0">
+		<Cursor position="3420" topLine="178" />
+	</File>
+	<File name="libsip/src/sip_www_authenticate.c" open="1" top="0" tabpos="5">
+		<Cursor position="1813" topLine="21" />
+	</File>
+	<File name="main.c" open="1" top="0" tabpos="8">
+		<Cursor position="4086" topLine="107" />
+	</File>
+</CodeBlocks_layout_file>
