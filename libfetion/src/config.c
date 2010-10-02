@@ -15,6 +15,7 @@
 #include "initial.h"
 #include "mem.h"
 #include "config.h"
+#include "crypto.h"
 #include "protocol.h"
 
 
@@ -28,7 +29,7 @@ extern CURL* g_curl;
  */
 
 FX_RET_CODE fx_get_sys_conf( __in char* sz_phone_num, \
-                             __in __out struct mem_struct* mem  )
+                             __in __out PMEM_STRUCT mem  )
 {
     CURLcode curl_ret = 0;
     char sz_send_data[512] = {0};
@@ -73,13 +74,17 @@ FX_RET_CODE fx_get_sys_conf( __in char* sz_phone_num, \
  *  \return FX_RET_CODE see more at error code definition
  */
 
-FX_RET_CODE fx_get_user_conf( __in struct sys_conf_data* sys_data, \
-                              __in __out struct mem_struct* mem )
+FX_RET_CODE fx_get_user_conf( __in PSYS_CONF_DATA sys_data, \
+                              __in __out PMEM_STRUCT mem )
 {
     CURLcode curl_ret = 0;
     char sz_login_url[256] = {0};
     struct curl_slist* head = NULL;
     char* sz_digest1 = NULL;
+	byte* hex_digest1 = NULL;
+	char sz_http[256] = {0};
+	FX_RET_CODE ret = FX_ERROR_OK;
+	int n_ret = 0;
 
     if ( g_curl == NULL ){
     	log_string( "fx_get_user_conf:libfetion need initial" );
@@ -87,14 +92,27 @@ FX_RET_CODE fx_get_user_conf( __in struct sys_conf_data* sys_data, \
     }
 
     /*get the hash string*/
-    sz_digest1 = fx_ssi_get_v4digest_1( sys_data->user_data.sz_password );
-    if( sz_digest1 == NULL ){
+    ret = fx_ssi_get_v4digest_1( (byte*)FX_SHA1_DOMAIN, strlen( FX_SHA1_DOMAIN ), \
+		(byte*)(sys_data->user_data.sz_password), strlen( sys_data->user_data.sz_password ), &hex_digest1 );
+	if ( FX_ERROR_OK != ret )
+	{
+		log_string( "fx_get_user_conf:libfetion fx_ssi_get_v4digest_1 error!" );
+    	return FX_ERROR_NOINITIAL;
+	}
+	n_ret = byte_2_hex_str( hex_digest1, &sz_digest1, SHA1_DIGESTSIZE );
+    if( n_ret <= 0 ){
         log_string( "get diget1 error!" );
         return FX_ERROR_UNKOWN;
     }
+	strcat( sz_http, "http://" );
+	if ( memcmp( sys_data->sz_user_conf_url, "https://", 8 ) == 0 )
+	{
+		strcat( sz_http, (char*)((sys_data->sz_user_conf_url) + 8) );
+	}
+	
     /*format the url for login request*/
     sprintf( sz_login_url, FX_SSI_FORMAT, \
-             sys_data->sz_user_conf_url, sys_data->user_data.sz_phone_num, \
+             sz_http, sys_data->user_data.sz_phone_num, \
              sz_digest1 );
 
     free( sz_digest1 );

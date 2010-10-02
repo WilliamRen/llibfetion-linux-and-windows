@@ -21,10 +21,12 @@
 #include "fxsocket.h"
 #include "protocol.h"
 #include "login.h"
+#include "crypto.h"
 #include "log.h"
 
 
-extern struct sys_conf_data g_sys_conf;
+extern SYS_CONF_DATA g_sys_conf;
+PLOGIN_DATA g_login_data = NULL;
 
 pthread_t g_recv_thread_id = {0};
 
@@ -49,7 +51,7 @@ pthread_t g_recv_thread_id = {0};
 void* thread_recv( void* lparam )
 {
     int socket = (int)lparam;
-    struct mem_struct mem = {0};
+    MEM_STRUCT mem = {0};
 
     while( 1 ){
 
@@ -64,12 +66,6 @@ void* thread_recv( void* lparam )
         }
 
         /*
-         *  下面就是解析服务器发来的消息
-         */
-
-        log_string( "%s", mem.mem_ptr );
-
-        /*
          *
          */
 
@@ -78,11 +74,15 @@ void* thread_recv( void* lparam )
             char* sz_nonce = fx_get_nonce( (char*)(mem.mem_ptr) );
             char* sz_key = fx_get_key( (char*)(mem.mem_ptr) );
             char sz_response[1024] = {0};
+			char* sz_RSA = NULL;
 			int n_ret = 0;
-            //char* sz_aes = generate_aes_key();
-            char* sz_SHA1 = fx_generate_response( sz_key, sz_nonce, ASE_KEY );
+			
+			FX_RET_CODE ret = FX_ERROR_OK;
 
-            sprintf( sz_response, LOGIN_STEP2, sz_SHA1 );
+            ret = fx_generate_response( sz_key, sz_nonce, g_login_data->sz_user_id, \
+					g_sys_conf.user_data.sz_password, &sz_RSA );
+
+            sprintf( sz_response, LOGIN_STEP2, sz_RSA );
 
             log_string( "len = %d:%s", strlen( sz_response ), sz_response );
 
@@ -92,7 +92,7 @@ void* thread_recv( void* lparam )
                 return NULL;
             }
 
-            free( sz_SHA1 );
+            free( sz_RSA );
             free( sz_nonce );
             free( sz_key );
         }
@@ -105,7 +105,7 @@ void* thread_recv( void* lparam )
     return NULL;
 }
 
-FX_RET_CODE fx_login( struct login_data* l_data  )
+FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
 {
     /*将sz_sipc_proxy中的IP和端口分别存放，看着挺麻烦的*/
     int n_ret = 0, socket;
@@ -113,9 +113,11 @@ FX_RET_CODE fx_login( struct login_data* l_data  )
     char* sz_find = NULL;
     char* sz_pack = NULL;
     char sz_ip[20] = {0};
-    struct mem_struct mem_recv = {0};
+    MEM_STRUCT mem_recv = {0};
 
     ushort u_port = 0;
+	
+	g_login_data = l_data;
 
     sz_proxy = g_sys_conf.sz_sipc_proxy;
     sz_find = strchr( sz_proxy, ':' );
@@ -171,10 +173,9 @@ FX_RET_CODE fx_login( struct login_data* l_data  )
         log_string( "fx_login:send data to server error!" );
         return FX_ERROR_SOCKET;
     }
-    //log_string(sz_pack);
 	
 #ifdef __WIN32__
-	Sleep( 10 * 1000 );
+	Sleep( 100 * 1000 );
 #else
     sleep( 50 );
 #endif

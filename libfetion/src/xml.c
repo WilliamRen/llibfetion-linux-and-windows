@@ -10,6 +10,7 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 
+#include "commdef.h"
 #include "initial.h"
 #include "log.h"
 #include "config.h"
@@ -22,8 +23,8 @@
  *  \return
  */
 
-FX_RET_CODE fx_parse_sys_conf( __in  struct mem_struct* mem, \
-                               __out struct sys_conf_data* sys_data )
+FX_RET_CODE fx_parse_sys_conf( __in  PMEM_STRUCT mem, \
+                               __out PSYS_CONF_DATA sys_data )
 {
     xmlDocPtr xml_doc;
     xmlNodePtr node_root = NULL, node_child = NULL;
@@ -44,17 +45,25 @@ FX_RET_CODE fx_parse_sys_conf( __in  struct mem_struct* mem, \
         if (xmlStrcmp(node_child->name, BAD_CAST("sipc-proxy")) == 0){
             char* sz_temp = xmlNodeGetContent( node_child );
             memcpy( sys_data->sz_sipc_proxy, sz_temp, strlen(sz_temp) );
-            printf( "%s\n", sz_temp );
         }
         else if ( xmlStrcmp(node_child->name, BAD_CAST("ssi-app-sign-in-v2")) == 0 ){
             char* sz_temp = xmlNodeGetContent( node_child );
             memcpy( sys_data->sz_user_conf_url, sz_temp, strlen(sz_temp) );
-            printf( "%s\n", sz_temp );
         }
         node_child = node_child->next;
     }
     /*free it*/
     xmlFreeDoc(xml_doc);
+
+	/*
+	 *	check it
+	 */	
+
+	if ( strlen( sys_data->sz_sipc_proxy ) <= 0 || \
+		 strlen( sys_data->sz_user_conf_url ) <= 0 )
+	{
+		return FX_ERROR_UNKOWN;
+	}
     return FX_ERROR_OK;
 }
 
@@ -64,8 +73,8 @@ FX_RET_CODE fx_parse_sys_conf( __in  struct mem_struct* mem, \
  *  \return
  */
 
-FX_RET_CODE fx_parse_user_conf( __in  struct mem_struct* mem, \
-                                __out struct login_data* l_data )
+FX_RET_CODE fx_parse_user_conf( __in  PMEM_STRUCT mem, \
+                                __out PLOGIN_DATA l_data )
 {
     xmlDocPtr xml_doc;
     xmlNodePtr node_root = NULL,node_child = NULL;

@@ -186,7 +186,7 @@ int fx_socket_recv( int fd, uchar* buf, size_t size )
 }
 
 #define MAX_RECV_PER    1024
-int fx_socket_recv2( int fd, struct mem_struct* mem )
+int fx_socket_recv2( int fd, PMEM_STRUCT mem )
 {
     int ret = 0;
     char sz_recv[MAX_RECV_PER];
@@ -198,14 +198,20 @@ int fx_socket_recv2( int fd, struct mem_struct* mem )
         if ( ret == -1 ){
             log_string( "fx_socket_recv2:recv data error!" );
             return ret;
+
         }
         if ( ret == 0 ){
             break;
+
         }
 
+
         /*
+
          *  allocate memory for recv data
+
          */
+
 
         if ( ret > 0 ){
             mem->mem_ptr = myrealloc( mem->mem_ptr, mem->size + ret + 1 );
@@ -216,7 +222,9 @@ int fx_socket_recv2( int fd, struct mem_struct* mem )
             }
             if ( ret < MAX_RECV_PER ){
                 break;
+
             }
+
         }
 
     }

@@ -16,7 +16,7 @@
 #include "login.h"
 
 extern FILE* g_log_file;
-struct sys_conf_data g_sys_conf = {0};
+SYS_CONF_DATA g_sys_conf = {0};
 
 /** \fn
  *  \brief
@@ -32,13 +32,13 @@ void init_data( char* sz_phone_num, char* sz_password )
 
 int main()
 {
-    struct login_data l_data = {0};
-    struct mem_struct mem_sys = {0};
-    struct mem_struct mem_user = {0};
+    LOGIN_DATA l_data = {0};
+    MEM_STRUCT mem_sys = {0};
+    MEM_STRUCT mem_user = {0};
 
     FX_RET_CODE fx_ret;
 
-    init_data( "1521028XXXX", "XXXX" );
+    init_data( "15210281153", "qiupeng501" );
 
     fx_ret = fx_init();
     if( fx_ret != FX_ERROR_OK){
@@ -66,6 +66,7 @@ int main()
     }
     fx_ret = fx_login( &l_data );
     fclose(g_log_file);
+	fx_close();
     return 0;
 }
 

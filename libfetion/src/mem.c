@@ -23,11 +23,12 @@ void* myrealloc(void *ptr, size_t size)
     return malloc(size);
 }
 
-void myfree( struct mem_struct* mem )
+void myfree( PMEM_STRUCT mem )
 {
     if( mem ){
         if( mem->mem_ptr ){
-            free( mem->mem_ptr );
+			free( mem->mem_ptr );
+			memset( mem, 0, sizeof( MEM_STRUCT ) );
         }
     }
 }
@@ -46,7 +47,7 @@ size_t write_mem_call_back(void *ptr, size_t size, \
                             size_t nmemb, void *data)
 {
   size_t realsize = size * nmemb;
-  struct mem_struct* mem = (struct mem_struct *)data;
+  PMEM_STRUCT mem = (PMEM_STRUCT)data;
 
   mem->mem_ptr = (char*)myrealloc(mem->mem_ptr, mem->size + realsize + 1);
   if (mem->mem_ptr) {
