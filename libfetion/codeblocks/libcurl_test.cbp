@@ -44,10 +44,15 @@
 			<Add option="-lssl" />
 			<Add library="\usr\lib\libcurl.a" />
 		</Linker>
+		<Unit filename="..\src\commdef.h" />
 		<Unit filename="..\src\config.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\src\config.h" />
+		<Unit filename="..\src\crypto.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\src\crypto.h" />
 		<Unit filename="..\src\fxsocket.c">
 			<Option compilerVar="CC" />
 		</Unit>
