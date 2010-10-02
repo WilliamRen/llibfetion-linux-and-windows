@@ -4,8 +4,16 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#ifndef __WIN32__
 #include <unistd.h>
+#endif
+#include <string.h>
 #include <pthread.h>
+
+#ifdef __WIN32__
+#include <windows.h>
+#endif
 
 #include "initial.h"
 #include "config.h"
@@ -13,9 +21,12 @@
 #include "fxsocket.h"
 #include "protocol.h"
 #include "login.h"
+#include "log.h"
+
 
 extern struct sys_conf_data g_sys_conf;
-pthread_t g_recv_thread_id = 0;
+
+pthread_t g_recv_thread_id = {0};
 
 #define ASE_KEY "4A026855890197CFDF768597D07200B346F3D676411C6F87368B5C2276DCEDD2"
 
@@ -67,6 +78,7 @@ void* thread_recv( void* lparam )
             char* sz_nonce = fx_get_nonce( (char*)(mem.mem_ptr) );
             char* sz_key = fx_get_key( (char*)(mem.mem_ptr) );
             char sz_response[1024] = {0};
+			int n_ret = 0;
             //char* sz_aes = generate_aes_key();
             char* sz_SHA1 = fx_generate_response( sz_key, sz_nonce, ASE_KEY );
 
@@ -74,10 +86,10 @@ void* thread_recv( void* lparam )
 
             log_string( "len = %d:%s", strlen( sz_response ), sz_response );
 
-            int n_ret = fx_socket_send( socket, sz_response, strlen(sz_response) );
+            n_ret = fx_socket_send( socket, sz_response, strlen(sz_response) );
             if ( n_ret == -1 ){
                 log_string( "fx_login:send data to server error!" );
-                return FX_ERROR_SOCKET;
+                return NULL;
             }
 
             free( sz_SHA1 );
@@ -160,8 +172,12 @@ FX_RET_CODE fx_login( struct login_data* l_data  )
         return FX_ERROR_SOCKET;
     }
     //log_string(sz_pack);
-
+	
+#ifdef __WIN32__
+	Sleep( 10 * 1000 );
+#else
     sleep( 50 );
+#endif
     pthread_cancel( g_recv_thread_id );
 
     return FX_ERROR_OK;

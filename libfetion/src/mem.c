@@ -4,6 +4,8 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <memory.h>
 
 #include "mem.h"
 
@@ -21,7 +23,7 @@ void* myrealloc(void *ptr, size_t size)
     return malloc(size);
 }
 
-void* myfree( struct mem_struct* mem )
+void myfree( struct mem_struct* mem )
 {
     if( mem ){
         if( mem->mem_ptr ){

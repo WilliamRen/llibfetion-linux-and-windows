@@ -3,8 +3,10 @@
  *  \brief
  */
 
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "initial.h"
 #include "log.h"

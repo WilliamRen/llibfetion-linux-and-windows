@@ -1,6 +1,10 @@
 #ifndef LOGIN_H_INCLUDED
 #define LOGIN_H_INCLUDED
 
+//#ifdef __WIN32__
+typedef unsigned long ulong;
+//#endif
+
 #define FX_LOGIN_DATA       "<args>"                                                                    \
                             "<device type=\"PC\" version=\"284571220\" client-version=\"3.3.0370\" />"  \
                             "<caps value=\"simple-im;im-session;temp-group;personal-group\" />"         \

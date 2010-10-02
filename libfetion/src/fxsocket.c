@@ -4,12 +4,12 @@
  */
 
 #include <stdio.h>
-#include <unistd.h>
 
 #ifdef __WIN32__
 #include <winsock.h>
 #include <wininet.h>
 #else
+#include <unistd.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -50,7 +50,8 @@ void fx_socket_end()
  *  \brief 创建套接字
  *  \param type 创建的类型, 包括tcp和udp
  *  \param ip ip地址
- *  \param port 端口 *  \return 如果成功返回创建的套接字的句柄,否则返回-1
+ *  \param port 端口
+ *  \return 如果成功返回创建的套接字的句柄,否则返回-1
  */
 
 int fx_socket_create( int type, char* ip, ushort port )
@@ -71,7 +72,7 @@ int fx_socket_create( int type, char* ip, ushort port )
 		if( bind( fd, (struct sockaddr*)&addr, sizeof(struct sockaddr_in) ) < 0 )
 		{
 			log_string("bind tcp socket error!");
-			close( fd );
+			fx_socket_close( fd );
 			return -1;
 		}
 		break;
@@ -87,7 +88,7 @@ int fx_socket_create( int type, char* ip, ushort port )
 		if( bind( fd, (struct sockaddr*)&addr, sizeof(struct sockaddr_in) ) < 0 )
 		{
 			log_string("bind udp socket error!");
-			close( fd );
+			fx_socket_close( fd );
 			return -1;
 		}
 		break;

@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <string.h>
+
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 
@@ -16,7 +18,8 @@
 
 /** \fn
  *  \brief
- *  \param *  \return
+ *  \param
+ *  \return
  */
 
 FX_RET_CODE fx_parse_sys_conf( __in  struct mem_struct* mem, \

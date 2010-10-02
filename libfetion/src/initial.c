@@ -7,11 +7,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/socket.h>
 
+#include <pthread.h>
 #include <curl/curl.h>
 
 #include "initial.h"
@@ -26,7 +23,13 @@ CURL* g_curl;
 */
 FX_RET_CODE fx_init()
 {
-    log_init();
+#ifdef __WIN32__
+#ifdef PTW32_STATIC_LIB
+	if(!pthread_win32_process_attach_np())
+		return FX_ERROR_INIT;
+#endif
+#endif
+	log_init();
     g_curl = curl_easy_init();
     if( !g_curl ){
         log_string( "fx_init:initialize error!" );
@@ -38,4 +41,12 @@ FX_RET_CODE fx_init()
 #endif
 }
 
+void fx_close()
+{
+#ifdef __WIN32__
+#ifdef PTW32_STATIC_LIB
+	pthread_win32_process_detach_np();
+#endif
+#endif
+}
 

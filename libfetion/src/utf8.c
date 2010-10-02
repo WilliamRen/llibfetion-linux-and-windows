@@ -23,7 +23,7 @@
 #include <stdlib.h>
 
 #include "utf8.h"
-
+#include "log.h"
 
 
 #ifdef __WIN32__
@@ -33,7 +33,7 @@ void utf8_to_gb ( char* src, char* dst, int len )
 	WCHAR* strA;
 	int i= MultiByteToWideChar ( CP_UTF8, 0 , src, -1, NULL, 0 );
 	if( i<=0 ){
-		DBG("ERROR."); return;
+		log_string("MultiByteToWideChar ERROR."); return;
 	}
 	strA = malloc( i*2 );
 	MultiByteToWideChar ( CP_UTF8 , 0 , src, -1, strA , i);
@@ -53,7 +53,7 @@ void gb_to_utf8 ( char* src, char* dst, int len )
 	WCHAR* strA;
 	int i= MultiByteToWideChar ( CP_ACP, 0 , src, -1, NULL, 0 );
 	if( i<=0 ){
-		DBG("ERROR."); return;
+		log_string("MultiByteToWideChar ERROR."); return;
 	}
 	strA = malloc( i*2 );
 	MultiByteToWideChar ( CP_ACP , 0 , src, -1, strA , i);

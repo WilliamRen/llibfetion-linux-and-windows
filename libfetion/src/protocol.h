@@ -24,5 +24,6 @@ char* fx_get_key( char* sz_data );
 int hex_str_2_byte( char* sz_hex, byte* p_byte, int* n_len );
 char* hash_password_v4(char* userid , char* password);
 char* generate_aes_key();
+char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key );
 
 #endif // PROTOCOL_H_INCLUDED

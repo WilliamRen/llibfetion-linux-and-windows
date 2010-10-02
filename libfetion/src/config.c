@@ -17,12 +17,14 @@
 #include "config.h"
 #include "protocol.h"
 
+
 /*declare the extern variable*/
 extern CURL* g_curl;
 
 /** \fn
  *  \brief
- *  \param *  \return
+ *  \param
+ *  \return
  */
 
 FX_RET_CODE fx_get_sys_conf( __in char* sz_phone_num, \
@@ -97,12 +99,6 @@ FX_RET_CODE fx_get_user_conf( __in struct sys_conf_data* sys_data, \
 
     free( sz_digest1 );
 
-    /*set the file to write for libcurl*/
-//    fp = fopen( "user_conf.xml", "wb+" );
-//    if( fp == NULL ){
-//        log_string( "fx_get_user_conf:create file error!\n" );
-//        return FX_ERROR_FILE;
-//    }
     /*if the paramter mem == ?*/
     if ( mem == NULL ){
     	log_string( "fx_get_sys_conf:the mem is null" );

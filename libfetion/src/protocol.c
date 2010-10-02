@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
 
 #include <openssl/sha.h>
 #include <openssl/rsa.h>
@@ -27,17 +28,20 @@ char g_pw_v4[30] = {0};
 
 unsigned char* strtohex(char* in , int* len);
 char* hextostr(unsigned char* in , int len);
+char* hash_password_v2(char* userid , char* passwordhex);
 
 char* hash_password_v1( unsigned char* b0 , int b0len, const unsigned char* password , int psdlen)
 {
 	unsigned char* dst = (unsigned char*)malloc(b0len + psdlen + 1);
 	unsigned char tmp[20];
 	char* res;
+	SHA_CTX ctx;
+
 	memset(tmp , 0 , sizeof(tmp));
 	memset(dst , 0 , b0len + psdlen + 1);
 	memcpy(dst , b0 , b0len);
 	memcpy(dst + b0len , password , psdlen);
-	SHA_CTX ctx;
+
 	SHA1_Init(&ctx);
 	SHA1_Update(&ctx , dst , b0len + psdlen );
 	SHA1_Final(tmp , &ctx);
@@ -45,7 +49,7 @@ char* hash_password_v1( unsigned char* b0 , int b0len, const unsigned char* pass
 	res = hextostr(tmp , 20);
 	return res;
 }
-char* hash_password_v2(char* userid , const char* passwordhex)
+char* hash_password_v2(char* userid , char* passwordhex)
 {
 	int id = atoi(userid);
 	char* res;
@@ -191,7 +195,7 @@ char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
     /*do RSA*/
     {
         int ret = 0, flen = 0, flen1 = 0;
-        BIGNUM *bnn, *bne, *bnd;
+        BIGNUM *bnn, *bne;
         unsigned char in[1024] = {0};
         unsigned char *out;
 
@@ -204,7 +208,8 @@ char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
         unsigned char* p_byte = strtohex( sz_pw, &n1 );
         unsigned char* p_byte1= strtohex( sz_ase_key, &n2 );
 
-
+		RSA *r = NULL;
+		char* sz = NULL;
         //hex_str_2_byte( g_pw_v4, p_byte, &n1 );
         //hex_str_2_byte( sz_ase_key, p_byte1, &n2 );
 
@@ -224,7 +229,7 @@ char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
          BN_hex2bn(&bne, sz_exponent);
         // BN_hex2bn(&bnd, PRIVATE_EXPONENT);
 
-         RSA *r = RSA_new();
+         r = RSA_new();
          r->n = bnn;
          r->e = bne;
          r->d = NULL;
@@ -234,7 +239,7 @@ char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
          flen1 = n1 + n2 + n3;
 
          out = (char *)malloc(flen);
-         bzero(out, flen);
+         memset(out, 0, flen);
 
          ret = RSA_public_encrypt(flen1, in, out, r,   RSA_PKCS1_PADDING);
          if (ret < 0)
@@ -243,10 +248,10 @@ char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
             return NULL;
          }
 
-        char* sz = hextostr( out, ret);
+        sz = hextostr( out, ret);
         strcpy( sz_SHA1, sz );
         free( sz );
-         RSA_free(r);
+        RSA_free(r);
     }
 
     return sz_SHA1;
@@ -254,8 +259,8 @@ char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
 
 char* fx_generate_cnonce()
 {
-	srand( (unsigned)time( NULL ) );
 	char* sz_conce = (char*)malloc( 33 );
+	srand( (unsigned)time( NULL ) );
 	memset( sz_conce, 0, 33 );
 	sprintf( sz_conce, "%04X%04X%04X%04X%04X%04X%04X%04X", \
 				rand() & 0xFFFF, rand() & 0xFFFF,\
@@ -267,12 +272,12 @@ char* fx_generate_cnonce()
 
 char* fx_get_nonce( char* sz_data )
 {
-    char* sz_find = NULL;
+    char* sz_find = NULL, *sz_find_nonce = NULL, *sz_nonce_temp = NULL;
     if( NULL == sz_data )
         return NULL;
     sz_find = strstr( sz_data, "nonce" );
-	char* sz_find_nonce = (char*)malloc(50);
-	char* sz_nonce_temp = sz_find_nonce;
+	sz_find_nonce = (char*)malloc(50);
+	sz_nonce_temp = sz_find_nonce;
 	memset( sz_find_nonce, 0, 50 );
 	if ( sz_find != NULL )
 	{
@@ -292,12 +297,12 @@ char* fx_get_nonce( char* sz_data )
 
 char* fx_get_key( char* sz_data )
 {
-    char* sz_find = NULL;
+    char* sz_find = NULL, *sz_find_nonce = NULL, *sz_nonce_temp = NULL;
     if( NULL == sz_data )
         return NULL;
     sz_find = strstr( sz_data, "key" );
-	char* sz_find_nonce = (char*)malloc(512);
-	char* sz_nonce_temp = sz_find_nonce;
+	sz_find_nonce = (char*)malloc(512);
+	sz_nonce_temp = sz_find_nonce;
 	memset( sz_find_nonce, 0, 512 );
 	if ( sz_find != NULL )
 	{

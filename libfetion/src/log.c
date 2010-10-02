@@ -47,7 +47,11 @@ void log_string( char* sz_fmt, ... )
     char sz_sprintf[1024] = {0};
 
     va_start( args, sz_fmt );
-    vsnprintf( sz_sprintf, 1024, sz_fmt, args );
+#ifdef __WIN32__
+	_vsnprintf( sz_sprintf, 1024, sz_fmt, args );
+#else
+	vsnprintf( sz_sprintf, 1024, sz_fmt, args );
+#endif
     va_end( args );
 
     sz_sprintf[1023] = 0;

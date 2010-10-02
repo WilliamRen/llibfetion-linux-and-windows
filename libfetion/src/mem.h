@@ -11,5 +11,6 @@ typedef struct mem_struct
 void* myrealloc(void *ptr, size_t size);
 size_t write_mem_call_back(void *ptr, size_t size, \
                             size_t nmemb, void *data);
+void myfree( struct mem_struct* mem );
 
 #endif // MEM_H_INCLUDED
