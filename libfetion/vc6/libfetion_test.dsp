@@ -102,7 +102,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wldap32.lib lib\pthread_static.lib lib\libeay32_static.lib lib\ssleay32_static.lib lib\libcurl_static.lib lib\libxml2_static.lib  ws2_32.lib /nologo /subsystem:console /machine:I386 /out:"bin/libfetion_test_r_static.exe"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wldap32.lib lib\pthread_static.lib lib\libeay32_static.lib lib\ssleay32_static.lib lib\libcurl_static.lib lib\libxml2_static.lib ws2_32.lib /nologo /subsystem:console /machine:I386 /out:"bin/libfetion_test_r_static.exe"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "libfetion_test - Win32 R_Share"
@@ -147,6 +147,10 @@ SOURCE=..\src\config.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\crypto.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\fxsocket.c
 # End Source File
 # Begin Source File
@@ -187,7 +191,15 @@ SOURCE=..\src\xml.c
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=..\src\commdef.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\config.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\crypto.h
 # End Source File
 # Begin Source File
 
