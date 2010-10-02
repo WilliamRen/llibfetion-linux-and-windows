@@ -44,45 +44,45 @@
 			<Add option="-lssl" />
 			<Add library="\usr\lib\libcurl.a" />
 		</Linker>
-		<Unit filename="config.c">
+		<Unit filename="..\src\config.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="config.h" />
-		<Unit filename="fxsocket.c">
+		<Unit filename="..\src\config.h" />
+		<Unit filename="..\src\fxsocket.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="fxsocket.h" />
-		<Unit filename="initial.c">
+		<Unit filename="..\src\fxsocket.h" />
+		<Unit filename="..\src\initial.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="initial.h" />
-		<Unit filename="log.c">
+		<Unit filename="..\src\initial.h" />
+		<Unit filename="..\src\log.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="log.h" />
-		<Unit filename="login.c">
+		<Unit filename="..\src\log.h" />
+		<Unit filename="..\src\login.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="login.h" />
-		<Unit filename="main.c">
+		<Unit filename="..\src\login.h" />
+		<Unit filename="..\src\main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="mem.c">
+		<Unit filename="..\src\mem.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="mem.h" />
-		<Unit filename="protocol.c">
+		<Unit filename="..\src\mem.h" />
+		<Unit filename="..\src\protocol.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="protocol.h" />
-		<Unit filename="utf8.c">
+		<Unit filename="..\src\protocol.h" />
+		<Unit filename="..\src\utf8.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="utf8.h" />
-		<Unit filename="xml.c">
+		<Unit filename="..\src\utf8.h" />
+		<Unit filename="..\src\xml.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="xml.h" />
+		<Unit filename="..\src\xml.h" />
 		<Extensions>
 			<code_completion>
 				<search_path add="/usr/include/libxml2" />
