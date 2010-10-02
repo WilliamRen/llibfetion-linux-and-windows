@@ -1,0 +1,463 @@
+# depslib dependency file v1.0
+1268123542 source:/home/programmeboy/programme/libcurl_test/config.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<curl/curl.h>
+	"log.h"
+	"initial.h"
+	"mem.h"
+	"config.h"
+
+1271746074 /home/programmeboy/programme/libcurl_test/log.h
+
+1268658436 /home/programmeboy/programme/libcurl_test/initial.h
+
+1268122222 /home/programmeboy/programme/libcurl_test/mem.h
+
+1268232510 /home/programmeboy/programme/libcurl_test/config.h
+	"initial.h"
+
+1268919462 source:/home/programmeboy/programme/libcurl_test/fxsocket.c
+	<stdio.h>
+	<unistd.h>
+	<winsock.h>
+	<wininet.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<netdb.h>
+	<fcntl.h>
+	<string.h>
+	<stdlib.h>
+	"log.h"
+	"mem.h"
+	"fxsocket.h"
+
+1268231968 /home/programmeboy/programme/libcurl_test/fxsocket.h
+
+1268238832 source:/home/programmeboy/programme/libcurl_test/initial.c
+	<stdio.h>
+	<stdlib.h>
+	<fcntl.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<curl/curl.h>
+	"initial.h"
+	"log.h"
+
+1268928562 source:/home/programmeboy/programme/libcurl_test/login.c
+	<stdio.h>
+	<unistd.h>
+	<pthread.h>
+	"initial.h"
+	"config.h"
+	"mem.h"
+	"fxsocket.h"
+	"protocol.h"
+	"login.h"
+
+1268232060 /home/programmeboy/programme/libcurl_test/protocol.h
+
+1268232740 /home/programmeboy/programme/libcurl_test/login.h
+
+1268238760 source:/home/programmeboy/programme/libcurl_test/main.c
+	<stdio.h>
+	<stdlib.h>
+	"initial.h"
+	"log.h"
+	"config.h"
+	"xml.h"
+	"mem.h"
+	"login.h"
+
+1268122694 /home/programmeboy/programme/libcurl_test/xml.h
+
+1268927454 source:/home/programmeboy/programme/libcurl_test/mem.c
+	<stdio.h>
+	"mem.h"
+
+1268239332 source:/home/programmeboy/programme/libcurl_test/protocol.c
+	<stdio.h>
+	"config.h"
+	"fxsocket.h"
+	"login.h"
+	"protocol.h"
+
+1268452648 source:/home/programmeboy/programme/libcurl_test/utf8.c
+	<windows.h>
+	<iconv.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"utf8.h"
+
+1268452678 /home/programmeboy/programme/libcurl_test/utf8.h
+
+1268237986 source:/home/programmeboy/programme/libcurl_test/xml.c
+	<stdio.h>
+	<stdlib.h>
+	<libxml/parser.h>
+	<libxml/tree.h>
+	"initial.h"
+	"log.h"
+	"config.h"
+	"mem.h"
+	"xml.h"
+
+1263120311 /usr/include/libxml2/libxml/parser.h
+	<stdarg.h>
+	<libxml/xmlversion.h>
+	<libxml/tree.h>
+	<libxml/dict.h>
+	<libxml/hash.h>
+	<libxml/valid.h>
+	<libxml/entities.h>
+	<libxml/xmlerror.h>
+	<libxml/xmlstring.h>
+	<libxml/encoding.h>
+	<libxml/xmlIO.h>
+	<libxml/globals.h>
+
+1263120311 /usr/include/libxml2/libxml/xmlversion.h
+	<libxml/xmlexports.h>
+	<ansidecl.h>
+
+1263120311 /usr/include/libxml2/libxml/xmlexports.h
+
+1263120311 /usr/include/libxml2/libxml/tree.h
+	<stdio.h>
+	<libxml/xmlversion.h>
+	<libxml/xmlstring.h>
+	<libxml/xmlregexp.h>
+	<libxml/xmlmemory.h>
+
+1263120311 /usr/include/libxml2/libxml/xmlstring.h
+	<stdarg.h>
+	<libxml/xmlversion.h>
+
+1263120311 /usr/include/libxml2/libxml/xmlregexp.h
+	<libxml/xmlversion.h>
+	<libxml/tree.h>
+	<libxml/dict.h>
+
+1263120311 /usr/include/libxml2/libxml/dict.h
+	<libxml/xmlversion.h>
+	<libxml/tree.h>
+
+1263120311 /usr/include/libxml2/libxml/xmlmemory.h
+	<stdio.h>
+	<libxml/xmlversion.h>
+	<libxml/threads.h>
+	<libxml/globals.h>
+
+1263120311 /usr/include/libxml2/libxml/threads.h
+	<libxml/xmlversion.h>
+	<libxml/globals.h>
+
+1263120311 /usr/include/libxml2/libxml/globals.h
+	<libxml/xmlversion.h>
+	<libxml/parser.h>
+	<libxml/xmlerror.h>
+	<libxml/SAX.h>
+	<libxml/SAX2.h>
+	<libxml/xmlmemory.h>
+	<libxml/threads.h>
+
+1263120311 /usr/include/libxml2/libxml/xmlerror.h
+	<libxml/parser.h>
+
+1263120311 /usr/include/libxml2/libxml/SAX.h
+	<stdio.h>
+	<stdlib.h>
+	<libxml/xmlversion.h>
+	<libxml/parser.h>
+	<libxml/xlink.h>
+
+1263120311 /usr/include/libxml2/libxml/xlink.h
+	<libxml/xmlversion.h>
+	<libxml/tree.h>
+
+1263120311 /usr/include/libxml2/libxml/SAX2.h
+	<stdio.h>
+	<stdlib.h>
+	<libxml/xmlversion.h>
+	<libxml/parser.h>
+	<libxml/xlink.h>
+
+1263120311 /usr/include/libxml2/libxml/hash.h
+	<libxml/xmlversion.h>
+	<libxml/parser.h>
+	<libxml/dict.h>
+
+1263120311 /usr/include/libxml2/libxml/valid.h
+	<libxml/xmlversion.h>
+	<libxml/xmlerror.h>
+	<libxml/tree.h>
+	<libxml/list.h>
+	<libxml/xmlautomata.h>
+	<libxml/xmlregexp.h>
+
+1263120311 /usr/include/libxml2/libxml/list.h
+	<libxml/xmlversion.h>
+
+1263120311 /usr/include/libxml2/libxml/xmlautomata.h
+	<libxml/xmlversion.h>
+	<libxml/tree.h>
+	<libxml/xmlregexp.h>
+
+1263120311 /usr/include/libxml2/libxml/entities.h
+	<libxml/xmlversion.h>
+	<libxml/tree.h>
+
+1263120311 /usr/include/libxml2/libxml/encoding.h
+	<libxml/xmlversion.h>
+	<iconv.h>
+	<libxml/tree.h>
+
+1263120311 /usr/include/libxml2/libxml/xmlIO.h
+	<stdio.h>
+	<libxml/xmlversion.h>
+	<libxml/globals.h>
+	<libxml/tree.h>
+	<libxml/parser.h>
+	<libxml/encoding.h>
+
+1268919462 source:/home/programmeboy/program/libcurl_test/libcurl_test/fxsocket.c
+	<stdio.h>
+	<unistd.h>
+	<winsock.h>
+	<wininet.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<netdb.h>
+	<fcntl.h>
+	<string.h>
+	<stdlib.h>
+	"log.h"
+	"mem.h"
+	"fxsocket.h"
+
+1271746074 /home/programmeboy/program/libcurl_test/libcurl_test/log.h
+
+1268122222 /home/programmeboy/program/libcurl_test/libcurl_test/mem.h
+
+1268231968 /home/programmeboy/program/libcurl_test/libcurl_test/fxsocket.h
+
+1268238832 source:/home/programmeboy/program/libcurl_test/libcurl_test/initial.c
+	<stdio.h>
+	<stdlib.h>
+	<fcntl.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<curl/curl.h>
+	"initial.h"
+	"log.h"
+
+1268658436 /home/programmeboy/program/libcurl_test/libcurl_test/initial.h
+
+1268928562 source:/home/programmeboy/program/libcurl_test/libcurl_test/login.c
+	<stdio.h>
+	<unistd.h>
+	<pthread.h>
+	"initial.h"
+	"config.h"
+	"mem.h"
+	"fxsocket.h"
+	"protocol.h"
+	"login.h"
+
+1280422137 /home/programmeboy/program/libcurl_test/libcurl_test/config.h
+	"initial.h"
+
+1280421634 /home/programmeboy/program/libcurl_test/libcurl_test/protocol.h
+
+1268232740 /home/programmeboy/program/libcurl_test/libcurl_test/login.h
+
+1268927454 source:/home/programmeboy/program/libcurl_test/libcurl_test/mem.c
+	<stdio.h>
+	"mem.h"
+
+1268452648 source:/home/programmeboy/program/libcurl_test/libcurl_test/utf8.c
+	<windows.h>
+	<iconv.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"utf8.h"
+
+1268452678 /home/programmeboy/program/libcurl_test/libcurl_test/utf8.h
+
+1280421912 source:/home/programmeboy/program/libcurl_test/libcurl_test/config.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<curl/curl.h>
+	"log.h"
+	"initial.h"
+	"mem.h"
+	"config.h"
+	"protocol.h"
+
+1271754498 source:/home/programmeboy/program/libcurl_test/libcurl_test/log.c
+	<stdio.h>
+	<stdarg.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<fcntl.h>
+
+1280420699 source:/home/programmeboy/program/libcurl_test/libcurl_test/main.c
+	<stdio.h>
+	<stdlib.h>
+	"initial.h"
+	"log.h"
+	"config.h"
+	"xml.h"
+	"mem.h"
+	"login.h"
+
+1268122694 /home/programmeboy/program/libcurl_test/libcurl_test/xml.h
+
+1280422318 source:/home/programmeboy/program/libcurl_test/libcurl_test/protocol.c
+	<stdio.h>
+	<openssl/sha.h>
+	"config.h"
+	"fxsocket.h"
+	"login.h"
+	"protocol.h"
+
+1280418533 source:/home/programmeboy/program/libcurl_test/libcurl_test/xml.c
+	<stdio.h>
+	<stdlib.h>
+	<libxml/parser.h>
+	<libxml/tree.h>
+	"initial.h"
+	"log.h"
+	"config.h"
+	"mem.h"
+	"xml.h"
+
+1281360114 source:/home/programmeboy/svn/llibfetion/libfetion/config.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<curl/curl.h>
+	"log.h"
+	"initial.h"
+	"mem.h"
+	"config.h"
+	"protocol.h"
+
+1271746074 /home/programmeboy/svn/llibfetion/libfetion/log.h
+
+1268658436 /home/programmeboy/svn/llibfetion/libfetion/initial.h
+
+1268122222 /home/programmeboy/svn/llibfetion/libfetion/mem.h
+
+1280422137 /home/programmeboy/svn/llibfetion/libfetion/config.h
+	"initial.h"
+
+1281714510 /home/programmeboy/svn/llibfetion/libfetion/protocol.h
+
+1268919462 source:/home/programmeboy/svn/llibfetion/libfetion/fxsocket.c
+	<stdio.h>
+	<unistd.h>
+	<winsock.h>
+	<wininet.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<netdb.h>
+	<fcntl.h>
+	<string.h>
+	<stdlib.h>
+	"log.h"
+	"mem.h"
+	"fxsocket.h"
+
+1268231968 /home/programmeboy/svn/llibfetion/libfetion/fxsocket.h
+
+1268238832 source:/home/programmeboy/svn/llibfetion/libfetion/initial.c
+	<stdio.h>
+	<stdlib.h>
+	<fcntl.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<curl/curl.h>
+	"initial.h"
+	"log.h"
+
+1281370624 source:/home/programmeboy/svn/llibfetion/libfetion/log.c
+	<stdio.h>
+	<stdarg.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<fcntl.h>
+
+1281714740 source:/home/programmeboy/svn/llibfetion/libfetion/login.c
+	<stdio.h>
+	<unistd.h>
+	<pthread.h>
+	"initial.h"
+	"config.h"
+	"mem.h"
+	"fxsocket.h"
+	"protocol.h"
+	"login.h"
+
+1268232740 /home/programmeboy/svn/llibfetion/libfetion/login.h
+
+1281536915 source:/home/programmeboy/svn/llibfetion/libfetion/main.c
+	<stdio.h>
+	<stdlib.h>
+	"initial.h"
+	"log.h"
+	"config.h"
+	"xml.h"
+	"mem.h"
+	"login.h"
+
+1268122694 /home/programmeboy/svn/llibfetion/libfetion/xml.h
+
+1281367718 source:/home/programmeboy/svn/llibfetion/libfetion/mem.c
+	<stdio.h>
+	"mem.h"
+
+1281714586 source:/home/programmeboy/svn/llibfetion/libfetion/protocol.c
+	<stdio.h>
+	<time.h>
+	<openssl/sha.h>
+	<openssl/rsa.h>
+	"config.h"
+	"fxsocket.h"
+	"login.h"
+	"protocol.h"
+
+1268452648 source:/home/programmeboy/svn/llibfetion/libfetion/utf8.c
+	<windows.h>
+	<iconv.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"utf8.h"
+
+1268452678 /home/programmeboy/svn/llibfetion/libfetion/utf8.h
+
+1280418533 source:/home/programmeboy/svn/llibfetion/libfetion/xml.c
+	<stdio.h>
+	<stdlib.h>
+	<libxml/parser.h>
+	<libxml/tree.h>
+	"initial.h"
+	"log.h"
+	"config.h"
+	"mem.h"
+	"xml.h"
+

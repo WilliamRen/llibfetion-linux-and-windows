@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="libcurl_test" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Script file="lib_finder.script" />
+			<Target title="Debug">
+				<Option output="bin\Debug\libcurl_test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="\usr\lib\libcurl.a" />
+					<Add library="\usr\lib\libcurl.so" />
+					<Add library="\usr\lib\libxml2.a" />
+					<Add library="\usr\lib\libxml2.so" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\libcurl_test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="\usr\lib\libcurl.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add directory="\usr\include\libxml2" />
+		</Compiler>
+		<Linker>
+			<Add option="-lssl" />
+			<Add library="\usr\lib\libcurl.a" />
+		</Linker>
+		<Unit filename="config.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="config.h" />
+		<Unit filename="fxsocket.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="fxsocket.h" />
+		<Unit filename="initial.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="initial.h" />
+		<Unit filename="log.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="log.h" />
+		<Unit filename="login.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="login.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mem.h" />
+		<Unit filename="protocol.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="protocol.h" />
+		<Unit filename="utf8.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="utf8.h" />
+		<Unit filename="xml.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="xml.h" />
+		<Extensions>
+			<code_completion>
+				<search_path add="/usr/include/libxml2" />
+				<search_path add="/usr/include/curl" />
+			</code_completion>
+			<envvars />
+			<lib_finder disable_auto="1" />
+			<debugger />
+			<wxsmith version="1">
+				<gui name="wxWidgets" src="" main="" init_handlers="necessary" language="CPP" />
+			</wxsmith>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
