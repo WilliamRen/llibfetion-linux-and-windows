@@ -20,9 +20,10 @@
 #include "mem.h"
 #include "fxsocket.h"
 #include "protocol.h"
-#include "login.h"
 #include "crypto.h"
 #include "log.h"
+#include "thread.h"
+#include "login.h"
 
 
 extern SYS_CONF_DATA g_sys_conf;
@@ -34,13 +35,6 @@ pthread_t g_recv_thread_id = {0};
 
 /*only for test*/
 
-#define LOGIN_STEP2     "R fetion.com.cn SIP-C/4.0\r\n" \
-                        "F: 879534138\r\n" \
-                        "I: 1\r\n" \
-                        "Q: 2 R\r\n" \
-                        "A: Digest algorithm=\"SHA1-sess-v4\",response=\"%s\"\r\n" \
-                        "L: 527\r\n\r\n" \
-                        "<args><device accept-language=\"default\" machine-code=\"2F6E7CD33AA1F6928E69DEDD7D6C50B1\" /><caps value=\"3FF\" /><events value=\"7F\" /><user-info mobile-no=\"15210281153\" user-id=\"639717376\"><personal version=\"0\" attributes=\"v4default;alv2-version;alv2-warn\" /><custom-config version=\"0\" /><contact-list version=\"0\" buddy-attributes=\"v4default\" /></user-info><credentials domains=\"fetion.com.cn;m161.com.cn;www.ikuwa.cn;games.fetion.com.cn;turn.fetion.com.cn\" /><presence><basic value=\"400\" desc=\"\" /><extendeds /></presence></args>"
 
 /** \fn void* thread_recv( void* lparam )
   * \brief the thread for recv data
@@ -48,62 +42,72 @@ pthread_t g_recv_thread_id = {0};
   * \return NULL
   */
 
-void* thread_recv( void* lparam )
-{
-    int socket = (int)lparam;
-    MEM_STRUCT mem = {0};
+// void* thread_recv( void* lparam )
+// {
+//     int socket = (int)lparam;
+//     MEM_STRUCT mem = {0};
+// 
+//     while( 1 ){
+// 
 
-    while( 1 ){
+//         /*
 
-        /*
-         *  接收数据
-         */
+//          *  接收数据
 
-        if( fx_socket_recv2( socket, &mem ) == -1 ){
-            log_string( "thread_recv error!\n" );
-            break;
-            //return NULL;
-        }
+//          */
 
-        /*
-         *
-         */
+// 
+//         if( fx_socket_recv2( socket, &mem ) == -1 ){
+//             log_string( "thread_recv error!\n" );
+//             break;
+//             //return NULL;
+//         }
+// 
+//         /*
+//          *
+//          */
+// 
+//         if( strstr( (char*)(mem.mem_ptr), "Unauthoried" ) ){
+// 
+//             char* sz_nonce = fx_get_nonce( (char*)(mem.mem_ptr) );
+//             char* sz_key = fx_get_key( (char*)(mem.mem_ptr) );
+//             char sz_response[1024] = {0};
 
-        if( strstr( (char*)(mem.mem_ptr), "Unauthoried" ) ){
+// 			char* sz_RSA = NULL;
 
-            char* sz_nonce = fx_get_nonce( (char*)(mem.mem_ptr) );
-            char* sz_key = fx_get_key( (char*)(mem.mem_ptr) );
-            char sz_response[1024] = {0};
-			char* sz_RSA = NULL;
-			int n_ret = 0;
-			
-			FX_RET_CODE ret = FX_ERROR_OK;
+// 			int n_ret = 0;
 
-            ret = fx_generate_response( sz_key, sz_nonce, g_login_data->sz_user_id, \
-					g_sys_conf.user_data.sz_password, &sz_RSA );
+// 			
 
-            sprintf( sz_response, LOGIN_STEP2, sz_RSA );
+// 			FX_RET_CODE ret = FX_ERROR_OK;
 
-            log_string( "len = %d:%s", strlen( sz_response ), sz_response );
+// 
+//             ret = fx_generate_response( sz_key, sz_nonce, g_login_data->sz_user_id, \
 
-            n_ret = fx_socket_send( socket, sz_response, strlen(sz_response) );
-            if ( n_ret == -1 ){
-                log_string( "fx_login:send data to server error!" );
-                return NULL;
-            }
-
-            free( sz_RSA );
-            free( sz_nonce );
-            free( sz_key );
-        }
-
-        myfree( &mem );
-
-
-    }
-
-    return NULL;
-}
+// 					g_sys_conf.user_data.sz_password, &sz_RSA );
+// 
+//             sprintf( sz_response, LOGIN_STEP2, sz_RSA );
+// 
+//             log_string( "len = %d:%s", strlen( sz_response ), sz_response );
+// 
+//             n_ret = fx_socket_send( socket, sz_response, strlen(sz_response) );
+//             if ( n_ret == -1 ){
+//                 log_string( "fx_login:send data to server error!" );
+//                 return NULL;
+//             }
+// 
+//             free( sz_RSA );
+//             free( sz_nonce );
+//             free( sz_key );
+//         }
+// 
+//         myfree( &mem );
+// 
+// 
+//     }
+// 
+//     return NULL;
+// }
 
 FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
 {
@@ -148,7 +152,7 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
      *  create new thread to recv data from server
      */
 
-    if ( pthread_create( &g_recv_thread_id, NULL, thread_recv, \
+    if ( pthread_create( &g_recv_thread_id, NULL, thread_sip_recv, \
             (void*)socket ) != 0 ){
         log_string( "fx_login:create recevice thread error!" );
         return FX_ERROR_THREAD;
@@ -175,7 +179,10 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
     }
 	
 #ifdef __WIN32__
-	Sleep( 100 * 1000 );
+	//Sleep( 100 * 1000 );
+	while ( 1 )
+	{
+	}
 #else
     sleep( 50 );
 #endif

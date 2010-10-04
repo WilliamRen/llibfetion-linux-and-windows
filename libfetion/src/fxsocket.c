@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 #ifdef __WIN32__
-#include <winsock.h>
+#include <winsock2.h>
 #include <wininet.h>
 #else
 #include <unistd.h>
@@ -45,6 +45,46 @@ void fx_socket_end()
 #endif
 }
 
+int tcp_keep_alive(int socketfd)
+{
+	int keepAlive = 1;
+	int keepIdle = 10;
+	int keepInterval = 5;
+	int keepCount = 5;
+	
+	if(setsockopt(socketfd , SOL_SOCKET , SO_KEEPALIVE 
+		,(void*)&keepAlive,sizeof(keepAlive)) == -1){
+		log_string("set SO_KEEPALIVE failed\n");
+		return -1;
+	}
+	
+#ifdef __WIN32__
+	if(setsockopt(socketfd , IPPROTO_TCP, SO_KEEPALIVE 
+		,(void *)&keepAlive,sizeof(keepAlive)) == -1){
+		log_string("set TCP_KEEPALIVE failed\n");
+		return -1;
+	}
+#else
+	if(setsockopt(socketfd , SOL_TCP, TCP_KEEPIDLE 
+		,(void *)&keepIdle,sizeof(keepIdle)) == -1){
+		log_string("set TCP_KEEPIDEL failed\n");
+		return -1;
+	}
+	
+	if(setsockopt(socketfd , SOL_TCP, TCP_KEEPINTVL
+		,(void *)&keepInterval,sizeof(keepInterval)) == -1){
+		debug_info("set TCP_KEEPINTVL failed\n");
+		log_string -1;
+	}
+	
+	if(setsockopt(socketfd , SOL_TCP, TCP_KEEPCNT
+		,(void *)&keepCount,sizeof(keepCount)) == -1){
+		log_string("set TCP_KEEPCNT failed\n");
+		return -1;
+	}
+#endif
+	return 1;
+}
 
 /** \fn int fx_socket_create( int type, char* ip, ushort port )
  *  \brief 创建套接字
@@ -116,10 +156,24 @@ void fx_socket_close( int fd )
 int fx_socket_connect( int fd, char* ip, ushort port )
 {
 	struct sockaddr_in addr;
+	int max_recv = 0 ;
 	memset( &addr, 0, sizeof(struct sockaddr_in) );
 	addr.sin_family = PF_INET;
 	netaddr_set( ip, &addr );
 	addr.sin_port = htons( port );
+	
+	
+	/*
+	 *	set the max recv buffer
+	 */
+	
+#ifdef __WIN32__
+	max_recv = SO_MAX_MSG_SIZE;
+#else
+	max_recv = MAX_RECV_BUF_SIZE;
+#endif
+
+	setsockopt(fd , SOL_SOCKET , SO_RCVBUF , (const char*)&max_recv , sizeof(max_recv));
 	if( connect( fd, (struct sockaddr*)&addr, sizeof(struct sockaddr_in)) < 0 )
 	{
 		log_string("qqsocket connect failed.");
@@ -131,10 +185,25 @@ int fx_socket_connect( int fd, char* ip, ushort port )
 int fx_socket_connect2( int fd, uint ip, ushort port )
 {
 	struct sockaddr_in addr;
+	int max_recv = 0;
+
 	memset( &addr, 0, sizeof(struct sockaddr_in) );
 	addr.sin_family = PF_INET;
 	addr.sin_addr.s_addr = htonl( ip );
 	addr.sin_port = htons( port );
+
+	/*
+	 *	set the max recv buffer
+	 */
+	
+#ifdef __WIN32__
+	max_recv = SO_MAX_MSG_SIZE;
+#else
+	max_recv = MAX_RECV_BUF_SIZE;
+#endif
+
+	setsockopt(fd , SOL_SOCKET , SO_RCVBUF , (const char*)&max_recv , sizeof(max_recv));
+
 	if( connect( fd, (struct sockaddr*)&addr, sizeof(struct sockaddr_in)) < 0 )
 	{
 		log_string("qqsocket connect failed.");

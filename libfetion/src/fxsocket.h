@@ -2,6 +2,9 @@
 #define FXSOCKET_H_INCLUDED
 
 #include "commdef.h"
+#include "mem.h"
+
+#define MAX_RECV_BUF_SIZE	61140
 
 #define UDP 0
 #define TCP 1

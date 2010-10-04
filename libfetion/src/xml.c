@@ -93,7 +93,7 @@ FX_RET_CODE fx_parse_user_conf( __in  PMEM_STRUCT mem, \
         /*save to struct*/
         l_data->nstatu_code = atoi((char*)sz_attr);
 #ifdef _DEBUG
-        printf("get status-code is %s \n", sz_attr);
+        //printf("get status-code is %s \n", sz_attr);
 #endif
     }else{
         log_string("fx_parse_conf:can't find the status-code!");
