@@ -89,4 +89,25 @@ typedef struct _login_data
 	
 }LOGIN_DATA, *PLOGIN_DATA;
 
+typedef struct _auth_dlg_helper
+{
+	int n_callid;
+	int n_cseq;
+	char phone_num[20];
+	char uri[50];
+	char user_id[20];
+	char user_pwd[20];
+	char machine_code[33];
+
+}AUTH_DLG_HELPER, *PAUTH_DLG_HELPER;
+
+typedef struct _chat_dlg_helper
+{
+	int n_callid;
+	int n_cseq;
+	char user_id[20];
+	char user_sip[32];
+	
+}CHAT_DLG_HELPER, *PCHAT_DLG_HELPER;
+
 #endif

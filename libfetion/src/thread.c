@@ -48,6 +48,12 @@
 extern SYS_CONF_DATA g_sys_conf;
 extern PLOGIN_DATA g_login_data;
 
+/** \fn void* thread_recv( void* lparam )
+  * \brief the thread for recv data
+  * \param lparam parameter
+  * \return NULL
+  */
+
 void* thread_sip_recv( void* lparam )
 {
 	int socket = (int)lparam;
@@ -76,43 +82,11 @@ void* thread_sip_recv( void* lparam )
 		
 		fx_sip_recv( socket, &msg_list );
 #ifdef _DEBUG
-		fx_sip_loop_print( msg_list );
+		/*fx_sip_loop_print( msg_list );*/
 #endif
 		p_msg_tmp = msg_list;
 		while ( p_msg_tmp != NULL )
 		{
-			if ( strcmp( p_msg_tmp->msg->startline->status_desc, "Unauthoried" ) == 0 )
-			{
-				char* sz_nonce = NULL, *sz_key = NULL, *sz_RSA = NULL;
-				char sz_response[1024] = {0};
-				int n_ret = 0;
-				
-				FX_RET_CODE ret = FX_ERROR_OK;
-				
-				char* sz_test = NULL;
-				sip_message_to_str( p_msg_tmp->msg, &sz_test );
-				
-				sz_nonce = fx_get_nonce( sz_test );
-				sz_key = fx_get_key( sz_test );
-				
-				ret = fx_generate_response( sz_key, sz_nonce, g_login_data->sz_user_id, \
-					g_sys_conf.user_data.sz_password, &sz_RSA );
-				
-				sprintf( sz_response, LOGIN_STEP2, sz_RSA );
-				
-				log_string( "len = %d:%s", strlen( sz_response ), sz_response );
-				
-				n_ret = fx_socket_send( socket, sz_response, strlen(sz_response) );
-				if ( n_ret == -1 ){
-					log_string( "fx_login:send data to server error!" );
-					return NULL;
-				}
-				
-				sip_free( sz_test );
-				free( sz_RSA );
-				free( sz_nonce );
-				free( sz_key );
-			}
 			p_msg_tmp = p_msg_tmp->next;
 		}
 	}

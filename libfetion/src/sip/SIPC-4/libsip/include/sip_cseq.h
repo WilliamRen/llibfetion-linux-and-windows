@@ -79,6 +79,8 @@ void sip_cseq_set_method( sip_cseq_t* cseq, char* method );
 
 int sip_cseq_to_str( sip_cseq_t* cseq, char** dest );
 
+void sip_cseq_set_all( sip_cseq_t* cseq, int num, const char* method );
+
 #endif // SIP_CSEQ_H_INCLUDED
 
 

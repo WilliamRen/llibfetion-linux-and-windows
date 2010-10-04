@@ -164,6 +164,15 @@ int sip_cseq_to_str( sip_cseq_t* cseq, char** dest )
     }
 
 }
+void sip_cseq_set_all( sip_cseq_t* cseq, int num, const char* method )
+{
+	if ( cseq == NULL )
+		return;
+	cseq->number = num;
+	if ( cseq->method != NULL )
+		sip_free( cseq->method );
+	cseq->method = strdup( method );
+}
 
 
 

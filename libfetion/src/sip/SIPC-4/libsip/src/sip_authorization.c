@@ -306,7 +306,7 @@ sip_authorization_to_str( sip_authorization_t* authorization, char** dest )
 		  }
 		  if (authorization->response != NULL){
 			  
-			  tmp = sip_strn_append(tmp, ", response=\"", 12);
+			  tmp = sip_strn_append(tmp, ",response=\"", 11);
 			  tmp = sip_str_append(tmp, authorization->response);
 			  tmp = sip_strn_append(tmp, "\"", 1);
 		  }
@@ -322,7 +322,7 @@ sip_authorization_to_str( sip_authorization_t* authorization, char** dest )
 		  }
 		  if (authorization->credential != NULL){
 			  
-			  tmp = sip_strn_append(tmp, ", credential=\"", 14);
+			  tmp = sip_strn_append(tmp, ",credential=\"", 13);
 			  tmp = sip_str_append(tmp, authorization->credential);
 			  tmp = sip_strn_append(tmp, "\"", 1);
 		  }
@@ -357,58 +357,65 @@ int sip_authorization_get_type( char* sz_type )
 	}
 }
 
-void sip_authorization_set_type( sip_authorization_t* authorization, char* auth_type )
+void sip_authorization_set_type( sip_authorization_t* authorization, const char* auth_type )
 {
 	if ( authorization->auth_type != NULL )
 	{
 		sip_free( authorization->auth_type );
 	}
-	authorization->auth_type = auth_type;
+	authorization->auth_type = strdup( auth_type );
 }
 
-void sip_authorization_set_address( sip_authorization_t* authorization, char* address )
+void sip_authorization_set_address( sip_authorization_t* authorization, const char* address )
 {
 	if ( authorization->address != NULL )
 	{
 		sip_free( authorization->address );
 	}
-	authorization->address = address;
+	authorization->address = strdup( address );
 }
 
-void sip_authorization_set_algorithm( sip_authorization_t* authorization, char* algorithm )
+void sip_authorization_set_algorithm( sip_authorization_t* authorization, const char* algorithm )
 {
 	if ( authorization->algorithm != NULL )
 	{
 		sip_free( authorization->algorithm );
 	}
-	authorization->algorithm = algorithm;
+	authorization->algorithm = strdup( algorithm );
 }
 
-void sip_authorization_set_auth( sip_authorization_t* authorization, char* auth )
+void sip_authorization_set_auth( sip_authorization_t* authorization, const char* auth )
 {
 	if ( authorization->auth != NULL )
 	{
 		sip_free( authorization->auth );
 	}
-	authorization->auth = auth;
+	authorization->auth = strdup( auth );
 }
 
-void sip_authorization_set_credential( sip_authorization_t* authorization, char* credential )
+void sip_authorization_set_credential( sip_authorization_t* authorization, const char* credential )
 {
 	if ( authorization->credential != NULL )
 	{
 		sip_free( authorization->credential );
 	}
-	authorization->credential = credential;
+	authorization->credential = strdup( credential );
 }
 
 
-void sip_authorization_set_response( sip_authorization_t* authorization, char* response )
+void sip_authorization_set_response( sip_authorization_t* authorization, const char* response )
 {
 	if ( authorization->response != NULL )
 	{
 		sip_free( authorization->response );
 	}
-	authorization->response = response;
+	authorization->response = strdup( response );
 }
 
+void sip_authorization_set_digest_all( sip_authorization_t* authorization, const char* response, \
+									   const char* algorithm )
+{
+	sip_authorization_set_type( authorization, "Digest" );
+	sip_authorization_set_response( authorization, response );
+	sip_authorization_set_algorithm( authorization, algorithm );
+}

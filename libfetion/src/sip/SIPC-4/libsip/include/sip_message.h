@@ -30,19 +30,20 @@
 
 typedef struct sip_message
 {
-    sip_startline_t* startline;            /*Head*/
-    sip_from_t* from;                       /*'F'*/
-    sip_call_id_t* call_id;                 /*'I'*/
-    sip_cnonce_t* cnonce;                   /*'CN'*/
-    sip_context_length_t* context_len;      /*'L'*/
-    sip_context_encode_t* context_encode;   /*'E'*/
-    sip_cseq_t* cseq;                       /*'Q'*/
-    sip_client_t* client;                   /*'CL'*/
-    sip_to_t* to;                           /*'T'*/
-    sip_expires_t* expires;                 /*'X'*/
-    sip_event_t*   event;                   /*'N'*/
-    sip_authorization_t* authorization;     /*'A'*/
+    sip_startline_t* startline;              /*Head*/
+    sip_from_t* from;                        /*'F'*/
+    sip_call_id_t* call_id;                  /*'I'*/
+    sip_cnonce_t* cnonce;                    /*'CN'*/
+    sip_context_length_t* context_len;       /*'L'*/
+    sip_context_encode_t* context_encode;    /*'E'*/
+    sip_cseq_t* cseq;                        /*'Q'*/
+    sip_client_t* client;                    /*'CL'*/
+    sip_to_t* to;                            /*'T'*/
+    sip_expires_t* expires;                  /*'X'*/
+    sip_event_t*   event;                    /*'N'*/
+    sip_authorization_t* authorization;      /*'A'*/
     sip_www_authenticate_t* www_authenticate;/*'W'*/
+	sip_support_list_t* support_list;		 /*'K'*/
     char* body;
 }sip_message_t;
 
@@ -50,25 +51,25 @@ typedef struct sip_message
 #define CTRLLFLF    "\r\n\r\n"
 
 int
-sip_message_set_common(sip_common_t** common, const char *value);
+sip_message_set_common_str(sip_common_t** common, const char *value);
 
 int
-sip_message_set_cseq(sip_message_t* sip, const char *value);
+sip_message_set_cseq_str(sip_message_t* sip, const char *value);
 
 int
-sip_message_set_www_authenticate(sip_message_t* sip, const char *value);
+sip_message_set_www_authenticate_str(sip_message_t* sip, const char *value);
 
 int
-sip_message_set_authorization(sip_message_t* sip, const char *value);
+sip_message_set_authorization_str(sip_message_t* sip, const char *value);
 
 int
-sip_message_set_to(sip_message_t* sip, const char *value);
+sip_message_set_to_str(sip_message_t* sip, const char *value);
 
 int
-sip_message_set_client(sip_message_t* sip, const char *value);
+sip_message_set_client_str(sip_message_t* sip, const char *value);
 
 int
-sip_message_set_startline(sip_message_t* sip, const char *value);
+sip_message_set_startline_str(sip_message_t* sip, const char *value);
 
 int
 sip_message_parse( sip_message_t* message, const char *value );
@@ -84,5 +85,30 @@ sip_message_init( sip_message_t** message );
 
 int
 sip_message_get_body_length( sip_message_t* message );
+
+void
+sip_message_set_common(sip_common_t** common, sip_common_t* common_set);
+
+void
+sip_message_set_cseq(sip_message_t* sip, sip_cseq_t* cseq );
+
+void
+sip_message_set_www_authenticate(sip_message_t* sip, sip_www_authenticate_t* www_authenticate);
+
+void
+sip_message_set_authorization(sip_message_t* sip, sip_authorization_t* authorization);
+
+void
+sip_message_set_to(sip_message_t* sip, sip_to_t* to);
+
+void
+sip_message_set_client(sip_message_t* sip, sip_client_t* client);
+
+void
+sip_message_set_startline(sip_message_t* sip, sip_startline_t* startline);
+
+void
+sip_message_set_body(sip_message_t* sip, const char* body );
+
 
 #endif // SIP_MESSAGE_H_INCLUDED

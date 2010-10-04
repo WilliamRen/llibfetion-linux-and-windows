@@ -169,10 +169,21 @@ sip_client_to_str( sip_client_t* client, char** dest )
   }
   if (client->version != NULL){
 
-      tmp = sip_strn_append(tmp, ", version=\"", 11);
+      tmp = sip_strn_append(tmp, ",version=\"", 10);
       tmp = sip_str_append(tmp, client->version);
       tmp = sip_strn_append(tmp, "\"", 1);
   }
   return LIBSIP_SUCCESS;
 }
 
+void sip_client_set_all( sip_client_t* client, const char* type, const char* version )
+{
+	if ( client == NULL )
+		return;
+	if ( client->type != NULL )
+		sip_free( client->type );
+	client->type = strdup( type );
+	if ( client->version != NULL )
+		sip_free( client->version );
+	client->version = strdup( version );
+}

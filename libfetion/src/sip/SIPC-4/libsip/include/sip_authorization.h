@@ -88,4 +88,7 @@ int sip_authorization_to_str( sip_authorization_t* authorization, char** dest );
 
 int sip_authorization_get_type( char* sz_type );
 
+void sip_authorization_set_digest_all( sip_authorization_t* authorization, const char* response, \
+									   const char* algorithm );
+
 #endif // SIP_AUTHORIZATION_H_INCLUDED

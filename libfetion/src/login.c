@@ -1,3 +1,22 @@
+/***************************************************************************
+ *   Copyright (C) 2010 by programmeboy                                    *
+ *   programmeboy@gmail.com                                                *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.                                        *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
+ ***************************************************************************/
 
 /*! \file login.c
  *  \brief the file include some code that login to server
@@ -23,6 +42,7 @@
 #include "crypto.h"
 #include "log.h"
 #include "thread.h"
+#include "sipc.h"
 #include "login.h"
 
 
@@ -33,96 +53,25 @@ pthread_t g_recv_thread_id = {0};
 
 #define ASE_KEY "4A026855890197CFDF768597D07200B346F3D676411C6F87368B5C2276DCEDD2"
 
-/*only for test*/
-
-
-/** \fn void* thread_recv( void* lparam )
-  * \brief the thread for recv data
-  * \param lparam parameter
-  * \return NULL
-  */
-
-// void* thread_recv( void* lparam )
-// {
-//     int socket = (int)lparam;
-//     MEM_STRUCT mem = {0};
-// 
-//     while( 1 ){
-// 
-
-//         /*
-
-//          *  接收数据
-
-//          */
-
-// 
-//         if( fx_socket_recv2( socket, &mem ) == -1 ){
-//             log_string( "thread_recv error!\n" );
-//             break;
-//             //return NULL;
-//         }
-// 
-//         /*
-//          *
-//          */
-// 
-//         if( strstr( (char*)(mem.mem_ptr), "Unauthoried" ) ){
-// 
-//             char* sz_nonce = fx_get_nonce( (char*)(mem.mem_ptr) );
-//             char* sz_key = fx_get_key( (char*)(mem.mem_ptr) );
-//             char sz_response[1024] = {0};
-
-// 			char* sz_RSA = NULL;
-
-// 			int n_ret = 0;
-
-// 			
-
-// 			FX_RET_CODE ret = FX_ERROR_OK;
-
-// 
-//             ret = fx_generate_response( sz_key, sz_nonce, g_login_data->sz_user_id, \
-
-// 					g_sys_conf.user_data.sz_password, &sz_RSA );
-// 
-//             sprintf( sz_response, LOGIN_STEP2, sz_RSA );
-// 
-//             log_string( "len = %d:%s", strlen( sz_response ), sz_response );
-// 
-//             n_ret = fx_socket_send( socket, sz_response, strlen(sz_response) );
-//             if ( n_ret == -1 ){
-//                 log_string( "fx_login:send data to server error!" );
-//                 return NULL;
-//             }
-// 
-//             free( sz_RSA );
-//             free( sz_nonce );
-//             free( sz_key );
-//         }
-// 
-//         myfree( &mem );
-// 
-// 
-//     }
-// 
-//     return NULL;
-// }
-
 FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
 {
     /*将sz_sipc_proxy中的IP和端口分别存放，看着挺麻烦的*/
     int n_ret = 0, socket;
-    char* sz_proxy = NULL;
-    char* sz_find = NULL;
-    char* sz_pack = NULL;
+    char* sz_proxy = NULL, *sz_find = NULL, *sz_pack = NULL;
     char sz_ip[20] = {0};
     MEM_STRUCT mem_recv = {0};
-
+	PSIPC_MSG sip_msg_list = NULL;
     ushort u_port = 0;
+	PAUTH_DLG_HELPER p_auth_helper = (PAUTH_DLG_HELPER)malloc( sizeof(AUTH_DLG_HELPER) );
 	
 	g_login_data = l_data;
-
+	
+	
+	/*
+	 *	get the server ip
+	 */
+	
+	
     sz_proxy = g_sys_conf.sz_sipc_proxy;
     sz_find = strchr( sz_proxy, ':' );
     if ( sz_find == NULL ){
@@ -131,7 +80,12 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
     }
     u_port = atoi( (char*)(sz_find+1) );
     memcpy( sz_ip, sz_proxy, (int)sz_find-(int)sz_proxy );
-    /*create socket*/
+    
+    /*
+     *	create socket
+     */
+    
+    
     socket = fx_socket_create( TCP, NULL, 0);
     if ( socket == -1 ){
         log_string( "create socket error!\n" );
@@ -149,6 +103,104 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
     }
 
     /*
+     *  build the login package (login_1)
+     */
+
+    /*sz_pack = fx_pro_build_package( FX_BUILD_LOGIN_1, l_data );
+    if ( sz_pack == NULL ){
+        log_string( "fx_login:build package error!" );
+        return FX_ERROR_UNKOWN;
+    }*/
+	
+	
+	/*
+	 *	init auth dlg helper
+	 */
+	
+	strcpy( p_auth_helper->machine_code, "2F6E7CD33AA1F6928E69DEDD7D6C50B1" );
+	strcpy( p_auth_helper->phone_num, l_data->sz_phone_num );
+	strcpy( p_auth_helper->user_id, l_data->sz_user_id );
+	strcpy( p_auth_helper->user_pwd, g_sys_conf.user_data.sz_password );
+	strcpy( p_auth_helper->uri, l_data->sz_uri );
+	p_auth_helper->n_callid = fx_sip_get_callid();
+	p_auth_helper->n_cseq = 1;
+
+	/*
+	 *	generate response and send it
+	 */
+	
+	if ( fx_sip_generate_auth_req( p_auth_helper, &sz_pack ) != FX_ERROR_OK )
+	{
+		log_string( "fx_login:fx_sip_generate_auth_req error!\n" );
+		return FX_ERROR_UNKOWN;
+	}
+	
+	printf( "%s\n", sz_pack ); 
+
+	/*
+	 *	send data to server
+	 */
+	
+	n_ret = fx_socket_send( socket, sz_pack, strlen(sz_pack) );
+    if ( n_ret == -1 ){
+        log_string( "fx_login:send data to server error!" );
+        return FX_ERROR_SOCKET;
+    }
+	
+	free( sz_pack );
+	sz_pack = NULL;
+
+	/*
+	 *	recv buffer from server
+	 */
+	
+	fx_sip_recv( socket, &sip_msg_list );
+	if ( atoi( sip_msg_list->msg->startline->status_code ) != SIP_UNAUTHORIZED )
+	{
+		log_string( "fx_login error!\n" );
+		return FX_ERROR_UNKOWN;
+	}
+	
+	/*
+	 *	generate response package then send it
+	 */
+	
+	if ( fx_sip_generate_auth_resp( p_auth_helper, sip_msg_list->msg->www_authenticate->key, \
+									sip_msg_list->msg->www_authenticate->nonce, &sz_pack ) != FX_ERROR_OK )
+	{
+		log_string( "fx_login:fx_sip_generate_auth_resp error!\n" );
+		return FX_ERROR_UNKOWN;
+	}
+	
+	printf( "%s\n", sz_pack );
+	
+	/*
+	 *	send data to server
+	 */
+	
+	n_ret = fx_socket_send( socket, sz_pack, strlen(sz_pack) );
+    if ( n_ret == -1 ){
+        log_string( "fx_login:send data to server error!" );
+        return FX_ERROR_SOCKET;
+    }
+
+	free( sz_pack );
+	/*
+	 *	free the msg list above
+	 */
+	
+	fx_sip_msg_list_free( sip_msg_list );
+	sip_msg_list = NULL;
+
+
+	fx_sip_recv( socket, &sip_msg_list );
+	if ( atoi( sip_msg_list->msg->startline->status_code ) != SIP_OK )
+	{
+		log_string( "fx_login failed!\n" );
+		return FX_ERROR_UNKOWN;
+	}
+
+	/*
      *  create new thread to recv data from server
      */
 
@@ -156,26 +208,6 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
             (void*)socket ) != 0 ){
         log_string( "fx_login:create recevice thread error!" );
         return FX_ERROR_THREAD;
-    }
-
-    /*
-     *  build the login package (login_1)
-     */
-
-    sz_pack = fx_pro_build_package( FX_BUILD_LOGIN_1, l_data );
-    if ( sz_pack == NULL ){
-        log_string( "fx_login:build package error!" );
-        return FX_ERROR_UNKOWN;
-    }
-
-    /*
-     *  send the login data to server
-     */
-
-    n_ret = fx_socket_send( socket, sz_pack, strlen(sz_pack) );
-    if ( n_ret == -1 ){
-        log_string( "fx_login:send data to server error!" );
-        return FX_ERROR_SOCKET;
     }
 	
 #ifdef __WIN32__

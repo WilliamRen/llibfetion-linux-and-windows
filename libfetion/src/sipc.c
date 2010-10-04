@@ -31,11 +31,36 @@
 #include "commdef.h"
 #include "fxsocket.h"
 #include "log.h"
+#include "protocol.h"
+#include "crypto.h"
 #include "sipc.h"
 
 #ifdef __WIN32__
 #pragma comment( lib, "../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib" )
 #endif
+
+int call_id = 1;
+
+int fx_sip_get_callid()
+{
+	return call_id;
+}
+int fx_sip_increase_callid()
+{
+	call_id ++;
+	return call_id;
+}
+
+void fx_sip_msg_list_free( PSIPC_MSG msg_list )
+{
+	PSIPC_MSG pos = msg_list;
+	while ( pos != NULL )
+	{
+		PSIPC_MSG p_temp = pos->next;
+		free( pos );
+		pos = p_temp;
+	}
+}
 
 void fx_sip_msg_append( PSIPC_MSG msglist, PSIPC_MSG msg )
 {
@@ -252,4 +277,202 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 
 	}
 	return FX_ERROR_OK;
+}
+
+int fx_sip_generate_auth_req( __in PAUTH_DLG_HELPER p_auth_helper, __out char** auth_req)
+{
+	sip_startline_t* start_line = NULL;
+	sip_from_t* from = NULL;
+	sip_call_id_t* call_id = NULL;
+	sip_cseq_t* cseq = NULL;
+	sip_cnonce_t* cnonce = NULL;
+	sip_client_t*	client = NULL;
+	sip_message_t* message = NULL;
+	char sz_num[10] = {0};
+	char* sz_tmp = NULL;
+	int n_ret = 0;
+
+	
+	sip_message_init( &message );
+
+	/*
+	 *	start line
+	 */
+	
+	sip_startline_init( &start_line );
+	sip_start_set_line_req_all( start_line, "R", FETION_DOMAIN );
+	sip_message_set_startline( message, start_line );
+	
+	/*
+	 *	from
+	 */
+	
+	sip_common_init( &from );
+	sip_common_set_all( from, p_auth_helper->uri );
+	sip_message_set_common( &(message->from), from );
+
+	/*
+	 *	call id
+	 */
+	
+	itoa( p_auth_helper->n_callid, sz_num, 10 );
+	sip_common_init( &call_id );
+	sip_common_set_all( call_id, sz_num );
+	sip_message_set_common( &(message->call_id), call_id );
+	
+	/*
+	 *	cseq
+	 */
+	
+	sip_cseq_init( &cseq );
+	sip_cseq_set_all( cseq, p_auth_helper->n_cseq, "R" );
+	sip_message_set_cseq( message, cseq );
+	
+	/*
+	 *	cnonce
+	 */
+	
+	sz_tmp = fx_generate_cnonce();
+	sip_common_init( &cnonce );
+	sip_common_set_all( cnonce, sz_tmp );
+	free( sz_tmp );
+	sip_message_set_common( &(message->cnonce), cnonce );
+	
+	/*
+	 *	client
+	 */
+	
+	sip_client_init( &client );
+	sip_client_set_all( client, "pc", "4.0.2510" );
+	sip_message_set_client( message, client );
+	
+	n_ret = sip_message_to_str( message, auth_req );
+	
+	sip_message_free( message );
+	
+	/*
+	 *	add the sceq
+	 */
+	
+	p_auth_helper->n_cseq++;
+
+	if ( n_ret == LIBSIP_SUCCESS )
+		return FX_ERROR_OK;
+	else
+		return FX_ERROR_UNKOWN;
+
+}
+
+int fx_sip_generate_auth_resp( __in PAUTH_DLG_HELPER p_auth_helper,
+							   __in char* key, __in char* nonce,
+							   __out char** auth_req)
+{
+	sip_startline_t* start_line = NULL;
+	sip_from_t* from = NULL;
+	sip_call_id_t* call_id = NULL;
+	sip_cseq_t* cseq = NULL;
+	sip_authorization_t* authorization = NULL;
+	sip_context_length_t* context_len = NULL;
+	sip_message_t* message = NULL;
+	char* sz_response = NULL;
+	FX_RET_CODE n_ret = FX_ERROR_OK;
+	char sz_body[1024] = {0}, sz_num[10] = {0};
+	
+	/*
+	 *	init message
+	 */
+	
+	sip_message_init( &message );
+
+	/*
+	 *	start line
+	 */
+	
+	sip_startline_init( &start_line );
+	sip_start_set_line_req_all( start_line, "R", FETION_DOMAIN );
+	sip_message_set_startline( message, start_line );
+
+	/*
+	 *	from
+	 */
+	
+	sip_common_init( &from );
+	sip_common_set_all( from, p_auth_helper->uri );
+	sip_message_set_common( &(message->from), from );
+
+	/*
+	 *	call id
+	 */
+	
+	itoa( p_auth_helper->n_callid, sz_num, 10 );
+	sip_common_init( &call_id );
+	sip_common_set_all( call_id, sz_num );
+	sip_message_set_common( &(message->call_id), call_id );
+	
+	/*
+	 *	cseq
+	 */
+	
+	sip_cseq_init( &cseq );
+	sip_cseq_set_all( cseq, p_auth_helper->n_cseq, "R" );
+	sip_message_set_cseq( message, cseq );
+	
+	/*
+	 *	authorization
+	 */
+		
+		/*
+		 *	get response
+		 */
+		
+	n_ret = fx_generate_response( key, nonce, p_auth_helper->user_id, \
+								p_auth_helper->user_pwd, &sz_response );
+	if ( n_ret != FX_ERROR_OK )
+	{
+		sip_message_free( message );
+		return n_ret;
+	}
+		
+		/*
+		 *	do generate authorization
+		 */
+
+	sip_authorization_init( &authorization );
+	sip_authorization_set_digest_all( authorization, sz_response, "SHA1-sess-v4" );
+	sip_message_set_authorization( message, authorization );
+	
+	
+	sprintf( sz_body, SIP_AUTH_BODY, p_auth_helper->machine_code, \
+				p_auth_helper->phone_num, p_auth_helper->user_id );
+	//strcpy( sz_body, SIP_AUTH_BODY );
+	
+	/*
+	 *	context length
+	 */
+	
+	itoa( strlen( sz_body ), sz_num, 10 );
+	sip_common_init( &context_len );
+	sip_common_set_all( context_len, sz_num );
+	sip_message_set_common( &(message->context_len), context_len );
+	
+	/*
+	 *	body
+	 */
+	
+	sip_message_set_body( message, sz_body );
+
+	n_ret = sip_message_to_str( message, auth_req );
+	
+	sip_message_free( message );
+	
+	/*
+	 *	add the sceq
+	 */
+	
+	p_auth_helper->n_cseq++;
+
+	if ( n_ret == LIBSIP_SUCCESS )
+		return FX_ERROR_OK;
+	else
+		return FX_ERROR_UNKOWN;
 }

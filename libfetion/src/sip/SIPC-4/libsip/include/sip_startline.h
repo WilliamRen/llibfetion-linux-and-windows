@@ -38,4 +38,9 @@ int sip_startline_parse( sip_startline_t* startline, const char* value );
 
 int sip_startline_to_str( sip_startline_t* startline, char** dest );
 
+void sip_start_set_line_req_all( sip_startline_t* startline, char* method, \
+							 char* host );
+void sip_start_set_line_resp_all( sip_startline_t* startline, char* statu_code, \
+							  char* status_desc );
+
 #endif // SIP_STARTLINE_H_INCLUDED

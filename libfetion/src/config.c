@@ -1,3 +1,22 @@
+/***************************************************************************
+ *   Copyright (C) 2010 by programmeboy                                    *
+ *   programmeboy@gmail.com                                                *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.                                        *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
+ ***************************************************************************/
 
 /*! \file config.cpp
  *  \brief this file include the code of
@@ -66,11 +85,11 @@ FX_RET_CODE fx_get_sys_conf( __in char* sz_phone_num, \
 }
 
 /** \fn FX_RET_CODE fx_get_user_conf( __in char* sz_username, __in char* sz_password, \
- *                                    __out struct login_data* l_data )
+ *                                    __in __out PMEM_STRUCT mem  )
  *  \brief get the config-file of the user specifed by sz_username
  *  \param sz_username the user's phone number
  *  \param sz_password the password
- *  \param l_data the data we get from config-file
+ *  \param mem the data we get from config-file
  *  \return FX_RET_CODE see more at error code definition
  */
 

@@ -1,3 +1,22 @@
+/***************************************************************************
+ *   Copyright (C) 2010 by programmeboy                                    *
+ *   programmeboy@gmail.com                                                *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.                                        *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
+ ***************************************************************************/
 
 /*! \file protocol.c
  *  \brief 里面封装了sip协议
@@ -26,67 +45,6 @@
 #define  MAKE_LABLE_CL  "CL: type=\"pc\",version=\"4.0.2510\"\r\n"
 
 char g_pw_v4[30] = {0};
-
-// unsigned char* strtohex(char* in , int* len);
-// char* hextostr(unsigned char* in , int len);
-
-// char* hash_password_v2(char* userid , char* passwordhex);
-// 
-// char* hash_password_v1( unsigned char* b0 , int b0len, const unsigned char* password , int psdlen)
-// {
-// 	unsigned char* dst = (unsigned char*)malloc(b0len + psdlen + 1);
-// 	unsigned char tmp[20];
-// 	char* res;
-
-// 	SHA_CTX ctx;
-
-// 
-// 	memset(tmp , 0 , sizeof(tmp));
-// 	memset(dst , 0 , b0len + psdlen + 1);
-// 	memcpy(dst , b0 , b0len);
-// 	memcpy(dst + b0len , password , psdlen);
-// 
-// 	SHA1_Init(&ctx);
-// 	SHA1_Update(&ctx , dst , b0len + psdlen );
-// 	SHA1_Final(tmp , &ctx);
-// 	free(dst);
-// 	res = hextostr(tmp , 20);
-// 	return res;
-// }
-// char* hash_password_v2(char* userid , char* passwordhex)
-// {
-// 	int id = atoi(userid);
-// 	char* res;
-// 	unsigned char* bid = (unsigned char*)(&id);
-// 	unsigned char ubid[4];
-// 	int bpsd_len;
-// 	unsigned char* bpsd = strtohex(passwordhex , &bpsd_len);
-// 	memcpy(ubid , bid , 4);
-// 	res = hash_password_v1(ubid , sizeof(id) , bpsd , bpsd_len);
-// 	free(bpsd);
-// 	return res;
-// }
-// char* hash_password_v4(char* userid , char* password)
-// {
-// 	char* domain = "fetion.com.cn:";
-// 	char *res , *dst;
-// 	unsigned char* udomain = (unsigned char*)malloc(strlen(domain));
-// 	unsigned char* upassword = (unsigned char*)malloc(strlen(password));
-// 	memset(udomain , 0 , strlen(domain));
-// 	memcpy(udomain , (unsigned char*)domain , strlen(domain));
-// 	memset(upassword , 0 , strlen(password));
-// 	memcpy(upassword , (unsigned char*)password , strlen(password));
-// 	res = hash_password_v1(udomain , strlen(domain) , upassword , strlen(password));
-// 	free(udomain);
-// 	free(upassword);
-// 	if(userid == NULL || strlen(userid) == 0)
-// 	{
-// 		return res;
-// 	}
-// 	dst = hash_password_v2(userid , res);
-// 	free(res);
-// 	return dst;
-// }
 
 int fx_get_next_call()
 {
@@ -140,80 +98,6 @@ char* fx_pro_build_package( int n_type, void* l_data )
     }
     return sz_pack;
 }
-
-// char* fx_generate_response( char* sz_key, char* sz_nonce, char* sz_ase_key )
-// {
-//     char sz_module[256+1] = {0};
-//     char sz_exponent[6+1] = {0};
-//     char* sz_SHA1 = (char*)malloc( 1024 );
-// 
-//     memset( sz_SHA1, 0, 1024 );
-// 
-//     if( sz_key == NULL || sz_nonce == NULL || sz_ase_key == NULL )
-//         return NULL;
-//     /*first we should get the moudle and the publicExponent*/
-//     if( strlen( sz_key ) != 262 )
-//         return NULL;
-// 
-//     memcpy( sz_module, sz_key, 256 );
-//     memcpy( sz_exponent, sz_key+256, 6 );
-// 
-//     /*do RSA*/
-//     {
-//         int ret = 0, flen = 0, flen1 = 0;
-//         BIGNUM *bnn, *bne;
-//         unsigned char in[1024] = {0};
-//         unsigned char *out;
-// 
-//         //sprintf( in, "%s%s%s", g_pw_v4, sz_nonce, sz_ase_key );
-// 
-//         int n1 = 0, n2 = 0, n3 = strlen( sz_nonce );
-// 
-//         char* sz_pw = hash_password_v4( "639717376", "qiupeng501");
-// 
-//         unsigned char* p_byte = strtohex( sz_pw, &n1 );
-//         unsigned char* p_byte1= strtohex( sz_ase_key, &n2 );
-// 
-// 		RSA *r = NULL;
-
-// 		char* sz = NULL;
-// 
-//         memcpy( in, sz_nonce, n3);
-//         memcpy( in + n3, p_byte, n1 );
-//         memcpy( in + n1 + n3, p_byte1, n2 );
-// 
-//          bnn = BN_new();
-//          bne = BN_new();
-// 
-//          BN_hex2bn(&bnn, sz_module);
-//          BN_hex2bn(&bne, sz_exponent);
-// 
-//          r = RSA_new();
-//          r->n = bnn;
-//          r->e = bne;
-//          r->d = NULL;
-// 
-//          flen = RSA_size(r);
-//          flen1 = n1 + n2 + n3;
-// 
-//          out = (char *)malloc(flen);
-//          memset(out, 0, flen);
-// 
-//          ret = RSA_public_encrypt(flen1, in, out, r, RSA_PKCS1_PADDING);
-//          if (ret < 0)
-//          {
-//             printf("Encrypt failed!\n");
-//             return NULL;
-//          }
-// 
-//         sz = hextostr( out, ret);
-//         strcpy( sz_SHA1, sz );
-//         free( sz );
-//         RSA_free(r);
-//     }
-// 
-//     return sz_SHA1;
-// }
 
 char* fx_generate_cnonce()
 {
@@ -277,65 +161,3 @@ char* fx_get_key( char* sz_data )
 	else
 		return NULL;
 }
-// unsigned char* strtohex(char* in , int* len)
-// {
-// 	unsigned char* out = (unsigned char*)malloc(strlen(in)/2 );
-// 	int i = 0 , j = 0 , k = 0 ,length = 0;
-// 	char tmp[3] = { 0 };
-// 	memset(out , 0 , strlen(in) / 2);
-// 	while(i < (int)strlen(in))
-// 	{
-// 		tmp[k++] = in[i++];
-// 		tmp[k] = '\0';
-// 		if(k == 2)
-// 		{
-// 			out[j++] = (unsigned char)strtol(tmp , (char**)NULL , 16);
-// 			k = 0;
-// 			length ++;
-// 		}
-// 	}
-// 	if(len != NULL )
-// 		*len = length;
-// 	return out;
-// }
-// 
-// char* hextostr(unsigned char* in , int len)
-// {
-// 	char* res = (char*)malloc(len * 2 + 1);
-// 	int i = 0;
-// 	memset(res , 0 , len * 2 + 1);
-// 	while(i < len)
-// 	{
-// 		sprintf(res + i * 2 , "%02X" , in[i]);
-// 		i ++;
-// 	};
-// 	i = 0;
-// // 	while(i < (int)strlen(res))
-
-// // 	{
-
-// // 		res[i] = toupper(res[i]);
-
-// // 		i ++;
-
-// // 	};
-
-// 	return res;
-// }
-
-// char* generate_aes_key()
-// {
-//         char* key = (char*)malloc(65);
-//         memset( key , 0 , 65 );
-//         sprintf( key , "%04X%04X%04X%04X%04X%04X%04X"
-//                        "%04X%04X%04X%04X%04X%04X%04X%04X%04X" ,
-//                         rand() & 0xFFFF , rand() & 0xFFFF ,
-//                         rand() & 0xFFFF , rand() & 0xFFFF ,
-//                         rand() & 0xFFFF , rand() & 0xFFFF ,
-//                         rand() & 0xFFFF , rand() & 0xFFFF ,
-//                         rand() & 0xFFFF , rand() & 0xFFFF ,
-//                         rand() & 0xFFFF , rand() & 0xFFFF ,
-//                         rand() & 0xFFFF , rand() & 0xFFFF,
-//                         rand() & 0xFFFF , rand() & 0xFFFF );
-//         return key;
-// }

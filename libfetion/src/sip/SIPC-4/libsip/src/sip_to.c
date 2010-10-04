@@ -219,3 +219,18 @@ sip_to_set_pvalue( sip_to_t* to, const char* p_value )
 {
     to->p_value = (char*)p_value;
 }
+
+void sip_to_set_all( sip_to_t* to, const char* uid, \
+					 const char* host, const char* p_value )
+{
+	if ( to->uid != NULL )
+		sip_free( to->uid );
+	to->uid = strdup( uid );
+	if ( to->host != NULL )
+		sip_free( to->host );
+	to->host = strdup( host );
+	if ( to->p_value != NULL )
+		sip_free( to->p_value );
+	to->p_value = strdup( p_value );
+
+}

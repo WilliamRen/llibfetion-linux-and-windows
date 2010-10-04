@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "../include/sip_def.h"
@@ -285,4 +286,37 @@ sip_startline_to_str( sip_startline_t* startline, char** dest )
 
         return LIBSIP_SUCCESS;
     }
+}
+
+void sip_start_set_line_req_all( sip_startline_t* startline, char* method, \
+							 char* host )
+{
+	if ( startline == NULL ){
+		return;
+	}
+	if ( startline->method != NULL )
+		sip_free( startline->method );
+	startline->method = strdup( method );
+	if ( startline->host != NULL )
+		sip_free( startline->host );
+	startline->host = strdup( host );
+	if ( startline->version != NULL )
+		sip_free( startline->version );
+	startline->version = strdup( SIP_VERSION );
+}
+void sip_start_set_line_resp_all( sip_startline_t* startline, char* statu_code, \
+							  char* status_desc )
+{
+	if ( startline == NULL ){
+		return;
+	}
+	if ( startline->status_code != NULL )
+		sip_free( startline->status_code );
+	startline->status_code = strdup( statu_code );
+	if ( startline->status_desc != NULL )
+		sip_free( startline->status_desc );
+	startline->status_desc = strdup( status_desc );
+	if ( startline->version != NULL )
+		sip_free( startline->version );
+	startline->version = strdup( SIP_VERSION );
 }

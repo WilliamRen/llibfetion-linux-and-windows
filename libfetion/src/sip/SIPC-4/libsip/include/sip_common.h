@@ -42,6 +42,19 @@ typedef sip_common_t sip_context_encode_t;
 typedef sip_common_t sip_expires_t;
 typedef sip_common_t sip_event_t;
 
+
+/*
+ *	add for K
+ *  sometime the recv package have a lot of k so we
+ */
+
+typedef struct sip_support_list
+{
+	sip_common_t* sip_k;
+	struct sip_support_list* next;
+
+}sip_support_list_t;
+
 /** \fn int sip_common_init( sip_common_t** common )
 	\brief Allocate a common element.
 	\param common The element to work on.
@@ -82,6 +95,32 @@ void sip_common_set_element( sip_common_t* common, const char* element );
 */
 
 int sip_common_to_str( sip_common_t* common, char** dest );
+
+/** \fn 
+	\brief 
+	\param 
+	\return 
+*/
+
+int sip_support_list_init( sip_support_list_t* sip_k );
+
+/** \fn 
+	\brief 
+	\param 
+	\return 
+*/
+
+void sip_support_list_free( sip_support_list_t* sip_k );
+
+/** \fn 
+	\brief 
+	\param 
+	\return 
+*/
+
+void sip_support_list_append( sip_support_list_t* sip_k, sip_support_list_t* add );
+
+#define sip_common_set_all	sip_common_set_element
 
 #endif/*SIP_COMMON_H_INCLUDE*/
 

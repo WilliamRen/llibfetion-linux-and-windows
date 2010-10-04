@@ -63,6 +63,8 @@ int sip_client_parse( sip_client_t* client, const char* value );
 
 int sip_client_to_str( sip_client_t* client, char** dest );
 
+void sip_client_set_all( sip_client_t* client, const char* type, const char* version );
+
 #endif // SIP_CLIENT_H_INCLUDED
 
 

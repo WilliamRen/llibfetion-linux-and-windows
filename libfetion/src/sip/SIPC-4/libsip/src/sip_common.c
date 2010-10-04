@@ -18,7 +18,9 @@
  **************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
 
 #include "../include/sip_def.h"
 #include "../include/sip_common.h"
@@ -96,7 +98,11 @@ sip_common_set_element( sip_common_t* common, const char* element )
      *  be called
      */
 
-    common->element = (char*)element;
+	if ( common == NULL )
+		return;
+	if ( common->element != NULL )
+		sip_free( common->element );
+	common->element = strdup( element );
 }
 
 int sip_common_to_str( sip_common_t* common, char** dest )
@@ -126,9 +132,34 @@ int sip_common_to_str( sip_common_t* common, char** dest )
     return LIBSIP_SUCCESS;
 }
 
+int sip_support_list_init( sip_support_list_t* sip_k )
+{
+	return LIBSIP_SUCCESS;
+}
 
+void sip_support_list_free( sip_support_list_t* sip_k )
+{
+	sip_support_list_t* pos = sip_k;
+	while ( pos )
+	{
+		sip_support_list_t* tmp = pos->next;
+		free( pos );
+		pos = tmp;
+	}
+}
 
-
-
+void sip_support_list_append( sip_support_list_t* sip_k, sip_support_list_t* add )
+{
+	sip_support_list_t* pos = sip_k;
+	while(pos != NULL)
+	{
+		if(pos->next == NULL)
+		{
+			pos->next = add;
+			break;
+		}
+		pos = pos->next;
+	}
+}
 
 
