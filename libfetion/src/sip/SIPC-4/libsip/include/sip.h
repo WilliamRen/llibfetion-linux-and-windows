@@ -38,5 +38,6 @@
 #include "sip_startline.h"
 #include "sip_to.h"
 #include "sip_www_authenticate.h"
+#include "sip_message.h"
 
 #endif // SIP_H_INCLUDED

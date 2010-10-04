@@ -46,7 +46,7 @@ void
 sip_to_free( sip_to_t* to )
 {
     if ( NULL == to )
-    	return LIBSIP_BADPARAMETER;
+    	return;
 
     /*
      *  free the all element
@@ -110,7 +110,7 @@ sip_to_parse( sip_to_t* to, const char* value )
              *  get the end of the value
              */
 
-            char* sz_end = value + strlen(value);
+            char* sz_end = (char*)value + strlen(value);
 
             len = sz_p - sz_at - 1;
             to->host = (char*)sip_malloc( len + 1 );
@@ -205,17 +205,17 @@ sip_to_to_str( sip_to_t* to, char** dest )
 void
 sip_to_set_uid( sip_to_t* to, const char* uid )
 {
-    to->uid = uid;
+    to->uid = (char*)uid;
 }
 
 void
 sip_to_set_host( sip_to_t* to, const char* host )
 {
-    to->host = host;
+    to->host = (char*)host;
 }
 
 void
 sip_to_set_pvalue( sip_to_t* to, const char* p_value )
 {
-    to->p_value = p_value;
+    to->p_value = (char*)p_value;
 }

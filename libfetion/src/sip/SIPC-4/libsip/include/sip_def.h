@@ -24,6 +24,7 @@
 #ifndef SIP_DEF_H_INCLUDED
 #define SIP_DEF_H_INCLUDED
 
+#define LIBSIP_BODY_BEYOND			 1
 #define LIBSIP_SUCCESS               0
 #define LIBSIP_UNDEFINED_ERROR      -1
 #define LIBSIP_BADPARAMETER         -2
@@ -32,6 +33,11 @@
 #define LIBSIP_SYNTAXERROR          -5
 #define LIBSIP_NOTFOUND             -6
 #define LIBSIP_API_NOT_INITIALIZED  -7
+#define LIBSIP_NOT_FOUND_HEAD_END   -8
+#define LIBSIP_HAVE_NO_LENGTH		-9
+#define LIBSIP_BODY_NOT_COMPLETE	-10
+
+#define LIBSIP_IS_SUCCESS( x ) ( x >= LIBSIP_SUCCESS )
 
 #define SIP_VERSION                 "SIP-C/4.0"
 

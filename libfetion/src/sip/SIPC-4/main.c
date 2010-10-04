@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <string.h>
+
 #include "libsip/include/sip_def.h"
 #include "libsip/include/sip_cseq.h"
 #include "libsip/include/sip_to.h"
@@ -19,15 +21,23 @@
 #define TEST_HEAD1 "SIP-C/4.0 401 Unauthoried"
 #define TEST_CLIENT "type=\"pc\",version=\"4.0.2510\""
 
-#define TEST_MESSAGE  "SIP-C/4.0 401 Unauthoried\r\n"\
-                      "F: 879534138\r\n"\
-                      "I: 1\r\n"\
+#define TEST_MESSAGE  "SIP-C/4.0 401 Unauthoried\r\n" \
+                      "F: 879534138\r\n" \
+                      "I: 1\r\n" \
+					  "K: 11\r\n" \
+					  "K: 22\r\n" \
                       "CN: 123456\r\n" \
-                      "Q: 1 R\r\n"\
-                      "W: Digest algorithm=\"SHA1-sess-v4\",nonce=\"660702E04DB7BC69666436271C4D9F7B\",key=\"AD3D7038\",signature=\"D528E11\"\r\n"\
-                      "L: 13\r\n" \
-                      "\r\n" \
-                      "body-->qp_test"
+                      "Q: 1 R\r\n" \
+                      "W: Digest algorithm=\"SHA1-sess-v4\",nonce=\"660702E04DB7BC69666436271C4D9F7B\",key=\"AD3D7038\",signature=\"D528E11\"\r\n" \
+                      "A: TICKS auth=\"2025669365.557049008\"\r\n" \
+					  "\r\n" \
+					  "SIP-C/4.0 401 Unauthoried\r\n" \
+					  "F: 879534138\r\n" \
+					  "CN: 123456\r\n" \
+					  "Q: 1 R\r\n" \
+					  "\r\n"
+
+
 
 int main()
 {
@@ -121,14 +131,54 @@ int main()
 
     sip_message_t* msg;
     char* sz_test = NULL;
+	int n_ret = 0;
 
-    msg = (sip_message_t*)sip_malloc( sizeof( sip_message_t ) );
+    //msg = (sip_message_t*)sip_malloc( sizeof( sip_message_t ) );
+	sip_message_init( &msg );
+	
+	n_ret = sip_message_parse( msg, TEST_MESSAGE );
+    if ( !LIBSIP_IS_SUCCESS( n_ret ) )
+    {
+		printf( "parse error!\n" );
+		return 0;
+    }
+	
+	if ( n_ret == LIBSIP_BODY_BEYOND )
+	{
+					
+// 		int n_head_len  = 0, n_body_len = 0, n_next = 0;
+// 		char* sz_ctrllflf = NULL, *sz_next_msg = NULL;
+// 		char* sz_tmp_recv = TEST_MESSAGE;
+// 
+// 		
+// 		/*
+// 		 *	这里肯定能得到,不然sip_message_parse就错了
+// 		 */
+// 		
+// 		sz_ctrllflf = strstr( sz_tmp_recv, CTRLLFLF );
+// 		n_head_len = strlen( sz_tmp_recv ) - strlen( sz_ctrllflf ) + 4/*for CTRLLFLF*/;
+// 
+// 		n_body_len = sip_message_get_body_length( msg );
+// 		
+// 		n_next = strlen( sz_tmp_recv ) - n_head_len - n_body_len;
+// 		sz_next_msg = (char*)malloc( n_next + 1 );
+// 		memset( sz_next_msg, 0, n_next + 1 );
+// 		
+// 		/*
+// 		 *	set the next msg buffer
+// 		 */
+// 		
+// 		strcpy( sz_next_msg, sz_tmp_recv + n_head_len + n_body_len );
 
-    sip_message_parse( msg, TEST_MESSAGE );
+	}
+
+	printf( "len = %d \n", sip_message_get_body_length( msg ) );
 
     sip_message_to_str( msg, &sz_test );
-
+	
     printf( "%s\n", sz_test );
+
+	sip_message_free( msg );
 
     sip_free( sz_test );
 

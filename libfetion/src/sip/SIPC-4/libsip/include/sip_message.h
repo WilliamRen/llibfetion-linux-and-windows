@@ -23,7 +23,7 @@
 	\brief for all
 */
 
-#include "../include/sip.h"
+#include "sip.h"
 
 #ifndef SIP_MESSAGE_H_INCLUDED
 #define SIP_MESSAGE_H_INCLUDED
@@ -75,5 +75,14 @@ sip_message_parse( sip_message_t* message, const char *value );
 
 int
 sip_message_to_str( sip_message_t* message, char** dest );
+
+void
+sip_message_free( sip_message_t* message );
+
+int 
+sip_message_init( sip_message_t** message );
+
+int
+sip_message_get_body_length( sip_message_t* message );
 
 #endif // SIP_MESSAGE_H_INCLUDED

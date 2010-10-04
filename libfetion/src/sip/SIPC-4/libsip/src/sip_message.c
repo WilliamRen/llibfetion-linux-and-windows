@@ -232,7 +232,7 @@ sip_common_to_hole_string( sip_common_t* common, const char* type, char** dest )
      *  get the length of the string
      */
 
-    n_len = strlen( sz_temp ) + 1 + 3/*for 'F: '*/ + 2/*for \r\n*/;
+    n_len = strlen( sz_temp ) + 1 + strlen( type )/*for 'X: '*/ + 2/*for \r\n*/;
     n_total += n_len;
 
     /*
@@ -251,6 +251,17 @@ sip_common_to_hole_string( sip_common_t* common, const char* type, char** dest )
     sip_free( sz_temp );
 
     return LIBSIP_SUCCESS;
+}
+
+int
+sip_message_get_body_length( sip_message_t* message )
+{
+	int n_len = 0;
+	sip_context_length_t* sip_len = message->context_len;
+	if ( sip_len != NULL ){
+		n_len = atoi( sip_len->element );
+	}
+	return n_len;
 }
 
 int
@@ -440,7 +451,7 @@ sip_message_to_str( sip_message_t* message, char** dest )
      *                       L:                         *
      ****************************************************/
 
-    n_ret = sip_common_to_hole_string( message->cnonce, "L: ", dest );
+    n_ret = sip_common_to_hole_string( message->context_len, "L: ", dest );
     if ( LIBSIP_SUCCESS != n_ret )
     	return n_ret;
 
@@ -476,6 +487,33 @@ sip_message_to_str( sip_message_t* message, char** dest )
     return LIBSIP_SUCCESS;
 }
 
+int sip_message_init( sip_message_t** message )
+{
+	*message = (sip_message_t*)sip_malloc( sizeof( sip_message_t ) );
+	if ( NULL == *message )
+    	return LIBSIP_NOMEM;
+	/*
+     *  initialize
+     */
+
+    (*message)->authorization	= NULL;
+    (*message)->body			= NULL;
+    (*message)->call_id			= NULL;
+	(*message)->client			= NULL;
+	(*message)->cnonce			= NULL;
+	(*message)->context_encode  = NULL;
+	(*message)->context_len		= NULL;
+    (*message)->cseq			= NULL;
+    (*message)->event			= NULL;
+	(*message)->expires			= NULL;
+	(*message)->from			= NULL;
+	(*message)->startline		= NULL;
+	(*message)->to				= NULL;
+    (*message)->www_authenticate= NULL;
+
+	return LIBSIP_SUCCESS;
+}
+
 void
 sip_message_free( sip_message_t* message )
 {
@@ -505,6 +543,8 @@ sip_message_free( sip_message_t* message )
         sip_www_authenticate_free( message->www_authenticate );
     if ( message->body )
     	sip_free( message->body );
+
+	sip_free( message );
 }
 
 int
@@ -512,7 +552,7 @@ sip_message_parse( sip_message_t* message, const char *value )
 {
     char* sz_line = NULL;
     char* sz_next = NULL;
-    char* sz_temp = value;
+    char* sz_temp = (char*)value;
     char* sz_body_pos = NULL;
     int n_ret = LIBSIP_SUCCESS;
 
@@ -523,18 +563,18 @@ sip_message_parse( sip_message_t* message, const char *value )
      *
      */
 
-    sz_body_pos = strstr( value, "\r\n\r\n" );
+    sz_body_pos = strstr( value, CTRLLFLF );
     if ( NULL == sz_body_pos )
-    	return LIBSIP_SYNTAXERROR;
-    if ( strlen( sz_body_pos ) != 4/*'\r\n\r\n'*/ ){
-
-        int n_len = strlen( sz_body_pos ) - 4 + 1;
-        message->body = (char*)sip_malloc( n_len );
-        if ( NULL == message->body )
-        	return LIBSIP_NOMEM;
-
-        strcpy( message->body, sz_body_pos + 4 );
-    }
+    	return LIBSIP_NOT_FOUND_HEAD_END;
+//     if ( strlen( sz_body_pos ) != 4/*'\r\n\r\n'*/ ){
+// 
+//         int n_len = strlen( sz_body_pos ) - 4 + 1;
+//         message->body = (char*)sip_malloc( n_len );
+//         if ( NULL == message->body )
+//         	return LIBSIP_NOMEM;
+// 
+//         strcpy( message->body, sz_body_pos + 4 );
+//     }
 
     /*
      *  get first line
@@ -566,6 +606,17 @@ sip_message_parse( sip_message_t* message, const char *value )
         if( LIBSIP_SUCCESS != n_ret ){
             break;
         }
+		
+		/*
+		 *	at the end
+		 */
+		
+		if ( strlen( sz_line ) == 0 )
+		{
+			n_ret = LIBSIP_SUCCESS;
+			break;
+		}
+		
         if( NULL == strchr( sz_line, ':' ) ){
             n_ret = LIBSIP_SYNTAXERROR;
         }
@@ -587,7 +638,6 @@ sip_message_parse( sip_message_t* message, const char *value )
                 n_ret = sip_message_set_common( &(message->from), sz_line + 3 );
                 if( LIBSIP_SUCCESS != n_ret )
                     return n_ret;
-                printf( "F = %s\n", (message->from)->element );
             }
             break;
         case 'T':
@@ -674,15 +724,44 @@ sip_message_parse( sip_message_t* message, const char *value )
          *  if end?
          */
 
-        if ( NULL == sz_next ){
+        if ( sz_next[0] == '\r' && sz_next[1] == '\n' ){
+			
+			/*
+			 *	get the body
+			 */
+			
+			int n_body_len = 0, n_body_len_real = 0;
+			
+			n_body_len = sip_message_get_body_length( message );
+
+			n_body_len_real = strlen( sz_next + 2 );
+			
+			/*
+			 *	if ok!
+			 */
+			
+			if ( n_body_len == n_body_len_real ){
+				if ( n_body_len != 0 )
+				{
+					message->body = (char*)sip_malloc( n_body_len + 1);
+					strcpy( message->body, sz_next + 2 );
+				}
+			}
+			if ( n_body_len > n_body_len_real ){
+				n_ret = LIBSIP_BODY_NOT_COMPLETE;
+			}
+			if ( n_body_len < n_body_len_real ){
+				if ( n_body_len != 0 )
+				{
+					message->body = (char*)sip_malloc( n_body_len + 1);
+					strncpy( message->body, sz_next + 2, n_body_len );
+				}
+				n_ret = LIBSIP_BODY_BEYOND;
+			}
 
         	break;
         }
     }
-
-    /*
-     *  get body
-     */
 
 
     return n_ret;

@@ -90,7 +90,7 @@ sip_startline_parse_req( sip_startline_t* startline, const char* value )
      *  get end
      */
 
-    sz_end = value + strlen( value );
+    sz_end = (char*)value + strlen( value );
 
     /*
      *  copy method
@@ -157,7 +157,7 @@ sip_startline_parse_resp( sip_startline_t* startline, const char* value )
      *  get end
      */
 
-    sz_end = value + strlen( value );
+    sz_end = (char*)value + strlen( value );
 
     /*
      *  copy version
@@ -200,7 +200,8 @@ int
 sip_startline_parse( sip_startline_t* startline, const char* value )
 {
     int is_resp = 0;
-    if ( NULL == startline || NULL == value )
+    if ( NULL == startline || NULL == value || \
+		(strstr( value, SIP_VERSION ) == NULL ))
     	return LIBSIP_BADPARAMETER;
     if ( 0 == strncmp( value, SIP_VERSION, 9 ) )
     	return sip_startline_parse_resp( startline, value );

@@ -18,6 +18,7 @@
  **************************************************************************/
 
 #include <stdio.h>
+#include <string.h>
 
 #include "../include/sip_def.h"
 #include "../include/sip_common.h"
@@ -95,7 +96,7 @@ sip_common_set_element( sip_common_t* common, const char* element )
      *  be called
      */
 
-    common->element = element;
+    common->element = (char*)element;
 }
 
 int sip_common_to_str( sip_common_t* common, char** dest )
