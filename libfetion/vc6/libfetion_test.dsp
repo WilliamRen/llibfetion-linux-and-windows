@@ -175,6 +175,10 @@ SOURCE=..\src\mem.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\process.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\protocol.c
 # End Source File
 # Begin Source File
@@ -228,6 +232,10 @@ SOURCE=..\src\login.h
 # Begin Source File
 
 SOURCE=..\src\mem.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\process.h
 # End Source File
 # Begin Source File
 
