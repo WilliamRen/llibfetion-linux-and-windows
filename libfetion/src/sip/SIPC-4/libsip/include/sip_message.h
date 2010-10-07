@@ -35,6 +35,7 @@ typedef struct sip_message
     sip_call_id_t* call_id;                  /*'I'*/
     sip_cnonce_t* cnonce;                    /*'CN'*/
     sip_context_length_t* context_len;       /*'L'*/
+	sip_context_type_t* context_type;		 /*'C'*/
     sip_context_encode_t* context_encode;    /*'E'*/
     sip_cseq_t* cseq;                        /*'Q'*/
     sip_client_t* client;                    /*'CL'*/

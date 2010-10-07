@@ -147,6 +147,7 @@ FX_RET_CODE fx_parse_user_conf( __in  PMEM_STRUCT mem, \
                 return FX_ERROR_XMLPARSE;
             }
             memcpy(l_data->sz_uri, (char*)(sz_first+1), (int)sz_next-(int)sz_first-1 );
+			memcpy( l_data->sz_uri_full, sz_attr, strlen((char*)sz_attr) );
         }else{
             log_string("fx_parse_conf:can't find the uri!");
             return FX_ERROR_XMLPARSE;

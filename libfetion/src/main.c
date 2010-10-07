@@ -83,6 +83,7 @@ int main()
         printf( "parse config file error\n" );
         return fx_ret;
     }
+	log_string( "=start login=" );
     fx_ret = fx_login( &l_data );
     fclose(g_log_file);
 	fx_close();

@@ -33,6 +33,7 @@
 #include "log.h"
 #include "protocol.h"
 #include "crypto.h"
+#include "helper.h"
 #include "sipc.h"
 
 #ifdef __WIN32__
@@ -112,7 +113,6 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 	char* sz_recv = (char*)malloc( MAX_SIP_RECV_LENGTH + 1 );
 	int n_ret = 0, n_sip_ret = LIBSIP_SUCCESS, n_body = 0;
 	PSIPC_MSG msg_list = NULL;
-	sip_message_t* p_msg = NULL;
 	char* sz_tmp_recv = NULL;   
 	
 	/*
@@ -128,7 +128,7 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 	 */
 	
 	n_ret = fx_socket_recv( sock, sz_recv, MAX_SIP_RECV_LENGTH );
-	if ( n_ret == 0 || n_ret == SOCKET_ERROR ){
+	if ( n_ret == SOCKET_ERROR ){
 		log_string( "recv error!" );
 		return FX_ERROR_SOCKET;
 	}
@@ -137,7 +137,7 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 
 	while ( 1 )
 	{
-		
+		sip_message_t* p_msg = NULL;
 		msg_list = (PSIPC_MSG)malloc( sizeof( SIPC_MSG ) );
 		msg_list->msg = NULL;
 		msg_list->next = NULL;
@@ -145,7 +145,7 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 		sip_message_init( &p_msg );
 		n_sip_ret = sip_message_parse( p_msg, sz_tmp_recv );
 		
-		if ( n_ret == MAX_SIP_RECV_LENGTH && \
+		if ( n_ret == MAX_SIP_RECV_LENGTH && 
 			 ( n_sip_ret == LIBSIP_NOT_FOUND_HEAD_END || \
 			   n_sip_ret == LIBSIP_BODY_NOT_COMPLETE) ){
 			
@@ -158,8 +158,8 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 			int n_len = 0;
 
 			n_ret = fx_socket_recv( sock, sz_tmp, MAX_SIP_RECV_LENGTH );
-			if ( n_ret == 0 || n_ret == SOCKET_ERROR ){
-				//log_string( "recv error!" );
+			if ( n_ret == SOCKET_ERROR ){
+				log_string( "recv error!" );
 				return FX_ERROR_SOCKET;
 			}
 			
@@ -194,6 +194,7 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 			 (n_sip_ret == LIBSIP_NOT_FOUND_HEAD_END || \
 			  n_sip_ret == LIBSIP_BODY_NOT_COMPLETE ) )
 		{
+			free( sz_tmp_recv );
 			free( msg_list );
 			sip_message_free( p_msg );
 			break;
@@ -226,6 +227,10 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 				 *	just return
 				 */
 				
+				free( sz_tmp_recv );
+				
+				log_string( "==success==" );
+
 				break;
 
 			}else if ( n_sip_ret == LIBSIP_BODY_BEYOND ){
@@ -234,7 +239,7 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 				 *	have the next message
 				 */
 				
-				
+
 				/*
 				 *	first we shuld get the first message's hole length
 				 */
@@ -243,6 +248,8 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 				char* sz_ctrllflf = NULL, *sz_next_msg = NULL;
 
 				
+				log_string( "=LIBSIP_BODY_BEYOND=" );
+
 				/*
 				 *	这里肯定能得到,不然sip_message_parse就错了
 				 */
@@ -273,7 +280,8 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 				continue;
 
 			}
-		}
+		}else
+			break;
 
 	}
 	return FX_ERROR_OK;
@@ -475,4 +483,191 @@ int fx_sip_generate_auth_resp( __in PAUTH_DLG_HELPER p_auth_helper,
 		return FX_ERROR_OK;
 	else
 		return FX_ERROR_UNKOWN;
+}
+
+
+int fx_sip_generate_keeplive( __in PKEEPLIVE_DLG_HELPER p_keeplive_helper, __out char** auth_req)
+{
+	sip_startline_t* start_line = NULL;
+	sip_from_t* from = NULL;
+	sip_call_id_t* call_id = NULL;
+	sip_cseq_t* cseq = NULL;
+	sip_event_t* event = NULL;
+	sip_context_length_t* context_len = NULL;
+	sip_message_t* message = NULL;
+	FX_RET_CODE n_ret = FX_ERROR_OK;
+	char sz_num[10] = {0};
+
+
+	/*
+	 *	init message
+	 */
+	
+	sip_message_init( &message );
+
+	/*
+	 *	start line
+	 */
+	
+	sip_startline_init( &start_line );
+	sip_start_set_line_req_all( start_line, "R", FETION_DOMAIN );
+	sip_message_set_startline( message, start_line );
+
+	/*
+	 *	from
+	 */
+	
+	sip_common_init( &from );
+	sip_common_set_all( from, p_keeplive_helper->uri );
+	sip_message_set_common( &(message->from), from );
+
+	/*
+	 *	call id
+	 */
+	
+	itoa( p_keeplive_helper->n_callid, sz_num, 10 );
+	sip_common_init( &call_id );
+	sip_common_set_all( call_id, sz_num );
+	sip_message_set_common( &(message->call_id), call_id );
+	
+	/*
+	 *	cseq
+	 */
+	
+	sip_cseq_init( &cseq );
+	sip_cseq_set_all( cseq, p_keeplive_helper->n_cseq, "R" );
+	sip_message_set_cseq( message, cseq );
+	
+	/*
+	 *	event
+	 */
+	
+	sip_common_init( &event );
+	sip_common_set_all( event, "KeepAlive" );
+	sip_message_set_common( &(message->event), event );
+
+	/*
+	 *	context length
+	 */
+	
+	itoa( strlen( SIP_KEEPLIVE_BODY ), sz_num, 10 );
+	sip_common_init( &context_len );
+	sip_common_set_all( context_len, sz_num );
+	sip_message_set_common( &(message->context_len), context_len );
+	
+	/*
+	 *	body
+	 */
+
+
+	sip_message_set_body( message, SIP_KEEPLIVE_BODY );
+
+	n_ret = sip_message_to_str( message, auth_req );
+	
+	sip_message_free( message );
+	
+	/*
+	 *	add the sceq
+	 */
+	
+	p_keeplive_helper->n_cseq++;
+
+	if ( n_ret == LIBSIP_SUCCESS )
+		return FX_ERROR_OK;
+	else
+		return FX_ERROR_UNKOWN;
+
+}
+
+int fx_sip_generate_send_msg_yourself( __in PCHAT_DLG_HELPER p_helper, __in char* msg, 
+									   __out char** sip_msg)
+{
+	sip_startline_t* start_line = NULL;
+	sip_from_t* from = NULL;
+	sip_call_id_t* call_id = NULL;
+	sip_cseq_t* cseq = NULL;
+	sip_event_t* event = NULL;
+	sip_context_length_t* context_len = NULL;
+	sip_message_t* message = NULL;
+	FX_RET_CODE n_ret = FX_ERROR_OK;
+	char sz_num[10] = {0};
+
+	/*
+	 *	init message
+	 */
+	
+	sip_message_init( &message );
+
+	/*
+	 *	start line
+	 */
+	
+	sip_startline_init( &start_line );
+	sip_start_set_line_req_all( start_line, "M", FETION_DOMAIN );
+	sip_message_set_startline( message, start_line );
+
+	/*
+	 *	from
+	 */
+	
+	sip_common_init( &from );
+	sip_common_set_all( from, p_helper->my_uri );
+	sip_message_set_common( &(message->from), from );
+
+	/*
+	 *	call id
+	 */
+	
+	itoa( p_helper->n_callid, sz_num, 10 );
+	sip_common_init( &call_id );
+	sip_common_set_all( call_id, sz_num );
+	sip_message_set_common( &(message->call_id), call_id );
+	
+	/*
+	 *	cseq
+	 */
+	
+	sip_cseq_init( &cseq );
+	sip_cseq_set_all( cseq, p_helper->n_cseq, "M" );
+	sip_message_set_cseq( message, cseq );
+	
+	/*
+	 *	To
+	 */
+	
+	sip_message_set_to_str( message, p_helper->dst_uri );
+	
+	/*
+	 *	event
+	 */
+	
+	sip_common_init( &event );
+	sip_common_set_all( event, "SendCatSMS" );
+	sip_message_set_common( &(message->event), event );
+
+	/*
+	 *	context length
+	 */
+	
+	itoa( strlen( msg ), sz_num, 10 );
+	sip_common_init( &context_len );
+	sip_common_set_all( context_len, sz_num );
+	sip_message_set_common( &(message->context_len), context_len );
+	
+	/*
+	 *	body
+	 */
+
+
+	sip_message_set_body( message, msg );
+
+	n_ret = sip_message_to_str( message, sip_msg );
+	
+	sip_message_free( message );
+
+	if ( n_ret == LIBSIP_SUCCESS )
+		return FX_ERROR_OK;
+	else
+		return FX_ERROR_UNKOWN;
+
 }

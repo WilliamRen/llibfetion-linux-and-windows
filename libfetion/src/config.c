@@ -149,7 +149,7 @@ FX_RET_CODE fx_get_user_conf( __in PSYS_CONF_DATA sys_data, \
     curl_easy_setopt( g_curl, CURLOPT_CONNECTTIMEOUT, 8 ); /*time out 8s*/
     curl_easy_setopt( g_curl, CURLOPT_WRITEFUNCTION, write_mem_call_back );
     curl_easy_setopt( g_curl, CURLOPT_WRITEDATA, (void*)mem );
-    curl_easy_setopt( g_curl, CURLOPT_COOKIEJAR, "cookie.txt" );
+    //curl_easy_setopt( g_curl, CURLOPT_COOKIEJAR, "cookie.txt" );
     /*execute curl*/
     curl_ret = curl_easy_perform( g_curl );
     if( curl_ret != CURLE_OK ){

@@ -43,13 +43,17 @@
 #include "log.h"
 #include "thread.h"
 #include "sipc.h"
+#include "helper.h"
+#include "utf8.h"
 #include "login.h"
 
 
 extern SYS_CONF_DATA g_sys_conf;
-PLOGIN_DATA g_login_data = NULL;
+LOGIN_DATA g_login_data = {0};
+extern DLG_HELPER g_dlg_helper;
 
 pthread_t g_recv_thread_id = {0};
+pthread_t g_keeplive_thread_id = {0};
 
 #define ASE_KEY "4A026855890197CFDF768597D07200B346F3D676411C6F87368B5C2276DCEDD2"
 
@@ -58,13 +62,18 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
     /*将sz_sipc_proxy中的IP和端口分别存放，看着挺麻烦的*/
     int n_ret = 0, socket;
     char* sz_proxy = NULL, *sz_find = NULL, *sz_pack = NULL;
+	char* sz_contact_list = NULL;
     char sz_ip[20] = {0};
     MEM_STRUCT mem_recv = {0};
 	PSIPC_MSG sip_msg_list = NULL;
     ushort u_port = 0;
-	PAUTH_DLG_HELPER p_auth_helper = (PAUTH_DLG_HELPER)malloc( sizeof(AUTH_DLG_HELPER) );
+	g_dlg_helper.p_auth = (PAUTH_DLG_HELPER)malloc( sizeof(AUTH_DLG_HELPER) );
 	
-	g_login_data = l_data;
+	/*
+	 *	get the login data
+	 */
+	
+	memcpy( &g_login_data, l_data, sizeof(LOGIN_DATA) );
 	
 	
 	/*
@@ -101,41 +110,35 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
         log_string( "fx_login:connect to server error!" );
         return FX_ERROR_SOCKET;
     }
-
-    /*
-     *  build the login package (login_1)
-     */
-
-    /*sz_pack = fx_pro_build_package( FX_BUILD_LOGIN_1, l_data );
-    if ( sz_pack == NULL ){
-        log_string( "fx_login:build package error!" );
-        return FX_ERROR_UNKOWN;
-    }*/
 	
 	
+	log_string( "==init auth dlg helper==" );
+
 	/*
 	 *	init auth dlg helper
 	 */
 	
-	strcpy( p_auth_helper->machine_code, "2F6E7CD33AA1F6928E69DEDD7D6C50B1" );
-	strcpy( p_auth_helper->phone_num, l_data->sz_phone_num );
-	strcpy( p_auth_helper->user_id, l_data->sz_user_id );
-	strcpy( p_auth_helper->user_pwd, g_sys_conf.user_data.sz_password );
-	strcpy( p_auth_helper->uri, l_data->sz_uri );
-	p_auth_helper->n_callid = fx_sip_get_callid();
-	p_auth_helper->n_cseq = 1;
+	strcpy( g_dlg_helper.p_auth->machine_code, "2F6E7CD33AA1F6928E69DEDD7D6C50B1" );
+	strcpy( g_dlg_helper.p_auth->phone_num, l_data->sz_phone_num );
+	strcpy( g_dlg_helper.p_auth->user_id, l_data->sz_user_id );
+	strcpy( g_dlg_helper.p_auth->user_pwd, g_sys_conf.user_data.sz_password );
+	strcpy( g_dlg_helper.p_auth->uri, l_data->sz_uri );
+	g_dlg_helper.p_auth->n_callid = fx_sip_get_callid();
+	g_dlg_helper.p_auth->n_cseq = 1;
 
 	/*
 	 *	generate response and send it
 	 */
 	
-	if ( fx_sip_generate_auth_req( p_auth_helper, &sz_pack ) != FX_ERROR_OK )
+	if ( fx_sip_generate_auth_req( g_dlg_helper.p_auth, &sz_pack ) != FX_ERROR_OK )
 	{
 		log_string( "fx_login:fx_sip_generate_auth_req error!\n" );
 		return FX_ERROR_UNKOWN;
 	}
 	
-	printf( "%s\n", sz_pack ); 
+	//printf( "%s\n", sz_pack ); 
+	
+	log_string( "==send data to server 1==" );
 
 	/*
 	 *	send data to server
@@ -150,6 +153,8 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
 	free( sz_pack );
 	sz_pack = NULL;
 
+	log_string( "==recv buffer from server==" );
+
 	/*
 	 *	recv buffer from server
 	 */
@@ -161,19 +166,23 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
 		return FX_ERROR_UNKOWN;
 	}
 	
+	log_string( "==generate response package then send it==" );
+
 	/*
 	 *	generate response package then send it
 	 */
 	
-	if ( fx_sip_generate_auth_resp( p_auth_helper, sip_msg_list->msg->www_authenticate->key, \
+	if ( fx_sip_generate_auth_resp( g_dlg_helper.p_auth, sip_msg_list->msg->www_authenticate->key, \
 									sip_msg_list->msg->www_authenticate->nonce, &sz_pack ) != FX_ERROR_OK )
 	{
 		log_string( "fx_login:fx_sip_generate_auth_resp error!\n" );
 		return FX_ERROR_UNKOWN;
 	}
 	
-	printf( "%s\n", sz_pack );
+	//printf( "%s\n", sz_pack );
 	
+	log_string( "==send data to server2==" );
+
 	/*
 	 *	send data to server
 	 */
@@ -185,14 +194,27 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
     }
 
 	free( sz_pack );
+
 	/*
 	 *	free the msg list above
 	 */
 	
 	fx_sip_msg_list_free( sip_msg_list );
 	sip_msg_list = NULL;
-
-
+	
+	log_string( "recv  data from server2" );
+	
+	/*
+	 *	here the sleep i don't understand why, but it is necessary
+	 */
+	
+	Sleep( 500 );
+	
+	/*
+	 *	recv buffer from server
+	 */
+	
+	
 	fx_sip_recv( socket, &sip_msg_list );
 	if ( atoi( sip_msg_list->msg->startline->status_code ) != SIP_OK )
 	{
@@ -201,19 +223,60 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
 	}
 
 	/*
+	 *	convert utf8 config string to ansi
+	 */
+	
+	log_string( "==utf8_to_ansi==" );
+	sz_contact_list = utf8_to_ansi( sip_msg_list->msg->body );
+	free( sz_contact_list );
+
+
+	fx_sip_msg_list_free( sip_msg_list );
+	sip_msg_list = NULL;
+
+	/*
      *  create new thread to recv data from server
      */
-
+	
+	log_string( "==pthread_create thread_sip_recv==" );
     if ( pthread_create( &g_recv_thread_id, NULL, thread_sip_recv, \
             (void*)socket ) != 0 ){
-        log_string( "fx_login:create recevice thread error!" );
+        log_string( "fx_login:create receive thread error!" );
         return FX_ERROR_THREAD;
     }
 	
 #ifdef __WIN32__
+	Sleep( 20 * 1000 );
+#endif
+
+	/*
+	 *	create keeplive thread
+	 */
+
+	log_string( "==pthread_create thread_sip_keeplive==" );
+	if ( pthread_create( &g_keeplive_thread_id, NULL, thread_sip_keeplive, \
+        (void*)socket ) != 0 ){
+		log_string( "fx_login:create keeplive thread error!" );
+		return FX_ERROR_THREAD;
+    }
+
+#ifdef __WIN32__
 	//Sleep( 100 * 1000 );
+	printf( "\t\t\tlibfetion v1.0 by programmeboy\n" );
 	while ( 1 )
 	{
+		char sz_msg[1024] = {0};
+
+		printf( ">>" );
+		gets( sz_msg );
+		
+		log_string( "==start send msg to myself==" );
+		fx_send_msg_to_yourself( socket, sz_msg );
+		log_string( "==end send msg to myself==" );
+		
+#ifdef __WIN32__
+		Sleep( 10 );
+#endif
 	}
 #else
     sleep( 50 );

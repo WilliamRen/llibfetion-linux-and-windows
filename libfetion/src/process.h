@@ -18,3 +18,16 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
  ***************************************************************************/
 
+#ifndef PROCESS_H_INCLUDE
+#define PROCESS_H_INCLUDE
+
+#include "commdef.h"
+
+#include "../src/sip/SIPC-4/libsip/include/sip.h"
+
+int process_sip_message( sip_message_t* message );
+int process_sip_notification( sip_message_t* message );
+int process_sip_invitation( sip_message_t* message );
+int dispatch_sip_recv( sip_message_t* message );
+
+#endif

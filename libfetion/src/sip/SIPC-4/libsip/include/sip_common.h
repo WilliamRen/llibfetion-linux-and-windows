@@ -38,6 +38,7 @@ typedef sip_common_t sip_call_id_t;
 typedef sip_common_t sip_cnonce_t;
 typedef sip_common_t sip_from_t;
 typedef sip_common_t sip_context_length_t;
+typedef sip_common_t sip_context_type_t;
 typedef sip_common_t sip_context_encode_t;
 typedef sip_common_t sip_expires_t;
 typedef sip_common_t sip_event_t;

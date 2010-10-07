@@ -333,6 +333,10 @@ sip_message_to_str( sip_message_t* message, char** dest )
     if ( LIBSIP_SUCCESS != n_ret )
     	return LIBSIP_SYNTAXERROR;
 
+	n_ret = sip_common_to_hole_string( message->context_type, "C: ", dest );
+    if ( LIBSIP_SUCCESS != n_ret )
+    	return LIBSIP_SYNTAXERROR;
+
     n_ret = sip_common_to_hole_string( message->expires, "X: ", dest );
     if ( LIBSIP_SUCCESS != n_ret )
     	return LIBSIP_SYNTAXERROR;
@@ -538,6 +542,7 @@ int sip_message_init( sip_message_t** message )
 	(*message)->client			= NULL;
 	(*message)->cnonce			= NULL;
 	(*message)->context_encode  = NULL;
+	(*message)->context_type	= NULL;
 	(*message)->context_len		= NULL;
     (*message)->cseq			= NULL;
     (*message)->event			= NULL;
@@ -564,6 +569,8 @@ sip_message_free( sip_message_t* message )
         sip_common_free( message->cnonce );
     if ( message->context_len )
         sip_common_free( message->context_len );
+	if ( message->context_type )
+        sip_common_free( message->context_type );
     if ( message->context_encode )
         sip_common_free( message->context_encode );
     if ( message->client )
@@ -683,7 +690,13 @@ sip_message_parse( sip_message_t* message, const char *value )
                     n_ret = sip_message_set_common_str( &(message->cnonce), sz_line + 4 );
                     if( LIBSIP_SUCCESS != n_ret )
                         return n_ret;
+                }else if ( sz_line[1] == ':' )
+                {
+					n_ret = sip_message_set_common_str( &(message->context_type), sz_line + 3 );
+                    if( LIBSIP_SUCCESS != n_ret )
+                        return n_ret;
                 }
+                
             }
             break;
         case 'I':

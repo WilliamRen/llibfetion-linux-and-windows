@@ -190,9 +190,8 @@ int fx_socket_connect( int fd, char* ip, ushort port )
 	max_recv = SO_MAX_MSG_SIZE;
 #else
 	max_recv = MAX_RECV_BUF_SIZE;
-#endif
-
 	setsockopt(fd , SOL_SOCKET , SO_RCVBUF , (const char*)&max_recv , sizeof(max_recv));
+#endif
 	if( connect( fd, (struct sockaddr*)&addr, sizeof(struct sockaddr_in)) < 0 )
 	{
 		log_string("qqsocket connect failed.");
@@ -219,9 +218,8 @@ int fx_socket_connect2( int fd, uint ip, ushort port )
 	max_recv = SO_MAX_MSG_SIZE;
 #else
 	max_recv = MAX_RECV_BUF_SIZE;
-#endif
-
 	setsockopt(fd , SOL_SOCKET , SO_RCVBUF , (const char*)&max_recv , sizeof(max_recv));
+#endif
 
 	if( connect( fd, (struct sockaddr*)&addr, sizeof(struct sockaddr_in)) < 0 )
 	{
@@ -268,9 +266,7 @@ int fx_socket_send( int fd, uchar* buf, size_t size )
 
 int fx_socket_recv( int fd, uchar* buf, size_t size )
 {
-	int ret;
-	ret = recv( fd, (char*)buf, size, 0 );
-	return ret;
+	return recv( fd, (char*)buf, size, 0 );
 }
 
 #define MAX_RECV_PER    1024

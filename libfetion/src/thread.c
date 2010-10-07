@@ -34,34 +34,29 @@
 #include "crypto.h"
 #include "protocol.h"
 #include "fxsocket.h"
+#include "process.h"
 #include "thread.h"
 
-
-#define LOGIN_STEP2     "R fetion.com.cn SIP-C/4.0\r\n" \
-	"F: 879534138\r\n" \
-	"I: 1\r\n" \
-	"Q: 2 R\r\n" \
-	"A: Digest algorithm=\"SHA1-sess-v4\",response=\"%s\"\r\n" \
-	"L: 527\r\n\r\n" \
-	"<args><device accept-language=\"default\" machine-code=\"2F6E7CD33AA1F6928E69DEDD7D6C50B1\" /><caps value=\"3FF\" /><events value=\"7F\" /><user-info mobile-no=\"15210281153\" user-id=\"639717376\"><personal version=\"0\" attributes=\"v4default;alv2-version;alv2-warn\" /><custom-config version=\"0\" /><contact-list version=\"0\" buddy-attributes=\"v4default\" /></user-info><credentials domains=\"fetion.com.cn;m161.com.cn;www.ikuwa.cn;games.fetion.com.cn;turn.fetion.com.cn\" /><presence><basic value=\"400\" desc=\"\" /><extendeds /></presence></args>"
-
 extern SYS_CONF_DATA g_sys_conf;
-extern PLOGIN_DATA g_login_data;
+extern LOGIN_DATA g_login_data;
 
 /** \fn void* thread_recv( void* lparam )
   * \brief the thread for recv data
   * \param lparam parameter
   * \return NULL
   */
-
+//#ifdef __WIN32__
+//DWORD WINAPI thread_sip_recv( void* lparam )
+//#else
 void* thread_sip_recv( void* lparam )
+//#endif
 {
 	int socket = (int)lparam;
 	fd_set fd_read;
 	int ret = 0;
 	PSIPC_MSG msg_list = NULL;
 	PSIPC_MSG p_msg_tmp = NULL;
-	
+
 	while ( 1 )
 	{
 		FD_ZERO( &fd_read );
@@ -73,7 +68,7 @@ void* thread_sip_recv( void* lparam )
 		}
 		if ( !FD_ISSET(socket, &fd_read) ) {
 #ifdef __WIN32__
-			Sleep( 100 );
+			Sleep( 1000 );
 #else
 			sleep( 1 );
 #endif
@@ -81,13 +76,70 @@ void* thread_sip_recv( void* lparam )
 		}
 		
 		fx_sip_recv( socket, &msg_list );
+#ifdef __WIN32__
+		Sleep( 50 );
+#endif
 #ifdef _DEBUG
 		/*fx_sip_loop_print( msg_list );*/
 #endif
 		p_msg_tmp = msg_list;
 		while ( p_msg_tmp != NULL )
 		{
+			dispatch_sip_recv( p_msg_tmp->msg );
 			p_msg_tmp = p_msg_tmp->next;
 		}
+
+		fx_sip_msg_list_free( msg_list );
+		msg_list = NULL;
 	}
+	return 0;
+}
+//#ifdef __WIN32__
+//DWORD WINAPI thread_sip_keeplive( void* lparam )
+//#else
+void* thread_sip_keeplive( void* lparam )
+//#endif
+{
+	int socket = (int)lparam;
+
+	while( 1 )
+	{
+		char* sz_keeplive = NULL;
+		KEEPLIVE_DLG_HELPER kp_help;
+		int n_ret = 0;
+		
+		
+		/*
+		 *	init helper
+		 */
+		
+		kp_help.n_callid = 1;
+		kp_help.n_cseq = 1;
+		strcpy( kp_help.uri, g_login_data.sz_uri );
+
+		if ( fx_sip_generate_keeplive( &kp_help, &sz_keeplive ) != FX_ERROR_OK )
+		{
+			return NULL;
+		}
+		
+		/*
+		 *	send the package
+		 */
+		
+		log_string( "==in thread_sip_keeplive fx_socket_send==" );
+		n_ret = fx_socket_send( socket, sz_keeplive, strlen(sz_keeplive) );
+		if ( n_ret == -1 ){
+			log_string( "fx_login:send data to server error!" );
+			return NULL;
+		}
+
+		free( sz_keeplive );
+
+#ifdef __WIN32__
+		Sleep( 200 * 1000 );
+#else
+		sleep( 200 );
+#endif
+	}
+	return 0;
 }

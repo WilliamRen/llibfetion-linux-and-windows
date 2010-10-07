@@ -33,71 +33,14 @@
 #include "config.h"
 #include "fxsocket.h"
 #include "login.h"
+#include "sipc.h"
+#include "utf8.h"
+#include "log.h"
 #include "protocol.h"
 
 #define FX_MAX_PACKAGE_SIZE 1024
 
-#define  MAKE_LABLE_RM  "%c fetion.com.cn SIP-C/4.0\r\n"
-#define  MAKE_LABLE_NUM "%c: %d\r\n"
-#define  MAKE_LABLE_Q   "Q: %d %c\r\n"
-#define  MAKE_LABLE_X   "%c: %s\r\n"
-#define  MAKE_LABLE_CN  "CN: %s\r\n"
-#define  MAKE_LABLE_CL  "CL: type=\"pc\",version=\"4.0.2510\"\r\n"
-
-char g_pw_v4[30] = {0};
-
-int fx_get_next_call()
-{
-	static	int	n_call = 0;
-	return ++n_call;
-}
-
-char* fx_pro_build_package( int n_type, void* l_data )
-{
-    static int n_call_id;
-    char* sz_pack = (char*)malloc(FX_MAX_PACKAGE_SIZE);
-
-    memset( sz_pack, 0, FX_MAX_PACKAGE_SIZE );
-    /*make package*/
-    switch ( n_type )
-    {
-        //struct login_data* data = (struct login_data*)l_data;
-        char sz_tmp[512] = {0};
-    	case FX_BUILD_LOGIN_1:
-            {
-                char* sz_cnonce = fx_generate_cnonce();
-                n_call_id = fx_get_next_call();
-                /*--1--*/
-                sprintf( sz_tmp, MAKE_LABLE_RM, 'R' );
-                strcat( sz_pack, sz_tmp );
-                /*--2--*/
-                sprintf( sz_tmp, MAKE_LABLE_X, 'F', ((PLOGIN_DATA)l_data)->sz_uri );
-                strcat( sz_pack, sz_tmp );
-                /*--3--*/
-                sprintf( sz_tmp, MAKE_LABLE_NUM, 'I', n_call_id );
-                strcat( sz_pack, sz_tmp );
-                /*--4--*/
-                sprintf( sz_tmp, MAKE_LABLE_Q, 1, 'R' );
-                strcat( sz_pack, sz_tmp );
-                /*--5--*/
-                sprintf( sz_tmp, MAKE_LABLE_CN, sz_cnonce );
-                strcat( sz_pack, sz_tmp );
-                free( sz_cnonce );
-                /*--6--*/
-                //sprintf( sz_tmp, MAKE_LABLE_NUM, 'L', strlen(FX_LOGIN_DATA) );
-                strcat( sz_pack, MAKE_LABLE_CL );
-                strcat( sz_pack, "\r\n" );
-            }
-    		break;
-        case FX_BUILD_LOGIN_2:
-            break;
-        case FX_BUILD_GET_PERSON_INFO:
-            break;
-    	default:
-    		break;
-    }
-    return sz_pack;
-}
+extern LOGIN_DATA g_login_data;
 
 char* fx_generate_cnonce()
 {
@@ -112,52 +55,73 @@ char* fx_generate_cnonce()
 	return sz_conce;
 }
 
-char* fx_get_nonce( char* sz_data )
-{
-    char* sz_find = NULL, *sz_find_nonce = NULL, *sz_nonce_temp = NULL;
-    if( NULL == sz_data )
-        return NULL;
-    sz_find = strstr( sz_data, "nonce" );
-	sz_find_nonce = (char*)malloc(50);
-	sz_nonce_temp = sz_find_nonce;
-	memset( sz_find_nonce, 0, 50 );
-	if ( sz_find != NULL )
-	{
-		sz_find += ( strlen( "nonce=\"" ));
-		while ( *sz_find != '\"' )
-		{
-			*sz_nonce_temp = *sz_find;
-			sz_nonce_temp++;
-			sz_find++;
-		}
-		*sz_nonce_temp = '\0';
-		return sz_find_nonce;
-	}
-	else
-		return NULL;
-}
+/** \fn 
+	\brief 
+	\param 
+	\return 
+*/
 
-char* fx_get_key( char* sz_data )
+FX_RET_CODE fx_send_msg_to_yourself( int socket, char* msg )
 {
-    char* sz_find = NULL, *sz_find_nonce = NULL, *sz_nonce_temp = NULL;
-    if( NULL == sz_data )
-        return NULL;
-    sz_find = strstr( sz_data, "key" );
-	sz_find_nonce = (char*)malloc(512);
-	sz_nonce_temp = sz_find_nonce;
-	memset( sz_find_nonce, 0, 512 );
-	if ( sz_find != NULL )
+	
+	CHAT_DLG_HELPER dlg_helper = {0};
+	char* sz_sip_msg = NULL;
+	FX_RET_CODE n_ret = 0;
+
+	/*
+	 *	first we should convert the ascii to utf8
+	 *  and in linux it is not necessary
+	 */
+	
+	char* sz_convert_msg = NULL;
+
+#ifdef __WIN32__
+	sz_convert_msg = ansi_to_utf8( msg );
+#else
+	sz_convert_msg = msg;
+#endif
+	
+	/*
+	 *  init helper	
+	 */
+	
+	strcpy( dlg_helper.dst_uri, g_login_data.sz_uri_full );
+	strcpy( dlg_helper.my_uri, g_login_data.sz_uri );
+	dlg_helper.n_callid = fx_sip_increase_callid();
+	dlg_helper.n_cseq = 1;
+
+	/*
+	 *	generate the sip package
+	 */
+	
+	n_ret = fx_sip_generate_send_msg_yourself( &dlg_helper, sz_convert_msg, &sz_sip_msg );
+	if ( FX_ERROR_OK != n_ret )
 	{
-		sz_find += ( strlen( "key=\"" ));
-		while ( *sz_find != '\"' )
-		{
-			*sz_nonce_temp = *sz_find;
-			sz_nonce_temp++;
-			sz_find++;
-		}
-		*sz_nonce_temp = '\0';
-		return sz_find_nonce;
+		log_string( "fx_sip_generate_send_msg_yourself error\n" );
+#ifdef __WIN32__
+		free( sz_convert_msg );
+#endif
+		return n_ret;
 	}
-	else
-		return NULL;
+	
+	/*
+	 *	send the package
+	 */
+	
+	n_ret = fx_socket_send( socket, sz_sip_msg, strlen(sz_sip_msg) );
+	if ( n_ret == -1 ){
+		log_string( "fx_login:send data to server error!" );
+		return FX_ERROR_SOCKET;
+	}
+	
+	
+	/*
+	 *	free resource
+	 */
+	
+	free( sz_sip_msg );
+#ifdef __WIN32__
+	free( sz_convert_msg );
+#endif
+	return FX_ERROR_OK;
 }

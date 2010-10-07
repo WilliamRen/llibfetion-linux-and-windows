@@ -66,6 +66,7 @@ void fx_close()
 #ifdef PTW32_STATIC_LIB
 	pthread_win32_process_detach_np();
 #endif
+	curl_easy_cleanup( g_curl );
 #endif
 }
 

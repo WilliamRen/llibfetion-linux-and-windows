@@ -27,6 +27,19 @@
 	\return 
 */
 
+//void* thread_sip_recv( void* lparam );
+//void* thread_sip_keeplive( void* lparam );
+
+//#ifdef __WIN32__
+//DWORD WINAPI thread_sip_recv( void* lparam );
+//#else
 void* thread_sip_recv( void* lparam );
+//#endif
+
+//#ifdef __WIN32__
+//DWORD WINAPI thread_sip_keeplive( void* lparam );
+//#else
+void* thread_sip_keeplive( void* lparam );
+//#endif
 
 #endif
