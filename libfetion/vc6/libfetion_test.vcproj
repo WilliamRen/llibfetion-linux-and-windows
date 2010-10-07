@@ -70,7 +70,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib wldap32.lib lib\pthread_share.lib lib\libeay32_share.lib lib\ssleay32_share.lib lib\libcurl_share.lib lib\libxml2_share.lib ws2_32.lib"
+				AdditionalDependencies="odbc32.lib odbccp32.lib wldap32.lib lib\pthread_share.lib lib\libeay32_share.lib lib\ssleay32_share.lib lib\libcurl_ssl_share.lib lib\libxml2_share.lib ws2_32.lib"
 				OutputFile="bin/libfetion_test_d_share.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -339,7 +339,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib wldap32.lib lib\pthread_static.lib lib\libeay32_static.lib lib\ssleay32_static.lib lib\libcurl_static.lib lib\libxml2_static.lib ws2_32.lib"
+				AdditionalDependencies="odbc32.lib odbccp32.lib wldap32.lib lib\pthread_static.lib lib\libeay32_static.lib lib\ssleay32_static.lib lib\libcurl_ssl_static.lib lib\libxml2_static.lib ws2_32.lib"
 				OutputFile="bin/libfetion_test_d_static.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
