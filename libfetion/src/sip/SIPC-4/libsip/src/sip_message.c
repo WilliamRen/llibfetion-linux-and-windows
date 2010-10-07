@@ -329,17 +329,6 @@ sip_message_to_str( sip_message_t* message, char** dest )
     if ( LIBSIP_SUCCESS != n_ret )
     	return LIBSIP_SYNTAXERROR;
 
-    n_ret = sip_common_to_hole_string( message->cnonce, "CN: ", dest );
-    if ( LIBSIP_SUCCESS != n_ret )
-    	return LIBSIP_SYNTAXERROR;
-
-	n_ret = sip_common_to_hole_string( message->context_type, "C: ", dest );
-    if ( LIBSIP_SUCCESS != n_ret )
-    	return LIBSIP_SYNTAXERROR;
-
-    n_ret = sip_common_to_hole_string( message->expires, "X: ", dest );
-    if ( LIBSIP_SUCCESS != n_ret )
-    	return LIBSIP_SYNTAXERROR;
 
     /****************************************************
      *                       Q:                         *
@@ -365,6 +354,18 @@ sip_message_to_str( sip_message_t* message, char** dest )
     }
 
     /****************************************************
+     *                         CN: X:                   *
+     ****************************************************/
+
+	n_ret = sip_common_to_hole_string( message->cnonce, "CN: ", dest );
+    if ( LIBSIP_SUCCESS != n_ret )
+		return LIBSIP_SYNTAXERROR;
+	
+    n_ret = sip_common_to_hole_string( message->expires, "X: ", dest );
+    if ( LIBSIP_SUCCESS != n_ret )
+    	return LIBSIP_SYNTAXERROR;
+
+    /****************************************************
      *                       T:                         *
      ****************************************************/
 
@@ -386,6 +387,14 @@ sip_message_to_str( sip_message_t* message, char** dest )
         sip_free( sz_temp );
 
     }
+
+	/****************************************************
+     *                       C:                         *
+     ****************************************************/	
+
+	n_ret = sip_common_to_hole_string( message->context_type, "C: ", dest );
+    if ( LIBSIP_SUCCESS != n_ret )
+    	return LIBSIP_SYNTAXERROR;
 
 	/****************************************************
      *                       K:                         *
