@@ -155,6 +155,10 @@ SOURCE=..\src\fxsocket.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\helper.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\initial.c
 # End Source File
 # Begin Source File
@@ -216,6 +220,10 @@ SOURCE=..\src\crypto.h
 # Begin Source File
 
 SOURCE=..\src\fxsocket.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\helper.h
 # End Source File
 # Begin Source File
 
