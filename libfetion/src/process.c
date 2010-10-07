@@ -24,6 +24,8 @@
 
 #include "commdef.h"
 #include "utf8.h"
+#include "login.h"
+#include "xml.h"
 #include "process.h"
 
 int dispatch_sip_recv( sip_message_t* message )
@@ -123,6 +125,21 @@ int process_sip_message( sip_message_t* message )
 
 int process_sip_notification( sip_message_t* message )
 {
+	
+	/*
+	 *	TODO thread safe
+	 */
+	if ( message->event )
+	{
+		if ( strcmp( message->event->element, "PresenceV4" ) == 0 )
+		{
+			FX_RET_CODE r ;
+			PGROUP_LIST p_group = fx_get_group_list();
+			r = fx_parse_event( message->body, &p_group );
+			return r;
+		}
+	}
+
 	return FX_ERROR_OK;
 }
 

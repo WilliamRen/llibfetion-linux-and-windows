@@ -21,9 +21,21 @@
 #ifndef XML_H_INCLUDED
 #define XML_H_INCLUDED
 
+#include "commdef.h"
+#include "mem.h"
+
 FX_RET_CODE fx_parse_user_conf( __in  PMEM_STRUCT mem, \
                                 __out PLOGIN_DATA l_data );
 FX_RET_CODE fx_parse_sys_conf( __in  PMEM_STRUCT mem, \
                                __out PSYS_CONF_DATA sys_data );
+
+void contact_list_free( PCONTACT_LIST p_contact );
+void group_list_free( PGROUP_LIST p_group );
+void contact_list_append( PCONTACT_LIST p_contact, PCONTACT_LIST p_add );
+void group_list_append( PGROUP_LIST p_group, PGROUP_LIST p_add );
+void print_group_list( __in PGROUP_LIST p_group );
+
+FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p_contact_list );
+FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list );
 
 #endif // XML_H_INCLUDED

@@ -32,10 +32,17 @@
 #include "config.h"
 #include "xml.h"
 #include "mem.h"
+#include "protocol.h"
+#include "sipc.h"
 #include "login.h"
+
+#ifdef __WIN32__
+#include <windows.h>
+#endif
 
 extern FILE* g_log_file;
 SYS_CONF_DATA g_sys_conf = {0};
+PGROUP_LIST g_contact_list = NULL;
 
 /** \fn
  *  \brief
@@ -84,7 +91,48 @@ int main()
         return fx_ret;
     }
 	log_string( "=start login=" );
-    fx_ret = fx_login( &l_data );
+    fx_ret = fx_login( &l_data, &g_contact_list );
+	
+	printf( "wait for update buddies list\n" );
+	Sleep( 2000 );
+
+	/*
+	 *	into command module
+	 */
+	
+	
+	printf( "\t\t\tlibfetion v1.0 by programmeboy\n" );
+	
+	/*
+	 *	print contact list
+	 */
+	
+	//print_group_list( p_contact_list );
+
+	while ( 1 )
+	{
+		char sz_msg[1024] = {0};
+		int socket = fx_get_socket();
+
+		printf( ">>" );
+		gets( sz_msg );
+		
+		if ( strcmp( sz_msg, "print" ) == 0 )
+		{
+			print_group_list( g_contact_list );
+		}
+		else
+		{
+			log_string( "==start send msg to myself==" );
+			fx_send_msg_to_yourself( socket, sz_msg );
+			log_string( "==end send msg to myself==" );
+		}
+		
+#ifdef __WIN32__
+		Sleep( 10 );
+#endif
+	}
+
     fclose(g_log_file);
 	fx_close();
     return 0;

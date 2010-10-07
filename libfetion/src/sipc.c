@@ -58,6 +58,7 @@ void fx_sip_msg_list_free( PSIPC_MSG msg_list )
 	while ( pos != NULL )
 	{
 		PSIPC_MSG p_temp = pos->next;
+		sip_message_free( pos->msg );
 		free( pos );
 		pos = p_temp;
 	}
@@ -670,4 +671,90 @@ int fx_sip_generate_send_msg_yourself( __in PCHAT_DLG_HELPER p_helper, __in char
 	else
 		return FX_ERROR_UNKOWN;
 
+}
+
+int fx_sip_generate_get_user_status( __in PSUB_DLG_HELPER p_helper, __out char** sip_msg )
+{
+	sip_startline_t* start_line = NULL;
+	sip_from_t* from = NULL;
+	sip_call_id_t* call_id = NULL;
+	sip_cseq_t* cseq = NULL;
+	sip_event_t* event = NULL;
+	sip_context_length_t* context_len = NULL;
+	sip_message_t* message = NULL;
+	FX_RET_CODE n_ret = FX_ERROR_OK;
+	char sz_num[10] = {0};
+
+	/*
+	 *	init message
+	 */
+	
+	sip_message_init( &message );
+
+	/*
+	 *	start line
+	 */
+	
+	sip_startline_init( &start_line );
+	sip_start_set_line_req_all( start_line, "SUB", FETION_DOMAIN );
+	sip_message_set_startline( message, start_line );
+
+	/*
+	 *	from
+	 */
+	
+	sip_common_init( &from );
+	sip_common_set_all( from, p_helper->uri );
+	sip_message_set_common( &(message->from), from );
+
+	/*
+	 *	call id
+	 */
+	
+	itoa( p_helper->n_callid, sz_num, 10 );
+	sip_common_init( &call_id );
+	sip_common_set_all( call_id, sz_num );
+	sip_message_set_common( &(message->call_id), call_id );
+	
+	/*
+	 *	cseq
+	 */
+	
+	sip_cseq_init( &cseq );
+	sip_cseq_set_all( cseq, 1, "SUB" );
+	sip_message_set_cseq( message, cseq );
+	
+	
+	/*
+	 *	event
+	 */
+	
+	sip_common_init( &event );
+	sip_common_set_all( event, "PresenceV4" );
+	sip_message_set_common( &(message->event), event );
+
+	/*
+	 *	context length
+	 */
+	
+	itoa( strlen( SIP_USER_STATUS_BODY ), sz_num, 10 );
+	sip_common_init( &context_len );
+	sip_common_set_all( context_len, sz_num );
+	sip_message_set_common( &(message->context_len), context_len );
+	
+	/*
+	 *	body
+	 */
+
+
+	sip_message_set_body( message, SIP_USER_STATUS_BODY );
+
+	n_ret = sip_message_to_str( message, sip_msg );
+	
+	sip_message_free( message );
+
+	if ( n_ret == LIBSIP_SUCCESS )
+		return FX_ERROR_OK;
+	else
+		return FX_ERROR_UNKOWN;
 }

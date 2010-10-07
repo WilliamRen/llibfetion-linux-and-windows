@@ -28,4 +28,7 @@
 FX_RET_CODE fx_init();
 void fx_close();
 
+FX_RET_CODE fx_curl_init();
+void fx_curl_close();
+
 #endif // INITIAL_H_INCLUDED

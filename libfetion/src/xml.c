@@ -35,6 +35,7 @@
 #include "log.h"
 #include "config.h"
 #include "mem.h"
+#include "utf8.h"
 #include "xml.h"
 
 /** \fn
@@ -188,8 +189,493 @@ FX_RET_CODE fx_parse_user_conf( __in  PMEM_STRUCT mem, \
     return FX_ERROR_OK;
 }
 
+void contact_list_append( PCONTACT_LIST p_contact, PCONTACT_LIST p_add )
+{
+	PCONTACT_LIST pos = p_contact;
+	while(pos != NULL)
+	{
+		if(pos->next == NULL)
+		{
+			pos->next = p_add;
+			break;
+		}
+		pos = pos->next;
+	}
+}
 
+void group_list_append( PGROUP_LIST p_group, PGROUP_LIST p_add )
+{
+	PGROUP_LIST pos = p_group;
+	while(pos != NULL)
+	{
+		if(pos->next == NULL)
+		{
+			pos->next = p_add;
+			break;
+		}
+		pos = pos->next;
+	}
+}
 
+void contact_list_free( PCONTACT_LIST p_contact )
+{
+	PCONTACT_LIST pos = p_contact;
+	while ( pos != NULL )
+	{
+		PCONTACT_LIST p_temp = pos->next;
+		free( pos );
+		pos = p_temp;
+	}
+}
 
+void group_list_free( PGROUP_LIST p_group )
+{
+	PGROUP_LIST pos = p_group;
+	while ( pos != NULL )
+	{
+		PGROUP_LIST p_temp = pos->next;
+		contact_list_free( pos->p_contact );
+		free( pos );
+		pos = p_temp;
+	}
+}
 
+void print_group_list( __in PGROUP_LIST p_group )
+{
+	PGROUP_LIST p_temp = p_group;
+	while ( p_temp )
+	{
+		PCONTACT_LIST p_temp_contact = p_temp->p_contact;
+		
+		/*
+		 *	first print group list
+		 */
+		
+		printf( "%s:\n", p_temp->sz_group_name );
+		
+		/*
+		 *	then print 
+		 */
+		
+		while ( p_temp_contact )
+		{
+			if ( strlen( p_temp_contact->sz_local_name ) != 0 )
+			{
+				printf( "\t%d %s", p_temp_contact->id, p_temp_contact->sz_local_name );
+			}
+			else
+			{
+				printf( "\t%d %s", p_temp_contact->id, p_temp_contact->user_status.sz_nick_name );
+			}
+			printf( "\tbase_code = %d\n", p_temp_contact->user_status.PRESENCE.n_base );
+			p_temp_contact = p_temp_contact->next;
+		}
+		p_temp = p_temp->next;
+	}
+}
 
+FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p_contact_list )
+{
+	xmlNodePtr node_root = NULL,node_child = NULL, node_group = NULL, node_buddy = NULL;
+	xmlNodePtr node_contact = NULL;
+	xmlDocPtr p_doc = xmlParseMemory( sz_xml, strlen( sz_xml ) );
+	int i = 1;
+
+	node_root = xmlDocGetRootElement( p_doc );
+	
+	/*
+	 *	循环root's child得到user_info
+	 */
+	
+	node_child = node_root->children;
+	while ( node_child )
+	{
+		if (xmlStrcmp(node_child->name, BAD_CAST("user-info")) == 0){
+            break;
+        }
+        node_child = node_child->next;
+	}
+	
+	/*
+	 *	循环user-info得到contact list
+	 */
+	
+	node_child = node_child->children;
+	while( node_child )
+	{
+		if (xmlStrcmp(node_child->name, BAD_CAST("contact-list")) == 0){
+            break;
+        }
+        node_child = node_child->next;
+	}
+	
+	node_contact = node_child;
+	
+	if ( node_contact == NULL )
+	{
+		return FX_ERROR_XMLPARSE;
+	}
+	/*
+	 *	循环contact list得到组信息.
+	 */
+	
+	node_child = node_contact->children;
+	while( node_child )
+	{
+		if (xmlStrcmp(node_child->name, BAD_CAST("buddy-lists")) == 0){
+            break;
+        }
+        node_child = node_child->next;
+	}
+	
+	node_group = node_child;
+	
+	if ( node_group == NULL )
+	{
+		return FX_ERROR_XMLPARSE;
+	}
+
+	/*
+	 *	循环组信息添加到链表
+	 */
+	
+	node_child = node_group->children;
+	while ( node_child )
+	{
+		PGROUP_LIST p_group = (PGROUP_LIST)malloc( sizeof(GROUP_LIST) );
+		memset( p_group, 0, sizeof(GROUP_LIST) );
+		if ( xmlStrcmp(node_child->name, BAD_CAST("buddy-list")) == 0 )
+		{
+			if ( xmlHasProp( node_child, BAD_CAST( "id" ) ) )
+			{
+				xmlChar* sz_attr = NULL;
+				sz_attr = xmlGetProp(node_child, BAD_CAST("id"));
+				p_group->n_group_id = atoi( (char*)sz_attr );
+			}
+			if ( xmlHasProp( node_child, BAD_CAST( "name" ) ) )
+			{
+				xmlChar* sz_attr = NULL;
+				char* sz_asc = NULL;
+				
+				sz_attr = xmlGetProp(node_child, BAD_CAST("name"));
+				sz_asc = utf8_to_ansi( (char*)sz_attr );
+				
+				strcpy( p_group->sz_group_name, sz_asc );
+				free( sz_asc );
+			}
+			if ( *p_contact_list == NULL )
+				*p_contact_list = p_group;
+			else
+			group_list_append( *p_contact_list, p_group );
+		}
+		
+		/*
+		 *	next
+		 */
+		
+		node_child = node_child->next;
+	}
+	
+	/*
+	 *	循环contact 得到buddies
+	 */
+	
+	node_child = node_contact->children;
+	while( node_child )
+	{
+		if (xmlStrcmp(node_child->name, BAD_CAST("buddies")) == 0){
+            break;
+        }
+        node_child = node_child->next;
+	}
+	
+	node_buddy = node_child;
+	
+	if ( node_buddy == NULL )
+	{
+		return FX_ERROR_XMLPARSE;
+	}
+
+	/*
+	 *	循环 buddy 添加到链表
+	 */
+
+	node_child = node_buddy->children;
+
+	while ( node_child )
+	{
+		if ( xmlStrcmp(node_child->name, BAD_CAST("b")) == 0 )
+		{
+			PCONTACT_LIST p_contact = (PCONTACT_LIST)malloc( sizeof(CONTACT_LIST) );
+			PGROUP_LIST p_temp = *p_contact_list;
+			
+			memset( p_contact, 0, sizeof(CONTACT_LIST) );
+			if ( xmlHasProp( node_child, BAD_CAST( "i" ) ) )
+			{
+				xmlChar* sz_attr = NULL;
+				
+				sz_attr = xmlGetProp(node_child, BAD_CAST("i"));
+				//sz_asc = ConvertUtf8ToGBK( (char*)sz_attr );
+				
+				strcpy( p_contact->sz_user_id, (char*)sz_attr );
+				//free( sz_asc );
+			}
+			if ( xmlHasProp( node_child, BAD_CAST( "u" ) ) )
+			{
+				xmlChar* sz_attr = NULL;
+				
+				sz_attr = xmlGetProp(node_child, BAD_CAST("u"));
+				strcpy( p_contact->sz_uri, (char*)sz_attr );
+			}
+			if ( xmlHasProp( node_child, BAD_CAST( "n" ) ) )
+			{
+				xmlChar* sz_attr = NULL;
+				char* sz_asc = NULL;
+				
+				sz_attr = xmlGetProp(node_child, BAD_CAST("n"));
+				sz_asc = utf8_to_ansi( (char*)sz_attr );
+				strcpy( p_contact->sz_local_name, (char*)sz_asc );
+				free( sz_asc );
+			}
+			if ( xmlHasProp( node_child, BAD_CAST( "o" ) ) )
+			{
+				xmlChar* sz_attr = NULL;
+				sz_attr = xmlGetProp(node_child, BAD_CAST("o"));
+				p_contact->n_online_notify = atoi( (char*)sz_attr );
+			}
+			if ( xmlHasProp( node_child, BAD_CAST( "r" ) ) )
+			{
+				xmlChar* sz_attr = NULL;
+				sz_attr = xmlGetProp(node_child, BAD_CAST("r"));
+				p_contact->n_relation_status= atoi( (char*)sz_attr );
+			}
+			if ( xmlHasProp( node_child, BAD_CAST( "l" ) ) )
+			{
+				xmlChar* sz_attr = NULL;
+				sz_attr = xmlGetProp(node_child, BAD_CAST("l"));
+				p_contact->n_group_list_id = atoi( (char*)sz_attr );
+			}
+			
+			p_contact->id = i;
+			i++;
+
+			/*
+			 *	add to group list
+			 */
+			
+			while ( p_temp )
+			{
+				if ( p_temp->n_group_id == p_contact->n_group_list_id )
+				{
+					/*
+					 *	add to list
+					 */
+					
+					if ( p_temp->p_contact == NULL )
+						p_temp->p_contact = p_contact;
+					else
+						contact_list_append( p_temp->p_contact, p_contact );
+				}
+				p_temp = p_temp->next;
+			}
+		}
+		
+		/*
+		 *	next
+		 */
+		
+		node_child = node_child->next;
+	}
+
+	return FX_ERROR_OK;
+}
+
+FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list )
+{
+	xmlNodePtr node_root = NULL,node_child = NULL, node_person = NULL;
+	xmlDocPtr p_doc = xmlParseMemory( sz_xml, strlen( sz_xml ) );
+	
+	/*
+	 *	events
+	 */
+	
+	node_root = xmlDocGetRootElement( p_doc );
+	
+	/*
+	 *	event
+	 */
+
+	node_child = node_root->children;
+	
+	while( node_child )
+	{
+		if (xmlStrcmp(node_child->name, BAD_CAST("event")) == 0){
+            break;
+        }
+        node_child = node_child->next;
+	}
+	
+	if ( node_child == NULL )
+	{
+		return FX_ERROR_XMLPARSE;
+	}
+	/*
+	 *	contacts
+	 */
+	
+	node_child = node_child->children;
+	while( node_child )
+	{
+		if (xmlStrcmp(node_child->name, BAD_CAST("contacts")) == 0){
+            break;
+        }
+        node_child = node_child->next;
+	}
+	
+	if ( node_child == NULL )
+	{
+		return FX_ERROR_XMLPARSE;
+	}
+
+	node_child = node_child->children;
+
+	/*
+	 *	loop contact;
+	 */
+	
+	while ( node_child )
+	{
+		if ( xmlStrcmp(node_child->name, BAD_CAST("c")) == 0  )
+		{
+			if ( xmlHasProp( node_child, BAD_CAST( "id" ) ) )
+			{
+				xmlChar* sz_attr = NULL;
+				PGROUP_LIST p_tmp = *p_contact_list;
+				PCONTACT_LIST p_dst = NULL;
+
+				sz_attr = xmlGetProp(node_child, BAD_CAST("id"));
+				
+				/*
+				 *	去PGROUP_LIST里面比较USERID去
+				 */
+				
+				while( p_tmp )
+				{
+					PCONTACT_LIST p_contact = p_tmp->p_contact;
+					while ( p_contact )
+					{
+						if ( strcmp( p_contact->sz_user_id, sz_attr ) == 0 )
+						{
+							p_dst = p_contact;
+							break;
+						}
+						p_contact = p_contact->next;
+					}
+					if ( p_dst != NULL )
+						break;
+					p_tmp = p_tmp->next;
+				}
+				
+				if ( p_dst != NULL )
+				{
+					node_person = node_child->children;
+
+					while( node_person )
+					{
+						if ( xmlStrcmp(node_person->name, BAD_CAST("p")) == 0 )
+						{
+							if ( xmlHasProp( node_person, BAD_CAST( "sid" ) ) )
+							{
+								xmlChar* sz_attr = NULL;
+								sz_attr = xmlGetProp(node_person, BAD_CAST("sid"));
+								
+								strcpy( p_dst->user_status.sz_sid, (char*)sz_attr );
+							}
+							if ( xmlHasProp( node_person, BAD_CAST( "su" ) ) )
+							{
+								xmlChar* sz_attr = NULL;
+								sz_attr = xmlGetProp(node_person, BAD_CAST("su"));
+								strcmp( p_dst->user_status.sz_uri, (char*)sz_attr );
+							}
+							if ( xmlHasProp( node_person, BAD_CAST( "n" ) ) )
+							{
+								xmlChar* sz_attr = NULL;
+								char* sz_asc = NULL;
+								sz_attr = xmlGetProp(node_person, BAD_CAST("n"));
+								sz_asc = utf8_to_ansi( (char*)sz_attr );
+								strcpy( p_dst->user_status.sz_nick_name, (char*)sz_asc );
+								free( sz_asc );
+							}
+							if ( xmlHasProp( node_person, BAD_CAST( "i" ) ) )
+							{
+								xmlChar* sz_attr = NULL;
+								char* sz_asc = NULL;
+								sz_attr = xmlGetProp(node_person, BAD_CAST("i"));
+								sz_asc = utf8_to_ansi( (char*)sz_attr );
+								strcpy( p_dst->user_status.sz_impresa, (char*)sz_asc );
+								free( sz_asc );
+							}
+							if ( xmlHasProp( node_person, BAD_CAST( "sms" ) ) )
+							{
+								xmlChar* sz_attr = NULL;
+								sz_attr = xmlGetProp(node_person, BAD_CAST("sms"));
+								//printf( "\tsms = %s\n", (char*)sz_attr );
+							}
+
+						}
+						else if ( xmlStrcmp(node_person->name, BAD_CAST("pr")) == 0 )
+						{
+							if ( xmlHasProp( node_person, BAD_CAST( "b" ) ) )
+							{
+								xmlChar* sz_attr = NULL;
+								sz_attr = xmlGetProp(node_child, BAD_CAST("b"));
+								if ( sz_attr != NULL )
+								{
+									p_dst->user_status.PRESENCE.n_base = atoi( (char*)sz_attr );
+								}
+							}
+							if ( xmlHasProp( node_person, BAD_CAST( "d" ) ) )
+							{
+								xmlChar* sz_attr = NULL;
+								char* sz_asc = NULL;
+								sz_attr = xmlGetProp(node_person, BAD_CAST("d"));
+								sz_asc = utf8_to_ansi( (char*)sz_attr );
+								strcpy( p_dst->user_status.PRESENCE.desc, sz_asc );
+								free( sz_asc );
+							}
+							if ( xmlHasProp( node_person, BAD_CAST( "dt" ) ) )
+							{
+								xmlChar* sz_attr = NULL;
+								sz_attr = xmlGetProp(node_person, BAD_CAST("dt"));
+								strcpy( p_dst->user_status.PRESENCE.device_type, sz_attr );
+							}
+							if ( xmlHasProp( node_person, BAD_CAST( "dc" ) ) )
+							{
+								xmlChar* sz_attr = NULL;
+								sz_attr = xmlGetProp(node_person, BAD_CAST("dc"));
+								strcpy( p_dst->user_status.PRESENCE.device_caps, sz_attr );
+							}
+						}
+
+						/*
+						 *	next
+						 */
+						
+						node_person = node_person->next;
+					}
+				
+				}
+			}
+			
+		}
+		
+		/*
+		 *	next 
+		 */
+		
+		node_child = node_child->next;
+
+	}
+
+	return FX_ERROR_OK;
+}

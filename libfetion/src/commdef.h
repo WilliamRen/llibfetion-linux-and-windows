@@ -91,4 +91,47 @@ typedef struct _login_data
 	
 }LOGIN_DATA, *PLOGIN_DATA;
 
+typedef struct _USER_STATUS
+{
+	char	sz_uri[50];
+	char	sz_sid[20];
+	char	sz_nick_name[50];
+	char	sz_impresa[256];
+	char	sz_phone_num[20];
+	int		portrait;
+	struct _presence
+	{
+		int  n_base;
+		char desc[64];
+		char device_type[16];
+		char device_caps[16];
+
+	}PRESENCE;
+
+}USER_STATUS,*PUSER_STATUS;
+
+typedef struct _CONTACT_LIST
+{
+	int		id;
+	char	sz_uri[50];
+	char	sz_user_id[20];
+	char	sz_local_name[50];
+	int		n_group_list_id;
+	int		n_relation_status;
+	int		n_feike_read_version;
+	int		n_online_notify;
+	USER_STATUS user_status;
+	struct _CONTACT_LIST* next;
+
+}CONTACT_LIST,*PCONTACT_LIST;
+
+typedef struct _GROUP_LIST
+{
+	int		n_group_id;
+	char	sz_group_name[50];
+	PCONTACT_LIST p_contact;	
+	struct _GROUP_LIST*	next;
+
+}GROUP_LIST, *PGROUP_LIST;
+
 #endif

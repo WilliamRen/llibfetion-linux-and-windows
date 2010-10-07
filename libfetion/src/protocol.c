@@ -125,3 +125,41 @@ FX_RET_CODE fx_send_msg_to_yourself( int socket, char* msg )
 #endif
 	return FX_ERROR_OK;
 }
+
+FX_RET_CODE fx_get_buddies_status( int socket )
+{
+	char* sz_sip_msg = NULL;
+	FX_RET_CODE n_ret = 0;
+	
+	SUB_DLG_HELPER sub_helper = {0};
+
+	sub_helper.n_callid = fx_sip_increase_callid();
+	sub_helper.n_cseq = 1;
+	strcpy( sub_helper.uri, g_login_data.sz_uri );
+	
+	/*
+	 *	generate the sip package
+	 */
+	
+	n_ret = fx_sip_generate_get_user_status( &sub_helper, &sz_sip_msg );
+	if ( FX_ERROR_OK != n_ret )
+	{
+		log_string( "fx_sip_generate_send_msg_yourself error\n" );
+		return n_ret;
+	}
+
+	n_ret = fx_socket_send( socket, sz_sip_msg, strlen(sz_sip_msg) );
+	if ( n_ret == -1 ){
+		log_string( "fx_login:send data to server error!" );
+		return FX_ERROR_SOCKET;
+	}
+	
+	
+	/*
+	 *	free resource
+	 */
+	
+	free( sz_sip_msg );
+
+	return FX_ERROR_OK;
+}

@@ -47,17 +47,31 @@ FX_RET_CODE fx_init()
 	if(!pthread_win32_process_attach_np())
 		return FX_ERROR_INIT;
 #endif
-#endif
 	log_init();
-    g_curl = curl_easy_init();
-    if( !g_curl ){
-        log_string( "fx_init:initialize error!" );
-        return FX_ERROR_INIT;
-    }
-    return FX_ERROR_OK;
+	return FX_ERROR_OK;
+#endif
 #ifdef _WINDOWS_
     /*todo here add the code run on windows*/
 #endif
+}
+
+FX_RET_CODE fx_curl_init()
+{
+	g_curl = curl_easy_init();
+	if( !g_curl ){
+		log_string( "fx_init:initialize error!" );
+		return FX_ERROR_INIT;
+	}
+	return FX_ERROR_OK;
+}
+void fx_curl_close()
+{
+	if ( g_curl )
+	{
+		curl_easy_cleanup( g_curl );
+		g_curl = NULL;
+	}
+	
 }
 
 void fx_close()
@@ -66,7 +80,6 @@ void fx_close()
 #ifdef PTW32_STATIC_LIB
 	pthread_win32_process_detach_np();
 #endif
-	curl_easy_cleanup( g_curl );
 #endif
 }
 

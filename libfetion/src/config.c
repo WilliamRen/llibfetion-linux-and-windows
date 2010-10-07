@@ -52,8 +52,15 @@ FX_RET_CODE fx_get_sys_conf( __in char* sz_phone_num, \
 {
     CURLcode curl_ret = 0;
     char sz_send_data[512] = {0};
-
+	
     struct curl_slist* head = NULL;
+	
+	/*
+	 *	initial
+	 */
+	
+	
+	fx_curl_init();
     if ( g_curl == NULL ){
         log_string( "fx_get_user_conf:libfetion need initial" );
     	return FX_ERROR_NOINITIAL;
@@ -80,7 +87,13 @@ FX_RET_CODE fx_get_sys_conf( __in char* sz_phone_num, \
         log_string( "fx_get_user_conf:exec curl error!" );
         return FX_ERROR_CURL;
     }
-    /*next we should parse the config file*/
+	
+	/*
+	 *	clean up curl
+	 */
+	
+	fx_curl_close();
+	/*next we should parse the config file*/
     return FX_ERROR_OK;
 }
 
@@ -99,11 +112,18 @@ FX_RET_CODE fx_get_user_conf( __in PSYS_CONF_DATA sys_data, \
     CURLcode curl_ret = 0;
     char sz_login_url[256] = {0};
     struct curl_slist* head = NULL;
+	struct curl_slist* cookies = NULL, *cookies_temp = NULL;
     char* sz_digest1 = NULL;
 	byte* hex_digest1 = NULL;
-	char sz_http[256] = {0};
 	FX_RET_CODE ret = FX_ERROR_OK;
 	int n_ret = 0;
+	
+	/*
+	 *	initial
+	 */
+	
+	
+	fx_curl_init();
 
     if ( g_curl == NULL ){
     	log_string( "fx_get_user_conf:libfetion need initial" );
@@ -123,15 +143,10 @@ FX_RET_CODE fx_get_user_conf( __in PSYS_CONF_DATA sys_data, \
         log_string( "get diget1 error!" );
         return FX_ERROR_UNKOWN;
     }
-	strcat( sz_http, "http://" );
-	if ( memcmp( sys_data->sz_user_conf_url, "https://", 8 ) == 0 )
-	{
-		strcat( sz_http, (char*)((sys_data->sz_user_conf_url) + 8) );
-	}
 	
     /*format the url for login request*/
     sprintf( sz_login_url, FX_SSI_FORMAT, \
-             sz_http, sys_data->user_data.sz_phone_num, \
+             sys_data->sz_user_conf_url, sys_data->user_data.sz_phone_num, \
              sz_digest1 );
 
     free( sz_digest1 );
@@ -146,16 +161,53 @@ FX_RET_CODE fx_get_user_conf( __in PSYS_CONF_DATA sys_data, \
     /*set libcurl*/
     curl_easy_setopt( g_curl, CURLOPT_URL, sz_login_url );
     curl_easy_setopt( g_curl, CURLOPT_HTTPHEADER, head );
-    curl_easy_setopt( g_curl, CURLOPT_CONNECTTIMEOUT, 8 ); /*time out 8s*/
+    curl_easy_setopt( g_curl, CURLOPT_CONNECTTIMEOUT, 20 ); /*time out 8s*/
     curl_easy_setopt( g_curl, CURLOPT_WRITEFUNCTION, write_mem_call_back );
+	curl_easy_setopt( g_curl, CURLOPT_SSL_VERIFYPEER, 0L);
+	curl_easy_setopt( g_curl, CURLOPT_SSL_VERIFYHOST, 0L);
     curl_easy_setopt( g_curl, CURLOPT_WRITEDATA, (void*)mem );
-    //curl_easy_setopt( g_curl, CURLOPT_COOKIEJAR, "cookie.txt" );
+    curl_easy_setopt( g_curl, CURLOPT_COOKIEFILE, "" );
     /*execute curl*/
     curl_ret = curl_easy_perform( g_curl );
     if( curl_ret != CURLE_OK ){
         log_string( "fx_get_user_conf:exec curl error!" );
         return FX_ERROR_CURL;
     }
+	
+	/*
+	 *	get cookies
+	 */
+	//curl_easy_setopt( g_curl, CURLOPT_COOKIELIST, "ALL" );
+	curl_ret = curl_easy_getinfo( g_curl, CURLINFO_COOKIELIST, &cookies );
+	if ( curl_ret != CURLE_OK ){
+		log_string( "fx_get_user_conf:curl_easy_getinfo error!" );
+		curl_slist_free_all( head );
+        fx_curl_close();
+		return FX_ERROR_OK;
+	}
+	
+	/*
+	 *	get ssic
+	 */
+	
+	cookies_temp = cookies;
+	while( cookies_temp )
+	{
+		if ( strstr( cookies_temp->data, "ssic" ) != NULL )
+		{
+			//printf( "cookies = %s\n", cookies_temp->data );
+			break;
+		}
+		cookies_temp = cookies_temp->next;
+	}
+	
+	/*
+	 *	clean up curl
+	 */
+	
+	curl_slist_free_all( cookies );
+
+	fx_curl_close();
     /*next we should parse the config file*/
     return FX_ERROR_OK;
 }

@@ -57,6 +57,9 @@ typedef struct _keeplive_dlg_helper
 	
 }KEEPLIVE_DLG_HELPER, *PKEEPLIVE_DLG_HELPER;
 
+typedef KEEPLIVE_DLG_HELPER SUB_DLG_HELPER;
+typedef PKEEPLIVE_DLG_HELPER PSUB_DLG_HELPER;
+
 typedef struct _dlg_helper
 {
 	PAUTH_DLG_HELPER p_auth;

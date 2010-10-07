@@ -23,15 +23,8 @@
 
 #include "commdef.h"
 
-#define FX_LOGIN_DATA       "<args>"                                                                    \
-                            "<device type=\"PC\" version=\"284571220\" client-version=\"3.3.0370\" />"  \
-                            "<caps value=\"simple-im;im-session;temp-group;personal-group\" />"         \
-                            "<events value=\"contact;permission;system-message;personal-group\" />"     \
-                            "<user-info attributes=\"all\" />"                                          \
-                            "<presence>"                                                                \
-                            "<basic value=\"400\" desc=\"\" />"                                         \
-                            "</presence>"                                                               \
-                            "</args>"
+FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list );
+int fx_get_socket();
+PGROUP_LIST fx_get_group_list();
 
-FX_RET_CODE fx_login( PLOGIN_DATA l_data  );
 #endif // LOGIN_H_INCLUDED

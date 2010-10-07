@@ -45,19 +45,28 @@
 #include "sipc.h"
 #include "helper.h"
 #include "utf8.h"
+#include "xml.h"
 #include "login.h"
 
 
 extern SYS_CONF_DATA g_sys_conf;
 LOGIN_DATA g_login_data = {0};
 extern DLG_HELPER g_dlg_helper;
+extern PGROUP_LIST g_contact_list;
 
 pthread_t g_recv_thread_id = {0};
 pthread_t g_keeplive_thread_id = {0};
 
 #define ASE_KEY "4A026855890197CFDF768597D07200B346F3D676411C6F87368B5C2276DCEDD2"
 
-FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
+int g_socket = 0;
+
+PGROUP_LIST fx_get_group_list()
+{
+	return g_contact_list;
+}
+
+FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 {
     /*将sz_sipc_proxy中的IP和端口分别存放，看着挺麻烦的*/
     int n_ret = 0, socket;
@@ -100,6 +109,8 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
         log_string( "create socket error!\n" );
         return FX_ERROR_SOCKET;
     }
+	
+	g_socket = socket;
 
     /*
      *  connect to the fetion server
@@ -216,24 +227,31 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
 	
 	
 	fx_sip_recv( socket, &sip_msg_list );
-	if ( atoi( sip_msg_list->msg->startline->status_code ) != SIP_OK )
+	if ( sip_msg_list->msg->startline->status_code == NULL || \
+		(sip_msg_list->msg->startline->status_code != NULL && \
+		atoi( sip_msg_list->msg->startline->status_code ) != SIP_OK) )
 	{
 		log_string( "fx_login failed!\n" );
 		return FX_ERROR_UNKOWN;
 	}
 
 	/*
-	 *	convert utf8 config string to ansi
+	 *	parse contact list
 	 */
 	
-	log_string( "==utf8_to_ansi==" );
-	sz_contact_list = utf8_to_ansi( sip_msg_list->msg->body );
-	free( sz_contact_list );
-
-
+	fx_parse_contact_list( sip_msg_list->msg->body, p_group_list );
+	
 	fx_sip_msg_list_free( sip_msg_list );
 	sip_msg_list = NULL;
-
+	
+	
+	/*
+	 *	update buddiy status
+	 */
+	
+	
+	fx_get_buddies_status( socket );
+	
 	/*
      *  create new thread to recv data from server
      */
@@ -246,7 +264,7 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
     }
 	
 #ifdef __WIN32__
-	Sleep( 20 * 1000 );
+	Sleep( 1000 );
 #endif
 
 	/*
@@ -261,28 +279,17 @@ FX_RET_CODE fx_login( PLOGIN_DATA l_data  )
     }
 
 #ifdef __WIN32__
-	//Sleep( 100 * 1000 );
-	printf( "\t\t\tlibfetion v1.0 by programmeboy\n" );
-	while ( 1 )
-	{
-		char sz_msg[1024] = {0};
-
-		printf( ">>" );
-		gets( sz_msg );
-		
-		log_string( "==start send msg to myself==" );
-		fx_send_msg_to_yourself( socket, sz_msg );
-		log_string( "==end send msg to myself==" );
-		
-#ifdef __WIN32__
-		Sleep( 10 );
-#endif
-	}
+	Sleep( 500 );
 #else
-    sleep( 50 );
+	sleep( 1 );
 #endif
-    pthread_cancel( g_recv_thread_id );
+    //pthread_cancel( g_recv_thread_id );
 
     return FX_ERROR_OK;
 
+}
+
+int fx_get_socket()
+{
+	return g_socket;
 }

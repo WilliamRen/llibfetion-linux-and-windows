@@ -47,6 +47,7 @@ typedef struct _SIPC_MESG
 						"<presence><basic value=\"400\" desc=\"\" /><extendeds /></presence></args>"*/
 #define SIP_AUTH_BODY "<args><device accept-language=\"default\" machine-code=\"%s\" /><caps value=\"3FF\" /><events value=\"7F\" /><user-info mobile-no=\"%s\" user-id=\"%s\"><personal version=\"0\" attributes=\"v4default;alv2-version;alv2-warn\" /><custom-config version=\"0\" /><contact-list version=\"0\" buddy-attributes=\"v4default\" /></user-info><credentials domains=\"fetion.com.cn;m161.com.cn;www.ikuwa.cn;games.fetion.com.cn;turn.fetion.com.cn\" /><presence><basic value=\"400\" desc=\"\" /><extendeds /></presence></args>"
 #define SIP_KEEPLIVE_BODY	"<args><credentials domains=\"fetion.com.cn;m161.com.cn;www.ikuwa.cn;games.fetion.com.cn;turn.fetion.com.cn\" /></args>"
+#define SIP_USER_STATUS_BODY	"<args><subscription self=\"v4default;mail-count;mail-info;impresa;sms-online-status\" buddy=\"v4default\" version=\"\" /></args>"
 
 void fx_sip_msg_append( PSIPC_MSG msglist, PSIPC_MSG msg );
 FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out );
@@ -65,4 +66,6 @@ int fx_sip_generate_keeplive(  __in PKEEPLIVE_DLG_HELPER p_keeplive_helper,
 int fx_sip_generate_send_msg_yourself( __in PCHAT_DLG_HELPER p_helper, 
 									   __in char* msg, 
 									   __out char** sip_msg);
+
+int fx_sip_generate_get_user_status( __in PSUB_DLG_HELPER p_helper, __out char** sip_msg );
 #endif
