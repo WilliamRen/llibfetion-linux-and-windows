@@ -68,4 +68,7 @@ int fx_sip_generate_send_msg_yourself( __in PCHAT_DLG_HELPER p_helper,
 									   __out char** sip_msg);
 
 int fx_sip_generate_get_user_status( __in PSUB_DLG_HELPER p_helper, __out char** sip_msg );
+int fx_sip_generate_send_msg_other(	 __in PCHAT_DLG_HELPER p_helper, __in char* msg, 
+									 __out char** sip_msg);
+
 #endif

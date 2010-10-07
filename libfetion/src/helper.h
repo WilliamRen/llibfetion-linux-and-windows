@@ -44,7 +44,7 @@ typedef struct _chat_dlg_helper
 
 typedef struct _chat_dlg_helper_list
 {
-	PAUTH_DLG_HELPER p_helper;
+	CHAT_DLG_HELPER p_helper;
 	struct _chat_dlg_helper_list* next;
 	
 }CHAT_DLG_HELPER_LIST, *PCHAT_DLG_HELPER_LIST;
@@ -64,6 +64,15 @@ typedef struct _dlg_helper
 {
 	PAUTH_DLG_HELPER p_auth;
 	PCHAT_DLG_HELPER_LIST p_chat_list;
+
 }DLG_HELPER, *PDLG_HELPER;
+
+PCONTACT_LIST fx_contact_list_find_by_id( __in int n_id );
+PCHAT_DLG_HELPER_LIST fx_chat_dlg_find_by_uri( __in char* sz_uri );
+PCHAT_DLG_HELPER_LIST fx_chat_dlg_find_by_id( __in int n_id );
+void fx_chat_dlg_helper_item_free( __in char* sz_uri );
+void fx_chat_dlg_helper_free( PCHAT_DLG_HELPER_LIST p_helper );
+void fx_chat_dlg_helper_append( PCHAT_DLG_HELPER_LIST p_helper, PCHAT_DLG_HELPER_LIST p_add );
+void fx_chat_dlg_helper_item_free_by_id( __in int n_id );
 
 #endif

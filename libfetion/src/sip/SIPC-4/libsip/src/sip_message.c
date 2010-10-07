@@ -491,6 +491,14 @@ sip_message_to_str( sip_message_t* message, char** dest )
     if ( LIBSIP_SUCCESS != n_ret )
     	return n_ret;
 	
+	 /****************************************************
+     *                       D:                         *
+     ****************************************************/
+
+    n_ret = sip_common_to_hole_string( message->date, "D: ", dest );
+    if ( LIBSIP_SUCCESS != n_ret )
+    	return n_ret;
+
 
 	n_len = strlen( *dest ) + 2 + 1;
 	*dest = (char*)sip_realloc( *dest, n_len );
@@ -552,6 +560,7 @@ int sip_message_init( sip_message_t** message )
 	(*message)->to				= NULL;
     (*message)->www_authenticate= NULL;
 	(*message)->support_list	= NULL;
+	(*message)->date			= NULL;
 
 	return LIBSIP_SUCCESS;
 }
@@ -589,6 +598,8 @@ sip_message_free( sip_message_t* message )
     	sip_free( message->body );
 	if ( message->support_list )
 		sip_support_list_free( message->support_list );
+	if ( message->date )
+        sip_common_free( message->date );
 
 	sip_free( message );
 }
@@ -760,6 +771,13 @@ sip_message_parse( sip_message_t* message, const char *value )
         case 'N':
             {
                 n_ret = sip_message_set_common_str( &(message->event), sz_line + 3 );
+                if( LIBSIP_SUCCESS != n_ret )
+                    return n_ret;
+            }
+            break;
+        case 'D':
+            {
+                n_ret = sip_message_set_common_str( &(message->date), sz_line + 3 );
                 if( LIBSIP_SUCCESS != n_ret )
                     return n_ret;
             }

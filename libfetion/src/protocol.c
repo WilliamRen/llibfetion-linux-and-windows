@@ -126,6 +126,67 @@ FX_RET_CODE fx_send_msg_to_yourself( int socket, char* msg )
 	return FX_ERROR_OK;
 }
 
+FX_RET_CODE fx_send_msg_to_other( int socket, char* msg, __in int n_id )
+{
+	PCHAT_DLG_HELPER_LIST p_list = NULL;
+	PCONTACT_LIST p_contact = fx_contact_list_find_by_id( n_id );
+	char* sz_utf8 = NULL;
+	char* sz_sip_msg = NULL;
+	FX_RET_CODE n_ret = 0;
+
+	if ( p_contact == NULL )
+	{
+		return FX_ERROR_UNKOWN;
+	}
+	p_list = fx_chat_dlg_find_by_uri( p_contact->sz_uri );
+	if ( p_list == NULL )
+	{
+		p_list = (PCHAT_DLG_HELPER_LIST)malloc( sizeof( CHAT_DLG_HELPER_LIST ) );
+		p_list->p_helper.n_callid = fx_sip_increase_callid();
+		p_list->p_helper.n_cseq = 1;
+		strcpy( p_list->p_helper.dst_uri, p_contact->sz_uri);
+		strcpy( p_list->p_helper.my_uri, g_login_data.sz_uri );
+	}
+
+#ifdef __WIN32__
+	sz_utf8 = ansi_to_utf8( msg );
+#else
+	sz_utf8 = msg;
+#endif
+
+	n_ret = fx_sip_generate_send_msg_other( &(p_list->p_helper), sz_utf8, &sz_sip_msg );
+	if ( FX_ERROR_OK != n_ret )
+	{
+		log_string( "fx_sip_generate_send_msg_yourself error\n" );
+#ifdef __WIN32__
+		free( sz_utf8 );
+#endif
+		return n_ret;
+	}
+
+	/*
+	 *	send the package
+	 */
+	
+	n_ret = fx_socket_send( socket, sz_sip_msg, strlen(sz_sip_msg) );
+	if ( n_ret == -1 ){
+		log_string( "fx_login:send data to server error!" );
+		return FX_ERROR_SOCKET;
+	}
+	
+	
+	/*
+	 *	free resource
+	 */
+	
+	free( sz_sip_msg );
+#ifdef __WIN32__
+	free( sz_utf8 );
+#endif
+	return FX_ERROR_OK;
+	
+}
+
 FX_RET_CODE fx_get_buddies_status( int socket )
 {
 	char* sz_sip_msg = NULL;

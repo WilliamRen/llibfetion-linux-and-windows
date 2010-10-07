@@ -25,4 +25,6 @@ char* fx_generate_cnonce();
 FX_RET_CODE fx_send_msg_to_yourself( int socket, char* msg );
 FX_RET_CODE fx_get_buddies_status( int socket );
 
+FX_RET_CODE fx_send_msg_to_other( int socket, char* msg, __in int n_id );
+
 #endif // PROTOCOL_H_INCLUDED

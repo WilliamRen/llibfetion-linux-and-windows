@@ -35,6 +35,7 @@
 					  "N: CatMsg\r\n" \
                       "CN: 123456\r\n" \
                       "Q: 1 R\r\n" \
+					  "D: oct, 2010 01:01:01\r\n" \
                       "W: Digest algorithm=\"SHA1-sess-v4\",nonce=\"660702E04DB7BC69666436271C4D9F7B\",key=\"AD3D7038\",signature=\"D528E11\"\r\n" \
                       "A: TICKS auth=\"2025669365.557049008\"\r\n" \
 					  "\r\n" \
@@ -78,6 +79,8 @@ int fx_sip_generate_auth_req( __in PAUTH_DLG_HELPER p_auth_helper, __out char** 
 	sip_cseq_t* cseq = NULL;
 	sip_cnonce_t* cnonce = NULL;
 	sip_client_t*	client = NULL;
+	sip_support_list_t* support_list = NULL;
+	sip_support_t* support = NULL;
 	sip_message_t* message = NULL;
 	char sz_num[10] = {0};
 	char* sz_tmp = NULL;
@@ -129,6 +132,17 @@ int fx_sip_generate_auth_req( __in PAUTH_DLG_HELPER p_auth_helper, __out char** 
 	free( sz_tmp );
 	sip_message_set_common( &(message->cnonce), cnonce );
 	
+	/*
+	 *	TODO: support list 
+	 */
+	
+	support_list = (sip_support_list_t*)sip_malloc( sizeof(sip_support_list_t) );
+	sip_common_init( &support );
+	sip_common_set_all( support, "SaveHistory" );
+	support_list->sip_k = support;
+	support_list->next = NULL;
+	message->support_list = support_list;
+
 	/*
 	 *	client
 	 */
@@ -272,115 +286,115 @@ int fx_sip_generate_auth_resp( __in PAUTH_DLG_HELPER p_auth_helper,
 int main()
 {
 
-    sip_message_t* msg;
-    char* sz_test = NULL;
-
-	int n_ret = 0;
-
-    //msg = (sip_message_t*)sip_malloc( sizeof( sip_message_t ) );
-
-	sip_message_init( &msg );
-	
-
-	n_ret = sip_message_parse( msg, TEST_MESSAGE );
-    if ( !LIBSIP_IS_SUCCESS( n_ret ) )
-
-    {
-
-		printf( "parse error!\n" );
-
-		return 0;
-
-    }
-	
-
-	if ( n_ret == LIBSIP_BODY_BEYOND )
-
-	{			
-
-// 		int n_head_len  = 0, n_body_len = 0, n_next = 0;
-
-// 		char* sz_ctrllflf = NULL, *sz_next_msg = NULL;
-
-// 		char* sz_tmp_recv = TEST_MESSAGE;
-
+//     sip_message_t* msg;
+//     char* sz_test = NULL;
 // 
-
-// 		
-
-// 		/*
-
-// 		 *	这里肯定能得到,不然sip_message_parse就错了
-
-// 		 */
-
-// 		
-
-// 		sz_ctrllflf = strstr( sz_tmp_recv, CTRLLFLF );
-
-// 		n_head_len = strlen( sz_tmp_recv ) - strlen( sz_ctrllflf ) + 4/*for CTRLLFLF*/;
-
+// 	int n_ret = 0;
 // 
-
-// 		n_body_len = sip_message_get_body_length( msg );
-
-// 		
-
-// 		n_next = strlen( sz_tmp_recv ) - n_head_len - n_body_len;
-
-// 		sz_next_msg = (char*)malloc( n_next + 1 );
-
-// 		memset( sz_next_msg, 0, n_next + 1 );
-
-// 		
-
-// 		/*
-
-// 		 *	set the next msg buffer
-
-// 		 */
-
-// 		
-
-// 		strcpy( sz_next_msg, sz_tmp_recv + n_head_len + n_body_len );
-
-
-
-	}
-
-
-
-	printf( "len = %d \n", sip_message_get_body_length( msg ) );
-
-
-    sip_message_to_str( msg, &sz_test );
-	
-    printf( "%s\n", sz_test );
-
-
-	sip_message_free( msg );
-
-
-    sip_free( sz_test );
-// 	PAUTH_DLG_HELPER p_auth_helper = (PAUTH_DLG_HELPER)malloc( sizeof(AUTH_DLG_HELPER) );
-// 	char* sz_pack = NULL;
+//     //msg = (sip_message_t*)sip_malloc( sizeof( sip_message_t ) );
+// 
+// 	sip_message_init( &msg );
 // 	
-// 	memset( p_auth_helper, 0, sizeof(AUTH_DLG_HELPER) );
-// 	strcpy( p_auth_helper->machine_code, "2F6E7CD33AA1F6928E69DEDD7D6C50B1" );
-// 	strcpy( p_auth_helper->phone_num, "15210281153" );
-// 	strcpy( p_auth_helper->user_id, "123456" );
-// 	strcpy( p_auth_helper->user_pwd, "5211314" );
-// 	p_auth_helper->n_callid = 1;
-// 	p_auth_helper->n_cseq = 1;
-// 	if ( fx_sip_generate_auth_req( p_auth_helper, &sz_pack ) != 0 )
-// 	{
-// 		return -1;
+// 
+// 	n_ret = sip_message_parse( msg, TEST_MESSAGE );
+//     if ( !LIBSIP_IS_SUCCESS( n_ret ) )
+// 
+//     {
+// 
+// 		printf( "parse error!\n" );
+// 
+// 		return 0;
+// 
+//     }
+// 	
+// 
+// 	if ( n_ret == LIBSIP_BODY_BEYOND )
+// 
+// 	{			
+// 
+// // 		int n_head_len  = 0, n_body_len = 0, n_next = 0;
+// 
+// // 		char* sz_ctrllflf = NULL, *sz_next_msg = NULL;
+// 
+// // 		char* sz_tmp_recv = TEST_MESSAGE;
+// 
+// // 
+// 
+// // 		
+// 
+// // 		/*
+// 
+// // 		 *	这里肯定能得到,不然sip_message_parse就错了
+// 
+// // 		 */
+// 
+// // 		
+// 
+// // 		sz_ctrllflf = strstr( sz_tmp_recv, CTRLLFLF );
+// 
+// // 		n_head_len = strlen( sz_tmp_recv ) - strlen( sz_ctrllflf ) + 4/*for CTRLLFLF*/;
+// 
+// // 
+// 
+// // 		n_body_len = sip_message_get_body_length( msg );
+// 
+// // 		
+// 
+// // 		n_next = strlen( sz_tmp_recv ) - n_head_len - n_body_len;
+// 
+// // 		sz_next_msg = (char*)malloc( n_next + 1 );
+// 
+// // 		memset( sz_next_msg, 0, n_next + 1 );
+// 
+// // 		
+// 
+// // 		/*
+// 
+// // 		 *	set the next msg buffer
+// 
+// // 		 */
+// 
+// // 		
+// 
+// // 		strcpy( sz_next_msg, sz_tmp_recv + n_head_len + n_body_len );
+// 
+// 
+// 
 // 	}
-// 	sip_free( sz_pack );
-// 	if ( fx_sip_generate_auth_resp( p_auth_helper, "213283273617362732", "126728367826473243", &sz_pack ) != 0 )
-// 	{
-// 		return -1;
-// 	}
-// 	sip_free( sz_pack );
+// 
+// 
+// 
+// 	printf( "len = %d \n", sip_message_get_body_length( msg ) );
+// 
+// 
+//     sip_message_to_str( msg, &sz_test );
+// 	
+//     printf( "%s\n", sz_test );
+// 
+// 
+// 	sip_message_free( msg );
+// 
+// 
+//     sip_free( sz_test );
+	PAUTH_DLG_HELPER p_auth_helper = (PAUTH_DLG_HELPER)malloc( sizeof(AUTH_DLG_HELPER) );
+	char* sz_pack = NULL;
+	
+	memset( p_auth_helper, 0, sizeof(AUTH_DLG_HELPER) );
+	strcpy( p_auth_helper->machine_code, "2F6E7CD33AA1F6928E69DEDD7D6C50B1" );
+	strcpy( p_auth_helper->phone_num, "15210281153" );
+	strcpy( p_auth_helper->user_id, "123456" );
+	strcpy( p_auth_helper->user_pwd, "5211314" );
+	p_auth_helper->n_callid = 1;
+	p_auth_helper->n_cseq = 1;
+	if ( fx_sip_generate_auth_req( p_auth_helper, &sz_pack ) != 0 )
+	{
+		return -1;
+	}
+	sip_free( sz_pack );
+	if ( fx_sip_generate_auth_resp( p_auth_helper, "213283273617362732", "126728367826473243", &sz_pack ) != 0 )
+	{
+		return -1;
+	}
+	sip_free( sz_pack );
     return 0;
 }

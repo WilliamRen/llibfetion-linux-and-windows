@@ -42,7 +42,8 @@ typedef sip_common_t sip_context_type_t;
 typedef sip_common_t sip_context_encode_t;
 typedef sip_common_t sip_expires_t;
 typedef sip_common_t sip_event_t;
-
+typedef sip_common_t sip_date_t;
+typedef sip_common_t sip_support_t;
 
 /*
  *	add for K

@@ -64,7 +64,7 @@ int main()
 
     FX_RET_CODE fx_ret;
 
-    init_data( "15210281153", "qiupeng501" );
+    init_data( "1521028XXXX", "qiupenXXXX" );
 
     fx_ret = fx_init();
     if( fx_ret != FX_ERROR_OK){
@@ -113,6 +113,7 @@ int main()
 	{
 		char sz_msg[1024] = {0};
 		int socket = fx_get_socket();
+		int n_current_chat = -1;
 
 		printf( ">>" );
 		gets( sz_msg );
@@ -120,6 +121,26 @@ int main()
 		if ( strcmp( sz_msg, "print" ) == 0 )
 		{
 			print_group_list( g_contact_list );
+		}
+		else if ( memcmp( sz_msg, "TO", 2 ) == 0 )
+		{
+			char sz_cmd[10] = {0};
+			char sz_msg1[100] = {0};
+			int i = 0;
+
+			sscanf( sz_msg, "%s %d %s", sz_cmd, &i, sz_msg1 );
+			
+			n_current_chat = i;
+
+			fx_send_msg_to_other( socket, sz_msg1, i );
+
+		}
+		else if ( strcmp( sz_msg, "CLOSE" ) == 0 )
+		{
+			if ( n_current_chat != -1 )
+			{
+				fx_chat_dlg_helper_item_free_by_id( n_current_chat );
+			}
 		}
 		else
 		{

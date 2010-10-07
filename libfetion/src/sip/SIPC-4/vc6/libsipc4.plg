@@ -6,7 +6,7 @@
 --------------------Configuration: libsipc4 - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPF8.tmp" with contents
+Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSP61.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /FR"Debug/" /Fp"Debug/libsipc4.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
 "D:\svn\llibfetion\libfetion\src\sip\SIPC-4\libsip\src\sip_authorization.c"
@@ -19,8 +19,8 @@ Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPF8.tmp" with cont
 "D:\svn\llibfetion\libfetion\src\sip\SIPC-4\libsip\src\sip_to.c"
 "D:\svn\llibfetion\libfetion\src\sip\SIPC-4\libsip\src\sip_www_authenticate.c"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPF8.tmp" 
-Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPF9.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSP61.tmp" 
+Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSP62.tmp" with contents
 [
 /nologo /out:"LIB_Debug\libsipc4d.lib" 
 ".\Debug\sip_authorization.obj"
@@ -33,7 +33,7 @@ Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPF9.tmp" with cont
 ".\Debug\sip_to.obj"
 ".\Debug\sip_www_authenticate.obj"
 ]
-Creating command line "link.exe -lib @C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPF9.tmp"
+Creating command line "link.exe -lib @C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSP62.tmp"
 <h3>Output Window</h3>
 Compiling...
 sip_authorization.c
@@ -46,7 +46,7 @@ sip_startline.c
 sip_to.c
 sip_www_authenticate.c
 Creating library...
-Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPFA.tmp" with contents
+Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSP63.tmp" with contents
 [
 /nologo /o"Debug/libsipc4.bsc" 
 ".\Debug\sip_authorization.sbr"
@@ -58,7 +58,7 @@ Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPFA.tmp" with cont
 ".\Debug\sip_startline.sbr"
 ".\Debug\sip_to.sbr"
 ".\Debug\sip_www_authenticate.sbr"]
-Creating command line "bscmake.exe @C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPFA.tmp"
+Creating command line "bscmake.exe @C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSP63.tmp"
 Creating browse info file...
 <h3>Output Window</h3>
 

@@ -44,6 +44,7 @@ typedef struct sip_message
     sip_event_t*   event;                    /*'N'*/
     sip_authorization_t* authorization;      /*'A'*/
     sip_www_authenticate_t* www_authenticate;/*'W'*/
+	sip_date_t* date;
 	sip_support_list_t* support_list;		 /*'K'*/
     char* body;
 }sip_message_t;
