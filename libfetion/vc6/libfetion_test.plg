@@ -3,69 +3,38 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: libfetion_test - Win32 R_Static--------------------
+--------------------Configuration: libfetion_test - Win32 R_Share--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPF3.tmp" with contents
+Creating temporary file "C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSP117.tmp" with contents
 [
-/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "__WIN32__" /D "CURL_STATICLIB" /D "PTW32_STATIC_LIB" /Fp"libfetion_test___Win32_R_Static/libfetion_test.pch" /YX /Fo"libfetion_test___Win32_R_Static/" /Fd"libfetion_test___Win32_R_Static/" /FD /c 
-"D:\svn\llibfetion\libfetion\src\config.c"
-"D:\svn\llibfetion\libfetion\src\crypto.c"
-"D:\svn\llibfetion\libfetion\src\fxsocket.c"
-"D:\svn\llibfetion\libfetion\src\helper.c"
-"D:\svn\llibfetion\libfetion\src\initial.c"
-"D:\svn\llibfetion\libfetion\src\login.c"
-"D:\svn\llibfetion\libfetion\src\main.c"
-"D:\svn\llibfetion\libfetion\src\process.c"
-"D:\svn\llibfetion\libfetion\src\protocol.c"
-"D:\svn\llibfetion\libfetion\src\sipc.c"
-"D:\svn\llibfetion\libfetion\src\thread.c"
-"D:\svn\llibfetion\libfetion\src\xml.c"
+kernel32.lib user32.lib gdi32.lib advapi32.lib wldap32.lib ..\lib_link\pthread_share.lib ..\lib_link\libeay32_share.lib ..\lib_link\ssleay32_share.lib ..\lib_link\libcurl_share.lib ..\lib_link\libxml2_share.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib /nologo /subsystem:console /incremental:no /pdb:"libfetion_test___Win32_R_Share/libfetion_test_r_share.pdb" /machine:I386 /out:"bin/libfetion_test_r_share.exe" 
+.\libfetion_test___Win32_R_Share\config.obj
+.\libfetion_test___Win32_R_Share\crypto.obj
+.\libfetion_test___Win32_R_Share\fxsocket.obj
+.\libfetion_test___Win32_R_Share\helper.obj
+.\libfetion_test___Win32_R_Share\initial.obj
+.\libfetion_test___Win32_R_Share\log.obj
+.\libfetion_test___Win32_R_Share\login.obj
+.\libfetion_test___Win32_R_Share\main.obj
+.\libfetion_test___Win32_R_Share\mem.obj
+.\libfetion_test___Win32_R_Share\process.obj
+.\libfetion_test___Win32_R_Share\protocol.obj
+.\libfetion_test___Win32_R_Share\sipc.obj
+.\libfetion_test___Win32_R_Share\thread.obj
+.\libfetion_test___Win32_R_Share\utf8.obj
+.\libfetion_test___Win32_R_Share\xml.obj
 ]
-Creating command line "cl.exe @C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPF3.tmp" 
-Creating temporary file "C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPF4.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib advapi32.lib wldap32.lib lib\pthread_static.lib lib\libeay32_static.lib lib\ssleay32_static.lib lib\libcurl_static.lib lib\libxml2_static.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib /nologo /subsystem:console /incremental:no /pdb:"libfetion_test___Win32_R_Static/libfetion_test_r_static.pdb" /machine:I386 /out:"bin/libfetion_test_r_static.exe" 
-.\libfetion_test___Win32_R_Static\config.obj
-.\libfetion_test___Win32_R_Static\crypto.obj
-.\libfetion_test___Win32_R_Static\fxsocket.obj
-.\libfetion_test___Win32_R_Static\helper.obj
-.\libfetion_test___Win32_R_Static\initial.obj
-.\libfetion_test___Win32_R_Static\log.obj
-.\libfetion_test___Win32_R_Static\login.obj
-.\libfetion_test___Win32_R_Static\main.obj
-.\libfetion_test___Win32_R_Static\mem.obj
-.\libfetion_test___Win32_R_Static\process.obj
-.\libfetion_test___Win32_R_Static\protocol.obj
-.\libfetion_test___Win32_R_Static\sipc.obj
-.\libfetion_test___Win32_R_Static\thread.obj
-.\libfetion_test___Win32_R_Static\utf8.obj
-.\libfetion_test___Win32_R_Static\xml.obj
-]
-Creating command line "link.exe @C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPF4.tmp"
+Creating command line "link.exe @C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSP117.tmp"
 <h3>Output Window</h3>
-Compiling...
-config.c
-crypto.c
-fxsocket.c
-helper.c
-initial.c
-login.c
-main.c
-process.c
-protocol.c
-sipc.c
-thread.c
-xml.c
 Linking...
 LINK : warning LNK4075: ignoring /EDITANDCONTINUE due to /INCREMENTAL:NO specification
 LINK : warning LNK4098: defaultlib "MSVCRTD" conflicts with use of other libs; use /NODEFAULTLIB:library
-LINK : warning LNK4089: all references to "GDI32.dll" discarded by /OPT:REF
 
 
 
 <h3>Results</h3>
-libfetion_test_r_static.exe - 0 error(s), 3 warning(s)
+libfetion_test_r_share.exe - 0 error(s), 2 warning(s)
 </pre>
 </body>
 </html>

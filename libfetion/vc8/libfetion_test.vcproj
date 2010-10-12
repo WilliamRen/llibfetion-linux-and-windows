@@ -69,7 +69,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib ..\lib\libcurl_ssl_share.lib wldap32.lib ..\lib\pthread_share.lib ..\lib\libeay32_share.lib ..\lib\ssleay32_share.lib ..\lib\libxml2_share.lib ws2_32.lib ../../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
+				AdditionalDependencies="..\lib_link\libcurl_ssl_share.lib wldap32.lib ..\lib_link\pthread_share.lib ..\lib_link\libeay32_share.lib ..\lib_link\ssleay32_share.lib ..\lib_link\libxml2_share.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
 				OutputFile="bin/libfetion_test_d_share.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -160,7 +160,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib wldap32.lib ..\lib\pthread_share.lib ..\lib\libeay32_share.lib ..\lib\ssleay32_share.lib ..\lib\libcurl_share.lib ..\lib\libxml2_share.lib ws2_32.lib ../../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
+				AdditionalDependencies="..\lib_link\libcurl_ssl_share.lib wldap32.lib ..\lib_link\pthread_share.lib ..\lib_link\libeay32_share.lib ..\lib_link\ssleay32_share.lib ..\lib_link\libxml2_share.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
 				OutputFile="bin/libfetion_test_r_share.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -250,7 +250,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib wldap32.lib ..\lib\pthread_static.lib ..\lib\libeay32_static.lib ..\lib\ssleay32_static.lib ..\lib\libcurl_static.lib ..\lib\libxml2_static.lib ws2_32.lib ../../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
+				AdditionalDependencies="wldap32.lib ..\lib_link\pthread_static.lib ..\lib_link\libeay32_static.lib ..\lib_link\ssleay32_static.lib ..\lib_link\libcurl_ssl_static.lib ..\lib_link\libxml2_static.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
 				OutputFile="bin/libfetion_test_r_static.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -341,7 +341,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib wldap32.lib ..\lib\pthread_static.lib ..\lib\libeay32_static.lib ..\lib\ssleay32_static.lib ..\lib\libcurl_ssl_static.lib ..\lib\libxml2_static.lib ws2_32.lib ../../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
+				AdditionalOptions="/force"
+				AdditionalDependencies="wldap32.lib ..\lib_link\pthread_static.lib ..\lib_link\libeay32_static.lib ..\lib_link\ssleay32_static.lib ..\lib_link\libcurl_ssl_static.lib ..\lib_link\libxml2_static.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
 				OutputFile="bin/libfetion_test_d_static.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -386,7 +387,7 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="..\..\src\config.c"
+				RelativePath="..\src\config.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -422,7 +423,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\crypto.c"
+				RelativePath="..\src\crypto.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -458,7 +459,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\fxsocket.c"
+				RelativePath="..\src\fxsocket.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -494,7 +495,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\helper.c"
+				RelativePath="..\src\helper.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -530,7 +531,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\initial.c"
+				RelativePath="..\src\initial.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -566,7 +567,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\log.c"
+				RelativePath="..\src\log.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -602,7 +603,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\login.c"
+				RelativePath="..\src\login.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -638,7 +639,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\main.c"
+				RelativePath="..\src\main.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -674,7 +675,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\mem.c"
+				RelativePath="..\src\mem.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -710,7 +711,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\process.c"
+				RelativePath="..\src\process.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -746,7 +747,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\protocol.c"
+				RelativePath="..\src\protocol.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -782,7 +783,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\sipc.c"
+				RelativePath="..\src\sipc.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -818,7 +819,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\thread.c"
+				RelativePath="..\src\thread.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -854,7 +855,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\utf8.c"
+				RelativePath="..\src\utf8.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -890,7 +891,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\xml.c"
+				RelativePath="..\src\xml.c"
 				>
 				<FileConfiguration
 					Name="D_Share|Win32"
@@ -931,63 +932,63 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
-				RelativePath="..\..\src\commdef.h"
+				RelativePath="..\src\commdef.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\config.h"
+				RelativePath="..\src\config.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\crypto.h"
+				RelativePath="..\src\crypto.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\fxsocket.h"
+				RelativePath="..\src\fxsocket.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\helper.h"
+				RelativePath="..\src\helper.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\initial.h"
+				RelativePath="..\src\initial.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\log.h"
+				RelativePath="..\src\log.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\login.h"
+				RelativePath="..\src\login.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\mem.h"
+				RelativePath="..\src\mem.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\process.h"
+				RelativePath="..\src\process.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\protocol.h"
+				RelativePath="..\src\protocol.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\sipc.h"
+				RelativePath="..\src\sipc.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\thread.h"
+				RelativePath="..\src\thread.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\utf8.h"
+				RelativePath="..\src\utf8.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\xml.h"
+				RelativePath="..\src\xml.h"
 				>
 			</File>
 		</Filter>
