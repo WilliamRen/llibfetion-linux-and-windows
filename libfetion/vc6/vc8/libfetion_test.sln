@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libfetion_test", "libfetion_test.vcproj", "{E5D6B43B-8207-459D-B935-911058984D05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		D_Share|Win32 = D_Share|Win32
+		D_Static|Win32 = D_Static|Win32
+		R_Share|Win32 = R_Share|Win32
+		R_Static|Win32 = R_Static|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5D6B43B-8207-459D-B935-911058984D05}.D_Share|Win32.ActiveCfg = D_Share|Win32
+		{E5D6B43B-8207-459D-B935-911058984D05}.D_Share|Win32.Build.0 = D_Share|Win32
+		{E5D6B43B-8207-459D-B935-911058984D05}.D_Static|Win32.ActiveCfg = D_Static|Win32
+		{E5D6B43B-8207-459D-B935-911058984D05}.D_Static|Win32.Build.0 = D_Static|Win32
+		{E5D6B43B-8207-459D-B935-911058984D05}.R_Share|Win32.ActiveCfg = R_Share|Win32
+		{E5D6B43B-8207-459D-B935-911058984D05}.R_Share|Win32.Build.0 = R_Share|Win32
+		{E5D6B43B-8207-459D-B935-911058984D05}.R_Static|Win32.ActiveCfg = R_Static|Win32
+		{E5D6B43B-8207-459D-B935-911058984D05}.R_Static|Win32.Build.0 = R_Static|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

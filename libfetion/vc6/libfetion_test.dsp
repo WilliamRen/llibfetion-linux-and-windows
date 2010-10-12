@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wldap32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wldap32.lib lib\pthread_static.lib lib\libeay32_static.lib lib\ssleay32_static.lib lib\libcurl_ssl_static.lib lib\libxml2_static.lib ws2_32.lib /nologo /subsystem:console /debug /machine:I386 /out:"bin/libfetion_test_d_static.exe" /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wldap32.lib lib\pthread_static.lib lib\libeay32_static.lib lib\ssleay32_static.lib lib\libcurl_ssl_static.lib lib\libxml2_static.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib /nologo /subsystem:console /debug /machine:I386 /out:"bin/libfetion_test_d_static.exe" /pdbtype:sept
 
 !ELSEIF  "$(CFG)" == "libfetion_test - Win32 D_Share"
 
@@ -78,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wldap32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lib\libcurl_ssl_share.lib wldap32.lib lib\pthread_share.lib lib\libeay32_share.lib lib\ssleay32_share.lib lib\libxml2_share.lib ws2_32.lib /nologo /subsystem:console /debug /machine:I386 /out:"bin/libfetion_test_d_share.exe" /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lib\libcurl_ssl_share.lib wldap32.lib lib\pthread_share.lib lib\libeay32_share.lib lib\ssleay32_share.lib lib\libxml2_share.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib /nologo /subsystem:console /debug /machine:I386 /out:"bin/libfetion_test_d_share.exe" /pdbtype:sept
 
 !ELSEIF  "$(CFG)" == "libfetion_test - Win32 R_Static"
 
@@ -102,7 +102,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wldap32.lib lib\pthread_static.lib lib\libeay32_static.lib lib\ssleay32_static.lib lib\libcurl_static.lib lib\libxml2_static.lib ws2_32.lib /nologo /subsystem:console /machine:I386 /out:"bin/libfetion_test_r_static.exe"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib advapi32.lib wldap32.lib lib\pthread_static.lib lib\libeay32_static.lib lib\ssleay32_static.lib lib\libcurl_static.lib lib\libxml2_static.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib /nologo /subsystem:console /machine:I386 /out:"bin/libfetion_test_r_static.exe"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "libfetion_test - Win32 R_Share"
@@ -127,7 +127,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wldap32.lib lib\pthread_share.lib lib\libeay32_share.lib lib\ssleay32_share.lib lib\libcurl_share.lib lib\libxml2_share.lib ws2_32.lib /nologo /subsystem:console /machine:I386 /out:"bin/libfetion_test_r_share.exe"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wldap32.lib lib\pthread_share.lib lib\libeay32_share.lib lib\ssleay32_share.lib lib\libcurl_share.lib lib\libxml2_share.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib /nologo /subsystem:console /machine:I386 /out:"bin/libfetion_test_r_share.exe"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 

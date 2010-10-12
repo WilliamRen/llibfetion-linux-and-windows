@@ -3,66 +3,69 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: libfetion_test - Win32 D_Share--------------------
+--------------------Configuration: libfetion_test - Win32 R_Static--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPEF.tmp" with contents
+Creating temporary file "C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPF3.tmp" with contents
 [
-/nologo /MD /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "__WIN32__" /D "__BUILD_SHARE__" /FR"libfetion_test___Win32_D_Share/" /Fp"libfetion_test___Win32_D_Share/libfetion_test.pch" /YX /Fo"libfetion_test___Win32_D_Share/" /Fd"libfetion_test___Win32_D_Share/" /FD /GZ /c 
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "__WIN32__" /D "CURL_STATICLIB" /D "PTW32_STATIC_LIB" /Fp"libfetion_test___Win32_R_Static/libfetion_test.pch" /YX /Fo"libfetion_test___Win32_R_Static/" /Fd"libfetion_test___Win32_R_Static/" /FD /c 
 "D:\svn\llibfetion\libfetion\src\config.c"
+"D:\svn\llibfetion\libfetion\src\crypto.c"
+"D:\svn\llibfetion\libfetion\src\fxsocket.c"
+"D:\svn\llibfetion\libfetion\src\helper.c"
+"D:\svn\llibfetion\libfetion\src\initial.c"
+"D:\svn\llibfetion\libfetion\src\login.c"
+"D:\svn\llibfetion\libfetion\src\main.c"
+"D:\svn\llibfetion\libfetion\src\process.c"
+"D:\svn\llibfetion\libfetion\src\protocol.c"
+"D:\svn\llibfetion\libfetion\src\sipc.c"
+"D:\svn\llibfetion\libfetion\src\thread.c"
+"D:\svn\llibfetion\libfetion\src\xml.c"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPEF.tmp" 
-Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPF0.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPF3.tmp" 
+Creating temporary file "C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPF4.tmp" with contents
 [
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lib\libcurl_ssl_share.lib wldap32.lib lib\pthread_share.lib lib\libeay32_share.lib lib\ssleay32_share.lib lib\libxml2_share.lib ws2_32.lib /nologo /subsystem:console /incremental:yes /pdb:"libfetion_test___Win32_D_Share/libfetion_test_d_share.pdb" /debug /machine:I386 /out:"bin/libfetion_test_d_share.exe" /pdbtype:sept 
-.\libfetion_test___Win32_D_Share\config.obj
-.\libfetion_test___Win32_D_Share\crypto.obj
-.\libfetion_test___Win32_D_Share\fxsocket.obj
-.\libfetion_test___Win32_D_Share\helper.obj
-.\libfetion_test___Win32_D_Share\initial.obj
-.\libfetion_test___Win32_D_Share\log.obj
-.\libfetion_test___Win32_D_Share\login.obj
-.\libfetion_test___Win32_D_Share\main.obj
-.\libfetion_test___Win32_D_Share\mem.obj
-.\libfetion_test___Win32_D_Share\process.obj
-.\libfetion_test___Win32_D_Share\protocol.obj
-.\libfetion_test___Win32_D_Share\sipc.obj
-.\libfetion_test___Win32_D_Share\thread.obj
-.\libfetion_test___Win32_D_Share\utf8.obj
-.\libfetion_test___Win32_D_Share\xml.obj
+kernel32.lib user32.lib gdi32.lib advapi32.lib wldap32.lib lib\pthread_static.lib lib\libeay32_static.lib lib\ssleay32_static.lib lib\libcurl_static.lib lib\libxml2_static.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib /nologo /subsystem:console /incremental:no /pdb:"libfetion_test___Win32_R_Static/libfetion_test_r_static.pdb" /machine:I386 /out:"bin/libfetion_test_r_static.exe" 
+.\libfetion_test___Win32_R_Static\config.obj
+.\libfetion_test___Win32_R_Static\crypto.obj
+.\libfetion_test___Win32_R_Static\fxsocket.obj
+.\libfetion_test___Win32_R_Static\helper.obj
+.\libfetion_test___Win32_R_Static\initial.obj
+.\libfetion_test___Win32_R_Static\log.obj
+.\libfetion_test___Win32_R_Static\login.obj
+.\libfetion_test___Win32_R_Static\main.obj
+.\libfetion_test___Win32_R_Static\mem.obj
+.\libfetion_test___Win32_R_Static\process.obj
+.\libfetion_test___Win32_R_Static\protocol.obj
+.\libfetion_test___Win32_R_Static\sipc.obj
+.\libfetion_test___Win32_R_Static\thread.obj
+.\libfetion_test___Win32_R_Static\utf8.obj
+.\libfetion_test___Win32_R_Static\xml.obj
 ]
-Creating command line "link.exe @C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPF0.tmp"
+Creating command line "link.exe @C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPF4.tmp"
 <h3>Output Window</h3>
 Compiling...
 config.c
+crypto.c
+fxsocket.c
+helper.c
+initial.c
+login.c
+main.c
+process.c
+protocol.c
+sipc.c
+thread.c
+xml.c
 Linking...
-MSVCRT.lib(cinitexe.obj) : warning LNK4098: defaultlib "msvcrtd.lib" conflicts with use of other libs; use /NODEFAULTLIB:library
-Creating temporary file "C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPF2.tmp" with contents
-[
-/nologo /o"libfetion_test___Win32_D_Share/libfetion_test.bsc" 
-.\libfetion_test___Win32_D_Share\config.sbr
-.\libfetion_test___Win32_D_Share\crypto.sbr
-.\libfetion_test___Win32_D_Share\fxsocket.sbr
-.\libfetion_test___Win32_D_Share\helper.sbr
-.\libfetion_test___Win32_D_Share\initial.sbr
-.\libfetion_test___Win32_D_Share\log.sbr
-.\libfetion_test___Win32_D_Share\login.sbr
-.\libfetion_test___Win32_D_Share\main.sbr
-.\libfetion_test___Win32_D_Share\mem.sbr
-.\libfetion_test___Win32_D_Share\process.sbr
-.\libfetion_test___Win32_D_Share\protocol.sbr
-.\libfetion_test___Win32_D_Share\sipc.sbr
-.\libfetion_test___Win32_D_Share\thread.sbr
-.\libfetion_test___Win32_D_Share\utf8.sbr
-.\libfetion_test___Win32_D_Share\xml.sbr]
-Creating command line "bscmake.exe @C:\DOCUME~1\PROGRA~1\LOCALS~1\Temp\RSPF2.tmp"
-Creating browse info file...
-<h3>Output Window</h3>
+LINK : warning LNK4075: ignoring /EDITANDCONTINUE due to /INCREMENTAL:NO specification
+LINK : warning LNK4098: defaultlib "MSVCRTD" conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4089: all references to "GDI32.dll" discarded by /OPT:REF
 
 
 
 <h3>Results</h3>
-libfetion_test_d_share.exe - 0 error(s), 1 warning(s)
+libfetion_test_r_static.exe - 0 error(s), 3 warning(s)
 </pre>
 </body>
 </html>
