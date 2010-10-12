@@ -36,9 +36,9 @@
 #include "helper.h"
 #include "sipc.h"
 
-#ifdef __WIN32__
-#pragma comment( lib, "../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib" )
-#endif
+//#ifdef __WIN32__
+//#pragma comment( lib, "../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib" )
+//#endif
 
 int call_id = 1;
 

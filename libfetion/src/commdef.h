@@ -55,16 +55,6 @@ typedef unsigned int uint;
 
 typedef int FX_RET_CODE;
 
-enum make_type
-{
-	FX_BUILD_LOGIN_1,
-	FX_BUILD_LOGIN_2,
-	FX_BUILD_GET_PERSON_INFO,
-	FX_BUILD_GET_CONTECT,
-	FX_BUILD_SEND_MSG,
-	FX_BUILD_SEND_TO_SELF
-};
-
 typedef struct _user_data
 {
 	char sz_phone_num[20];

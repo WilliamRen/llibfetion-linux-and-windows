@@ -68,8 +68,8 @@ PGROUP_LIST fx_get_group_list()
 
 FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 {
-    /*将sz_sipc_proxy中的IP和端口分别存放，看着挺麻烦的*/
-    int n_ret = 0, socket;
+    
+	int n_ret = 0, socket;
     char* sz_proxy = NULL, *sz_find = NULL, *sz_pack = NULL;
 	char* sz_contact_list = NULL;
     char sz_ip[20] = {0};
@@ -147,8 +147,6 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 		return FX_ERROR_UNKOWN;
 	}
 	
-	//printf( "%s\n", sz_pack ); 
-	
 	log_string( "==send data to server 1==" );
 
 	/*
@@ -189,8 +187,6 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 		log_string( "fx_login:fx_sip_generate_auth_resp error!\n" );
 		return FX_ERROR_UNKOWN;
 	}
-	
-	//printf( "%s\n", sz_pack );
 	
 	log_string( "==send data to server2==" );
 

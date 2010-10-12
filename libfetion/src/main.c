@@ -44,6 +44,7 @@ extern FILE* g_log_file;
 SYS_CONF_DATA g_sys_conf = {0};
 PGROUP_LIST g_contact_list = NULL;
 
+
 /** \fn
  *  \brief
  *  \param
@@ -64,7 +65,7 @@ int main()
 
     FX_RET_CODE fx_ret;
 
-    init_data( "1521028XXXX", "qiupenXXXX" );
+    init_data( "15210281153", "programmeboy521" );
 
     fx_ret = fx_init();
     if( fx_ret != FX_ERROR_OK){
@@ -102,12 +103,6 @@ int main()
 	
 	
 	printf( "\t\t\tlibfetion v1.0 by programmeboy\n" );
-	
-	/*
-	 *	print contact list
-	 */
-	
-	//print_group_list( p_contact_list );
 
 	while ( 1 )
 	{
@@ -118,6 +113,10 @@ int main()
 		printf( ">>" );
 		gets( sz_msg );
 		
+		/*
+		 *	print contact list
+		 */
+
 		if ( strcmp( sz_msg, "print" ) == 0 )
 		{
 			print_group_list( g_contact_list );
