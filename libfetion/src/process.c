@@ -115,9 +115,12 @@ int process_sip_message( sip_message_t* message )
 	}
 	else if ( strcmp( message->context_type->element, "text/html-fragment" ) == 0 )
 	{
-		char* sz_tmp = utf8_to_ansi( message->body );
+		
+		/*
+		 *	fuck! sometimes here look like have some GBK message.
+		 */
+		
 		printf( "xml message %s ==> %s\n", message->from->element, message->body );
-		free( sz_tmp );
 	}
 
 	return FX_ERROR_OK;

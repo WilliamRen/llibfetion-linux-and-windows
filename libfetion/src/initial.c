@@ -31,6 +31,7 @@
 #include <curl/curl.h>
 
 #include "initial.h"
+#include "login.h"
 #include "log.h"
 
 CURL* g_curl;
@@ -53,6 +54,13 @@ FX_RET_CODE fx_init()
 #ifdef _WINDOWS_
     /*todo here add the code run on windows*/
 #endif
+	
+	/*
+	 *	initial group list read/write lock mutex
+	 */
+	
+	fx_get_group_list_mutex_init();
+	
 }
 
 FX_RET_CODE fx_curl_init()

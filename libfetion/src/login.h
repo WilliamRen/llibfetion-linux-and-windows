@@ -27,4 +27,9 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 int fx_get_socket();
 PGROUP_LIST fx_get_group_list();
 
+int fx_get_group_list_mutex_lock();
+int fx_get_group_list_mutex_unlock();
+void fx_get_group_list_mutex_init();
+void fx_get_group_list_mutex_free();
+
 #endif // LOGIN_H_INCLUDED

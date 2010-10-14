@@ -33,6 +33,7 @@
 #include "commdef.h"
 #include "initial.h"
 #include "log.h"
+#include "login.h"
 #include "config.h"
 #include "mem.h"
 #include "utf8.h"
@@ -243,6 +244,13 @@ void group_list_free( PGROUP_LIST p_group )
 void print_group_list( __in PGROUP_LIST p_group )
 {
 	PGROUP_LIST p_temp = p_group;
+	
+	/*
+	 *	lock 
+	 */
+	
+	fx_get_group_list_mutex_lock();
+
 	while ( p_temp )
 	{
 		PCONTACT_LIST p_temp_contact = p_temp->p_contact;
@@ -261,17 +269,18 @@ void print_group_list( __in PGROUP_LIST p_group )
 		{
 			if ( strlen( p_temp_contact->sz_local_name ) != 0 )
 			{
-				printf( "\t%d %s", p_temp_contact->id, p_temp_contact->sz_local_name );
+				printf( "\t%d %-20s", p_temp_contact->id, p_temp_contact->sz_local_name );
 			}
 			else
 			{
-				printf( "\t%d %s", p_temp_contact->id, p_temp_contact->user_status.sz_nick_name );
+				printf( "\t%d %-20s", p_temp_contact->id, p_temp_contact->user_status.sz_nick_name );
 			}
 			printf( "\tbase_code = %d\n", p_temp_contact->user_status.PRESENCE.n_base );
 			p_temp_contact = p_temp_contact->next;
 		}
 		p_temp = p_temp->next;
 	}
+	fx_get_group_list_mutex_unlock();
 }
 
 FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p_contact_list )
@@ -496,6 +505,12 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 	xmlDocPtr p_doc = xmlParseMemory( sz_xml, strlen( sz_xml ) );
 	
 	/*
+	 *	here use thread to parse the list so we should lock it
+	 */
+	
+	fx_get_group_list_mutex_lock();
+
+	/*
 	 *	events
 	 */
 	
@@ -517,6 +532,7 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 	
 	if ( node_child == NULL )
 	{
+		fx_get_group_list_mutex_unlock();
 		return FX_ERROR_XMLPARSE;
 	}
 	/*
@@ -534,6 +550,7 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 	
 	if ( node_child == NULL )
 	{
+		fx_get_group_list_mutex_unlock();
 		return FX_ERROR_XMLPARSE;
 	}
 
@@ -676,6 +693,12 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 		node_child = node_child->next;
 
 	}
-
+	
+	/*
+	 *	unlock it
+	 */
+	
+	fx_get_group_list_mutex_unlock();
+	
 	return FX_ERROR_OK;
 }
