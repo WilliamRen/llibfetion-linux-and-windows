@@ -38,4 +38,6 @@ void print_group_list( __in PGROUP_LIST p_group );
 FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p_contact_list );
 FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list );
 
+PCONTACT_LIST fx_find_contact_by_sip( __in PGROUP_LIST p_group, __in char* sip );
+
 #endif // XML_H_INCLUDED

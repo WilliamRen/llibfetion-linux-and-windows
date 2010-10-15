@@ -487,6 +487,77 @@ int fx_sip_generate_auth_resp( __in PAUTH_DLG_HELPER p_auth_helper,
 }
 
 
+int fx_sip_generate_keep_connection_busy( __in PKEEPLIVE_DLG_HELPER p_keeplive_helper, __out char** auth_req)
+{
+	sip_startline_t* start_line = NULL;
+	sip_from_t* from = NULL;
+	sip_call_id_t* call_id = NULL;
+	sip_cseq_t* cseq = NULL;
+	sip_event_t* event = NULL;
+	sip_context_length_t* context_len = NULL;
+	sip_message_t* message = NULL;
+	FX_RET_CODE n_ret = FX_ERROR_OK;
+	char sz_num[10] = {0};
+
+
+	/*
+	 *	init message
+	 */
+	
+	sip_message_init( &message );
+
+	/*
+	 *	start line
+	 */
+	
+	sip_startline_init( &start_line );
+	sip_start_set_line_req_all( start_line, "O", FETION_DOMAIN );
+	sip_message_set_startline( message, start_line );
+
+	/*
+	 *	from
+	 */
+	
+	sip_common_init( &from );
+	sip_common_set_all( from, p_keeplive_helper->uri );
+	sip_message_set_common( &(message->from), from );
+
+	/*
+	 *	call id
+	 */
+	
+	itoa( p_keeplive_helper->n_callid, sz_num, 10 );
+	sip_common_init( &call_id );
+	sip_common_set_all( call_id, sz_num );
+	sip_message_set_common( &(message->call_id), call_id );
+	
+	/*
+	 *	cseq
+	 */
+	
+	sip_cseq_init( &cseq );
+	sip_cseq_set_all( cseq, p_keeplive_helper->n_cseq, "O" );
+	sip_message_set_cseq( message, cseq );
+	
+	/*
+	 *	event
+	 */
+	
+	sip_common_init( &event );
+	sip_common_set_all( event, "KeepConnectionBusy" );
+	sip_message_set_common( &(message->event), event );
+
+	n_ret = sip_message_to_str( message, auth_req );
+	
+	sip_message_free( message );
+
+	if ( n_ret == LIBSIP_SUCCESS )
+		return FX_ERROR_OK;
+	else
+		return FX_ERROR_UNKOWN;
+
+}
+
 int fx_sip_generate_keeplive( __in PKEEPLIVE_DLG_HELPER p_keeplive_helper, __out char** auth_req)
 {
 	sip_startline_t* start_line = NULL;
@@ -866,6 +937,63 @@ int fx_sip_generate_send_msg_other(	   __in PCHAT_DLG_HELPER p_helper, __in char
 
 	n_ret = sip_message_to_str( message, sip_msg );
 	
+	sip_message_free( message );
+
+	if ( n_ret == LIBSIP_SUCCESS )
+		return FX_ERROR_OK;
+	else
+		return FX_ERROR_UNKOWN;
+
+}
+
+int fx_sip_generate_resp_recv_msg( __in sip_message_t* message_recv, __out char** sz_out )
+{
+	sip_startline_t* start_line = NULL;
+	sip_from_t* from = NULL;
+	sip_call_id_t* call_id = NULL;
+	sip_cseq_t* cseq = NULL;
+	sip_message_t* message = NULL;
+	FX_RET_CODE n_ret = FX_ERROR_OK;
+
+	/*
+	 *	init message
+	 */
+	
+	sip_message_init( &message );
+	
+	/*
+	 *	start line
+	 */
+	
+	sip_startline_init( &start_line );
+	sip_start_set_line_resp_all( start_line, "200", "OK" );
+	sip_message_set_startline( message, start_line );
+
+	/*
+	 *	from
+	 */
+	
+	sip_common_init( &from );
+	sip_common_set_all( from, message_recv->from->element );
+	sip_message_set_common( &(message->from), from );
+
+	/*
+	 *	call id
+	 */
+	
+	sip_common_init( &call_id );
+	sip_common_set_all( call_id, message_recv->call_id->element );
+	sip_message_set_common( &(message->call_id), call_id );
+	
+	/*
+	 *	cseq
+	 */
+	
+	sip_cseq_init( &cseq );
+	sip_cseq_set_all( cseq, message_recv->cseq->number, message_recv->cseq->method );
+	sip_message_set_cseq( message, cseq );
+	
+	n_ret = sip_message_to_str( message, sz_out );
 	sip_message_free( message );
 
 	if ( n_ret == LIBSIP_SUCCESS )

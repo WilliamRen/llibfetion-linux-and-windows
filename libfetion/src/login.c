@@ -58,6 +58,7 @@ pthread_mutex_t g_group_list_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 pthread_t g_recv_thread_id = {0};
 pthread_t g_keeplive_thread_id = {0};
+pthread_t g_keepbusy_thread_id = {0};
 
 int g_socket = 0;
 
@@ -299,13 +300,24 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 		return FX_ERROR_THREAD;
     }
 
+	/*
+	 *	create keeplive thread
+	 */
+
+	/*log_string( "==pthread_create thread_sip_keepbusy==" );
+	if ( pthread_create( &g_keepbusy_thread_id, NULL, thread_sip_keep_connection_busy, \
+        (void*)socket ) != 0 ){
+		log_string( "fx_login:create keepbusy thread error!" );
+		return FX_ERROR_THREAD;
+    }*/
+
 #ifdef __WIN32__
 	Sleep( 500 );
 #else
 	sleep( 1 );
 #endif
     //pthread_cancel( g_recv_thread_id );
-
+	//thread_sip_keep_connection_busy
     return FX_ERROR_OK;
 
 }

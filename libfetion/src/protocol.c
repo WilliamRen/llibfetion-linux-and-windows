@@ -224,3 +224,34 @@ FX_RET_CODE fx_get_buddies_status( int socket )
 
 	return FX_ERROR_OK;
 }
+
+FX_RET_CODE fx_send_msg_resp( int socket, sip_message_t* message )
+{
+	char* sz_sip_msg = NULL;
+	FX_RET_CODE n_ret = 0;
+
+	/*
+	 *	generate the sip package
+	 */
+
+	n_ret = fx_sip_generate_resp_recv_msg( message, &sz_sip_msg );
+	if ( FX_ERROR_OK != n_ret )
+	{
+		log_string( "fx_send_msg_resp error\n" );
+		return n_ret;
+	}
+	n_ret = fx_socket_send( socket, sz_sip_msg, strlen(sz_sip_msg) );
+	if ( n_ret == -1 ){
+		log_string( "fx_login:send data to server error!" );
+		return FX_ERROR_SOCKET;
+	}
+	
+	/*
+	 *	free resource
+	 */
+	
+	free( sz_sip_msg );
+
+	return FX_ERROR_OK;
+
+}

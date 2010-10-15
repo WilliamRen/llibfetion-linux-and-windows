@@ -42,4 +42,6 @@ void* thread_sip_recv( void* lparam );
 void* thread_sip_keeplive( void* lparam );
 //#endif
 
+void* thread_sip_keep_connection_busy( void* lparam );
+
 #endif

@@ -241,6 +241,51 @@ void group_list_free( PGROUP_LIST p_group )
 	}
 }
 
+PCONTACT_LIST fx_find_contact_by_sip( __in PGROUP_LIST p_group, __in char* sip )
+{
+	PGROUP_LIST p_temp = p_group;
+	PCONTACT_LIST p_ret = NULL;
+	
+	if ( p_group == NULL || sip == NULL )
+	{
+		return NULL;
+	}
+	/*
+	 *	lock
+	 */
+	
+	fx_get_group_list_mutex_lock();
+
+	while ( p_temp )
+	{
+		PCONTACT_LIST p_temp_contact = p_temp->p_contact;
+		
+		/*
+		 *	then print 
+		 */
+		
+		while ( p_temp_contact )
+		{
+			if ( strcmp( p_temp_contact->sz_uri, sip ) == 0 )
+			{
+				p_ret = p_temp_contact;
+				break;
+			}
+			p_temp_contact = p_temp_contact->next;
+		}
+		p_temp = p_temp->next;
+	}
+	
+	/*
+	 *	unlock
+	 */
+	
+	fx_get_group_list_mutex_unlock();
+
+	return p_ret;
+	
+}
+
 void print_group_list( __in PGROUP_LIST p_group )
 {
 	PGROUP_LIST p_temp = p_group;

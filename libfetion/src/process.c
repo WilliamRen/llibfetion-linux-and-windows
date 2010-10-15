@@ -26,6 +26,7 @@
 #include "utf8.h"
 #include "login.h"
 #include "xml.h"
+#include "protocol.h"
 #include "process.h"
 
 int dispatch_sip_recv( sip_message_t* message )
@@ -103,6 +104,33 @@ int dispatch_sip_recv( sip_message_t* message )
 int process_sip_message( sip_message_t* message )
 {
 	
+	int socket = 0;
+
+	/*
+	 *	first we should find the contact
+	 */
+	
+	PGROUP_LIST p_group = fx_get_group_list();
+	PCONTACT_LIST p_list = fx_find_contact_by_sip( p_group, message->from->element );
+
+	if ( p_list == NULL )
+	{
+		return FX_ERROR_OK;
+	}
+	
+	/*
+	 *	print name 
+	 */
+	
+	if ( strlen( p_list->sz_local_name ) != 0 )
+	{
+		printf( "message from %s", p_list->sz_local_name );
+	}
+	else
+	{
+		printf( "message from %s", p_list->user_status.sz_nick_name );
+	}
+
 	/*
 	 *	just print message
 	 */
@@ -110,7 +138,7 @@ int process_sip_message( sip_message_t* message )
 	if ( strcmp( message->context_type->element, "text/plain" ) == 0 )
 	{
 		char* sz_tmp = utf8_to_ansi( message->body );
-		printf( "%s ==> %s\n", message->from->element, sz_tmp );
+		printf( " ==> %s\n",  sz_tmp );
 		free( sz_tmp );
 	}
 	else if ( strcmp( message->context_type->element, "text/html-fragment" ) == 0 )
@@ -120,8 +148,16 @@ int process_sip_message( sip_message_t* message )
 		 *	fuck! sometimes here look like have some GBK message.
 		 */
 		
-		printf( "xml message %s ==> %s\n", message->from->element, message->body );
+		printf( " ==> %s\n", message->body );
 	}
+	
+	/*
+	 *	then we should send the package of recv ok
+	 */
+	
+	socket = fx_get_socket();
+
+	fx_send_msg_resp( socket, message );
 
 	return FX_ERROR_OK;
 }

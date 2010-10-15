@@ -21,10 +21,15 @@
 #ifndef PROTOCOL_H_INCLUDED
 #define PROTOCOL_H_INCLUDED
 
+#include "commdef.h"
+#include "../src/sip/SIPC-4/libsip/include/sip.h"
+
 char* fx_generate_cnonce();
 FX_RET_CODE fx_send_msg_to_yourself( int socket, char* msg );
 FX_RET_CODE fx_get_buddies_status( int socket );
 
 FX_RET_CODE fx_send_msg_to_other( int socket, char* msg, __in int n_id );
+
+FX_RET_CODE fx_send_msg_resp( int socket, sip_message_t* message );
 
 #endif // PROTOCOL_H_INCLUDED

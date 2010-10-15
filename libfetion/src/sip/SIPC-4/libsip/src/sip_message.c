@@ -318,12 +318,8 @@ sip_message_to_str( sip_message_t* message, char** dest )
     sip_free( sz_temp );
 
     /****************************************************
-     *                   F: I: CN: X:                   *
+     *                      I: CN: X:                   *
      ****************************************************/
-
-    n_ret = sip_common_to_hole_string( message->from, "F: ", dest );
-    if ( LIBSIP_SUCCESS != n_ret )
-    	return LIBSIP_SYNTAXERROR;
 
     n_ret = sip_common_to_hole_string( message->call_id, "I: ", dest );
     if ( LIBSIP_SUCCESS != n_ret )
@@ -352,6 +348,14 @@ sip_message_to_str( sip_message_t* message, char** dest )
         sip_free( sz_temp );
 
     }
+
+	/****************************************************
+     *                         CN: X:                   *
+     ****************************************************/
+
+	n_ret = sip_common_to_hole_string( message->from, "F: ", dest );
+    if ( LIBSIP_SUCCESS != n_ret )
+    	return LIBSIP_SYNTAXERROR;
 
     /****************************************************
      *                         CN: X:                   *
@@ -685,9 +689,20 @@ sip_message_parse( sip_message_t* message, const char *value )
         switch( sz_line[0] ){
         case 'A':
             {
-                n_ret = sip_message_set_authorization_str( message, sz_line + 3 );
-                if( LIBSIP_SUCCESS != n_ret )
+                if ( sz_line[1] == 'L' )
+                {
+					
+					/*
+					 *	TODO for AL 
+					 */
+					
+                }
+				else if ( sz_line[1] == ':' )
+                {
+					n_ret = sip_message_set_authorization_str( message, sz_line + 3 );
+					if( LIBSIP_SUCCESS != n_ret )
                     return n_ret;
+                }
             }
             break;
         case 'F':

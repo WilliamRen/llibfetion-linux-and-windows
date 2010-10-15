@@ -143,3 +143,49 @@ void* thread_sip_keeplive( void* lparam )
 	}
 	return 0;
 }
+
+void* thread_sip_keep_connection_busy( void* lparam )
+{
+	int socket = (int)lparam;
+
+	while( 1 )
+	{
+		char* sz_keeplive = NULL;
+		KEEPLIVE_DLG_HELPER kp_help;
+		int n_ret = 0;
+		
+		
+		/*
+		 *	init helper
+		 */
+		
+		kp_help.n_callid = fx_sip_increase_callid();
+		kp_help.n_cseq = 1;
+		strcpy( kp_help.uri, g_login_data.sz_uri );
+
+		if ( fx_sip_generate_keep_connection_busy( &kp_help, &sz_keeplive ) != FX_ERROR_OK )
+		{
+			return NULL;
+		}
+		
+		/*
+		 *	send the package
+		 */
+		
+		log_string( "==in thread_sip_keeplive fx_socket_send==" );
+		n_ret = fx_socket_send( socket, sz_keeplive, strlen(sz_keeplive) );
+		if ( n_ret == -1 ){
+			log_string( "fx_login:send data to server error!" );
+			return NULL;
+		}
+
+		free( sz_keeplive );
+
+#ifdef __WIN32__
+		Sleep( 1000 );
+#else
+		sleep( 200 );
+#endif
+	}
+	return 0;
+}
