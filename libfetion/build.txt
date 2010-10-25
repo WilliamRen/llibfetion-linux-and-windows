@@ -1,2 +1,24 @@
+1.windows 
 将本目录下的lib_include添加到vc的目录设置中
 编译,,ok!
+2.linux
+只支持codeblock工程，双击打开工程文件编译即可
+注：编译之前需安装以下库。。
+依赖库：
+
+libxml:
+for ubuntu : sudo apt-get install libxml2 libxml2-dev
+for fedora : unknown
+
+libcurl:
+for ubuntu : sudo apt-get install libcurl4-openssl-dev
+for fedora : unknown
+
+openssl:
+for ubuntu : already build in system
+for fedora : already build in system
+
+pthread
+
+for ubuntu : already build in system
+for fedora : already build in system
