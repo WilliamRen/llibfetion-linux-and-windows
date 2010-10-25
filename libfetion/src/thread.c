@@ -15,17 +15,16 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.                                        *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include <winsock2.h>
-
 #ifdef __WIN32__
 #include <windows.h>
+#include <winsock2.h>
 #endif
 
 #include "commdef.h"
@@ -74,7 +73,7 @@ void* thread_sip_recv( void* lparam )
 #endif
 			continue;
 		}
-		
+
 		fx_sip_recv( socket, &msg_list );
 #ifdef __WIN32__
 		Sleep( 50 );
@@ -107,12 +106,12 @@ void* thread_sip_keeplive( void* lparam )
 		char* sz_keeplive = NULL;
 		KEEPLIVE_DLG_HELPER kp_help;
 		int n_ret = 0;
-		
-		
+
+
 		/*
 		 *	init helper
 		 */
-		
+
 		kp_help.n_callid = 1;
 		kp_help.n_cseq = 1;
 		strcpy( kp_help.uri, g_login_data.sz_uri );
@@ -121,11 +120,11 @@ void* thread_sip_keeplive( void* lparam )
 		{
 			return NULL;
 		}
-		
+
 		/*
 		 *	send the package
 		 */
-		
+
 		log_string( "==in thread_sip_keeplive fx_socket_send==" );
 		n_ret = fx_socket_send( socket, sz_keeplive, strlen(sz_keeplive) );
 		if ( n_ret == -1 ){
@@ -153,12 +152,12 @@ void* thread_sip_keep_connection_busy( void* lparam )
 		char* sz_keeplive = NULL;
 		KEEPLIVE_DLG_HELPER kp_help;
 		int n_ret = 0;
-		
-		
+
+
 		/*
 		 *	init helper
 		 */
-		
+
 		kp_help.n_callid = fx_sip_increase_callid();
 		kp_help.n_cseq = 1;
 		strcpy( kp_help.uri, g_login_data.sz_uri );
@@ -167,11 +166,11 @@ void* thread_sip_keep_connection_busy( void* lparam )
 		{
 			return NULL;
 		}
-		
+
 		/*
 		 *	send the package
 		 */
-		
+
 		log_string( "==in thread_sip_keeplive fx_socket_send==" );
 		n_ret = fx_socket_send( socket, sz_keeplive, strlen(sz_keeplive) );
 		if ( n_ret == -1 ){

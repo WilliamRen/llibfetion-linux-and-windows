@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.                                        *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
 /*! \file fxsocket.c
@@ -29,6 +29,8 @@
 #include <wininet.h>
 #else
 #include <unistd.h>
+#include <netinet/in.h>
+#include <netinet/tcp.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -70,32 +72,32 @@ int tcp_keep_alive(int socketfd)
 	int keepIdle = 10;
 	int keepInterval = 5;
 	int keepCount = 5;
-	
-	if(setsockopt(socketfd , SOL_SOCKET , SO_KEEPALIVE 
+
+	if(setsockopt(socketfd , SOL_SOCKET , SO_KEEPALIVE
 		,(void*)&keepAlive,sizeof(keepAlive)) == -1){
 		log_string("set SO_KEEPALIVE failed\n");
 		return -1;
 	}
-	
+
 #ifdef __WIN32__
-	if(setsockopt(socketfd , IPPROTO_TCP, SO_KEEPALIVE 
+	if(setsockopt(socketfd , IPPROTO_TCP, SO_KEEPALIVE
 		,(void *)&keepAlive,sizeof(keepAlive)) == -1){
 		log_string("set TCP_KEEPALIVE failed\n");
 		return -1;
 	}
 #else
-	if(setsockopt(socketfd , SOL_TCP, TCP_KEEPIDLE 
+	if(setsockopt(socketfd , SOL_TCP, TCP_KEEPIDLE
 		,(void *)&keepIdle,sizeof(keepIdle)) == -1){
 		log_string("set TCP_KEEPIDEL failed\n");
 		return -1;
 	}
-	
+
 	if(setsockopt(socketfd , SOL_TCP, TCP_KEEPINTVL
 		,(void *)&keepInterval,sizeof(keepInterval)) == -1){
-		debug_info("set TCP_KEEPINTVL failed\n");
-		log_string -1;
+		log_string("set TCP_KEEPINTVL failed\n");
+		return -1;
 	}
-	
+
 	if(setsockopt(socketfd , SOL_TCP, TCP_KEEPCNT
 		,(void *)&keepCount,sizeof(keepCount)) == -1){
 		log_string("set TCP_KEEPCNT failed\n");
@@ -180,12 +182,12 @@ int fx_socket_connect( int fd, char* ip, ushort port )
 	addr.sin_family = PF_INET;
 	netaddr_set( ip, &addr );
 	addr.sin_port = htons( port );
-	
-	
+
+
 	/*
 	 *	set the max recv buffer
 	 */
-	
+
 #ifdef __WIN32__
 	max_recv = SO_MAX_MSG_SIZE;
 #else
@@ -213,7 +215,7 @@ int fx_socket_connect2( int fd, uint ip, ushort port )
 	/*
 	 *	set the max recv buffer
 	 */
-	
+
 #ifdef __WIN32__
 	max_recv = SO_MAX_MSG_SIZE;
 #else

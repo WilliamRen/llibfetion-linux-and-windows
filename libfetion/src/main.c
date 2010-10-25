@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.                                        *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
 /*! \file main.c
@@ -65,7 +65,7 @@ int main()
 
     FX_RET_CODE fx_ret;
 
-    init_data( "ÕËºÅ", "ÃÜÂë" );
+    init_data( "152102XXXX", "XXXX" );
 
     fx_ret = fx_init();
     if( fx_ret != FX_ERROR_OK){
@@ -93,15 +93,16 @@ int main()
     }
 	log_string( "=start login=" );
     fx_ret = fx_login( &l_data, &g_contact_list );
-	
-	printf( "wait for update buddies list\n" );
-	Sleep( 2000 );
 
+	printf( "wait for update buddies list\n" );
+#ifdef __WIN32__
+	Sleep( 2000 );
+#endif
 	/*
 	 *	into command module
 	 */
-	
-	
+
+
 	printf( "\t\t\tlibfetion v1.0 by programmeboy\n" );
 
 	while ( 1 )
@@ -112,7 +113,7 @@ int main()
 
 		printf( ">>" );
 		gets( sz_msg );
-		
+
 		/*
 		 *	print contact list
 		 */
@@ -128,7 +129,7 @@ int main()
 			int i = 0;
 
 			sscanf( sz_msg, "%s %d %s", sz_cmd, &i, sz_msg1 );
-			
+
 			n_current_chat = i;
 
 			fx_send_msg_to_other( socket, sz_msg1, i );
@@ -147,7 +148,7 @@ int main()
 			fx_send_msg_to_yourself( socket, sz_msg );
 			log_string( "==end send msg to myself==" );
 		}
-		
+
 #ifdef __WIN32__
 		Sleep( 10 );
 #endif

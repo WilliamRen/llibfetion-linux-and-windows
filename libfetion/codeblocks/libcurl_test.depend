@@ -461,3 +461,262 @@
 	"mem.h"
 	"xml.h"
 
+1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/config.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<curl/curl.h>
+	"log.h"
+	"initial.h"
+	"mem.h"
+	"config.h"
+	"crypto.h"
+	"protocol.h"
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/log.h
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/initial.h
+	"commdef.h"
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/commdef.h
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/mem.h
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/config.h
+	"commdef.h"
+	"mem.h"
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/crypto.h
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/protocol.h
+	"commdef.h"
+	"../src/sip/SIPC-4/libsip/include/sip.h"
+
+1287977463 /home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/include/sip.h
+	"sip_def.h"
+	"sip_authorization.h"
+	"sip_client.h"
+	"sip_common.h"
+	"sip_cseq.h"
+	"sip_def.h"
+	"sip_startline.h"
+	"sip_to.h"
+	"sip_www_authenticate.h"
+	"sip_message.h"
+
+1287977463 /home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/include/sip_def.h
+
+1287977463 /home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/include/sip_authorization.h
+
+1287977463 /home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/include/sip_client.h
+
+1287977463 /home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/include/sip_common.h
+
+1287977463 /home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/include/sip_cseq.h
+
+1287977463 /home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/include/sip_startline.h
+
+1287977463 /home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/include/sip_to.h
+
+1287977463 /home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/include/sip_www_authenticate.h
+
+1287977463 /home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/include/sip_message.h
+	"sip.h"
+
+1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/crypto.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<openssl/sha.h>
+	<openssl/rsa.h>
+	"commdef.h"
+	"crypto.h"
+	"log.h"
+
+1287978970 source:/home/programmeboy/svn/llibfetion/libfetion/src/fxsocket.c
+	<stdio.h>
+	<winsock2.h>
+	<wininet.h>
+	<unistd.h>
+	<netinet/in.h>
+	<netinet/tcp.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<netdb.h>
+	<fcntl.h>
+	<string.h>
+	<stdlib.h>
+	"log.h"
+	"mem.h"
+	"fxsocket.h"
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/fxsocket.h
+	"commdef.h"
+	"mem.h"
+
+1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/helper.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"commdef.h"
+	"helper.h"
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/helper.h
+
+1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/initial.c
+	<stdio.h>
+	<stdlib.h>
+	<pthread.h>
+	<curl/curl.h>
+	"initial.h"
+	"login.h"
+	"log.h"
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/login.h
+	"commdef.h"
+
+1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/log.c
+	<stdio.h>
+	<stdarg.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<fcntl.h>
+
+1287978970 source:/home/programmeboy/svn/llibfetion/libfetion/src/login.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<string.h>
+	<pthread.h>
+	<windows.h>
+	"initial.h"
+	"config.h"
+	"mem.h"
+	"fxsocket.h"
+	"protocol.h"
+	"crypto.h"
+	"log.h"
+	"thread.h"
+	"sipc.h"
+	"helper.h"
+	"utf8.h"
+	"xml.h"
+	"login.h"
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/thread.h
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/sipc.h
+	"../src/sip/SIPC-4/libsip/include/sip.h"
+	"helper.h"
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/utf8.h
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/xml.h
+	"commdef.h"
+	"mem.h"
+
+1287979041 source:/home/programmeboy/svn/llibfetion/libfetion/src/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"initial.h"
+	"log.h"
+	"config.h"
+	"xml.h"
+	"mem.h"
+	"protocol.h"
+	"sipc.h"
+	"login.h"
+	<windows.h>
+
+1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/mem.c
+	<stdio.h>
+	<stdlib.h>
+	<memory.h>
+	"mem.h"
+
+1287978989 source:/home/programmeboy/svn/llibfetion/libfetion/src/process.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"commdef.h"
+	"utf8.h"
+	"login.h"
+	"xml.h"
+	"protocol.h"
+	"process.h"
+
+1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/process.h
+	"commdef.h"
+	"../src/sip/SIPC-4/libsip/include/sip.h"
+
+1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/protocol.c
+	<stdio.h>
+	<time.h>
+	<string.h>
+	<openssl/sha.h>
+	<openssl/rsa.h>
+	"commdef.h"
+	"config.h"
+	"fxsocket.h"
+	"login.h"
+	"sipc.h"
+	"utf8.h"
+	"log.h"
+	"protocol.h"
+
+1287981417 source:/home/programmeboy/svn/llibfetion/libfetion/src/sipc.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<winsock2.h>
+	"commdef.h"
+	"fxsocket.h"
+	"log.h"
+	"protocol.h"
+	"crypto.h"
+	"helper.h"
+	"sipc.h"
+
+1287978779 source:/home/programmeboy/svn/llibfetion/libfetion/src/thread.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	<winsock2.h>
+	"commdef.h"
+	"sipc.h"
+	"log.h"
+	"crypto.h"
+	"protocol.h"
+	"fxsocket.h"
+	"process.h"
+	"thread.h"
+
+1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/utf8.c
+	<windows.h>
+	<iconv.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"utf8.h"
+	"log.h"
+
+1287981417 source:/home/programmeboy/svn/llibfetion/libfetion/src/xml.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<libxml/parser.h>
+	<libxml/tree.h>
+	"commdef.h"
+	"initial.h"
+	"log.h"
+	"login.h"
+	"config.h"
+	"mem.h"
+	"utf8.h"
+	"xml.h"
+

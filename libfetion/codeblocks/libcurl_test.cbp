@@ -8,23 +8,23 @@
 		<Build>
 			<Script file="lib_finder.script" />
 			<Target title="Debug">
-				<Option output="bin\Debug\libcurl_test" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Debug\" />
+				<Option output="bin/Debug/libcurl_test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add library="\usr\lib\libcurl.a" />
-					<Add library="\usr\lib\libcurl.so" />
-					<Add library="\usr\lib\libxml2.a" />
-					<Add library="\usr\lib\libxml2.so" />
+					<Add library="/usr/lib/libcurl.a" />
+					<Add library="/usr/lib/libcurl.so" />
+					<Add library="/usr/lib/libxml2.a" />
+					<Add library="/usr/lib/libxml2.so" />
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin\Release\libcurl_test" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Release\" />
+				<Option output="bin/Release/libcurl_test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -32,66 +32,89 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="\usr\lib\libcurl.a" />
+					<Add library="/usr/lib/libcurl.a" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="\usr\include\libxml2" />
+			<Add directory="/usr/include/libxml2" />
 		</Compiler>
 		<Linker>
 			<Add option="-lssl" />
-			<Add library="\usr\lib\libcurl.a" />
+			<Add library="/usr/lib/libcurl.a" />
+			<Add library="../src/sip/SIPC-4/codeblocks/libsipc4.a" />
 		</Linker>
-		<Unit filename="..\src\commdef.h" />
-		<Unit filename="..\src\config.c">
+		<Unit filename="../src/commdef.h" />
+		<Unit filename="../src/config.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\src\config.h" />
-		<Unit filename="..\src\crypto.c">
+		<Unit filename="../src/config.h" />
+		<Unit filename="../src/crypto.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\src\crypto.h" />
-		<Unit filename="..\src\fxsocket.c">
+		<Unit filename="../src/crypto.h" />
+		<Unit filename="../src/fxsocket.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\src\fxsocket.h" />
-		<Unit filename="..\src\initial.c">
+		<Unit filename="../src/fxsocket.h" />
+		<Unit filename="../src/helper.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\src\initial.h" />
-		<Unit filename="..\src\log.c">
+		<Unit filename="../src/helper.h" />
+		<Unit filename="../src/initial.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\src\log.h" />
-		<Unit filename="..\src\login.c">
+		<Unit filename="../src/initial.h" />
+		<Unit filename="../src/log.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\src\login.h" />
-		<Unit filename="..\src\main.c">
+		<Unit filename="../src/log.h" />
+		<Unit filename="../src/login.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\src\mem.c">
+		<Unit filename="../src/login.h" />
+		<Unit filename="../src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\src\mem.h" />
-		<Unit filename="..\src\protocol.c">
+		<Unit filename="../src/mem.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\src\protocol.h" />
-		<Unit filename="..\src\utf8.c">
+		<Unit filename="../src/mem.h" />
+		<Unit filename="../src/process.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\src\utf8.h" />
-		<Unit filename="..\src\xml.c">
+		<Unit filename="../src/process.h" />
+		<Unit filename="../src/protocol.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\src\xml.h" />
+		<Unit filename="../src/protocol.h" />
+		<Unit filename="../src/sipc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/sipc.h" />
+		<Unit filename="../src/thread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/thread.h" />
+		<Unit filename="../src/utf8.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/utf8.h" />
+		<Unit filename="../src/xml.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/xml.h" />
 		<Extensions>
 			<code_completion>
 				<search_path add="/usr/include/libxml2" />
 				<search_path add="/usr/include/curl" />
+				<search_path add="/usr/include" />
+				<search_path add="/usr/include/bits" />
+				<search_path add="/usr/local/include" />
+				<search_path add="/usr/include/sys" />
+				<search_path add="/usr/include/netinet" />
+				<search_path add="/usr/include/arpa" />
 			</code_completion>
 			<envvars />
 			<lib_finder disable_auto="1" />

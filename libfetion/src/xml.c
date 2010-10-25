@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.                                        *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
 /*! \file xml.c
@@ -79,7 +79,7 @@ FX_RET_CODE fx_parse_sys_conf( __in  PMEM_STRUCT mem, \
 
 	/*
 	 *	check it
-	 */	
+	 */
 
 	if ( strlen( sys_data->sz_sipc_proxy ) <= 0 || \
 		 strlen( sys_data->sz_user_conf_url ) <= 0 )
@@ -245,7 +245,7 @@ PCONTACT_LIST fx_find_contact_by_sip( __in PGROUP_LIST p_group, __in char* sip )
 {
 	PGROUP_LIST p_temp = p_group;
 	PCONTACT_LIST p_ret = NULL;
-	
+
 	if ( p_group == NULL || sip == NULL )
 	{
 		return NULL;
@@ -253,17 +253,17 @@ PCONTACT_LIST fx_find_contact_by_sip( __in PGROUP_LIST p_group, __in char* sip )
 	/*
 	 *	lock
 	 */
-	
+
 	fx_get_group_list_mutex_lock();
 
 	while ( p_temp )
 	{
 		PCONTACT_LIST p_temp_contact = p_temp->p_contact;
-		
+
 		/*
-		 *	then print 
+		 *	then print
 		 */
-		
+
 		while ( p_temp_contact )
 		{
 			if ( strcmp( p_temp_contact->sz_uri, sip ) == 0 )
@@ -275,41 +275,41 @@ PCONTACT_LIST fx_find_contact_by_sip( __in PGROUP_LIST p_group, __in char* sip )
 		}
 		p_temp = p_temp->next;
 	}
-	
+
 	/*
 	 *	unlock
 	 */
-	
+
 	fx_get_group_list_mutex_unlock();
 
 	return p_ret;
-	
+
 }
 
 void print_group_list( __in PGROUP_LIST p_group )
 {
 	PGROUP_LIST p_temp = p_group;
-	
+
 	/*
-	 *	lock 
+	 *	lock
 	 */
-	
+
 	fx_get_group_list_mutex_lock();
 
 	while ( p_temp )
 	{
 		PCONTACT_LIST p_temp_contact = p_temp->p_contact;
-		
+
 		/*
 		 *	first print group list
 		 */
-		
+
 		printf( "%s:\n", p_temp->sz_group_name );
-		
+
 		/*
-		 *	then print 
+		 *	then print
 		 */
-		
+
 		while ( p_temp_contact )
 		{
 			if ( strlen( p_temp_contact->sz_local_name ) != 0 )
@@ -336,11 +336,11 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 	int i = 1;
 
 	node_root = xmlDocGetRootElement( p_doc );
-	
+
 	/*
 	 *	循环root's child得到user_info
 	 */
-	
+
 	node_child = node_root->children;
 	while ( node_child )
 	{
@@ -349,11 +349,11 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
         }
         node_child = node_child->next;
 	}
-	
+
 	/*
 	 *	循环user-info得到contact list
 	 */
-	
+
 	node_child = node_child->children;
 	while( node_child )
 	{
@@ -362,9 +362,9 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
         }
         node_child = node_child->next;
 	}
-	
+
 	node_contact = node_child;
-	
+
 	if ( node_contact == NULL )
 	{
 		return FX_ERROR_XMLPARSE;
@@ -372,7 +372,7 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 	/*
 	 *	循环contact list得到组信息.
 	 */
-	
+
 	node_child = node_contact->children;
 	while( node_child )
 	{
@@ -381,9 +381,9 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
         }
         node_child = node_child->next;
 	}
-	
+
 	node_group = node_child;
-	
+
 	if ( node_group == NULL )
 	{
 		return FX_ERROR_XMLPARSE;
@@ -392,7 +392,7 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 	/*
 	 *	循环组信息添加到链表
 	 */
-	
+
 	node_child = node_group->children;
 	while ( node_child )
 	{
@@ -410,10 +410,14 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 			{
 				xmlChar* sz_attr = NULL;
 				char* sz_asc = NULL;
-				
+
 				sz_attr = xmlGetProp(node_child, BAD_CAST("name"));
+
+            #ifdef __WIN32__
 				sz_asc = utf8_to_ansi( (char*)sz_attr );
-				
+            #else
+                sz_asc = sz_attr;
+            #endif
 				strcpy( p_group->sz_group_name, sz_asc );
 				free( sz_asc );
 			}
@@ -422,18 +426,18 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 			else
 			group_list_append( *p_contact_list, p_group );
 		}
-		
+
 		/*
 		 *	next
 		 */
-		
+
 		node_child = node_child->next;
 	}
-	
+
 	/*
 	 *	循环contact 得到buddies
 	 */
-	
+
 	node_child = node_contact->children;
 	while( node_child )
 	{
@@ -442,9 +446,9 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
         }
         node_child = node_child->next;
 	}
-	
+
 	node_buddy = node_child;
-	
+
 	if ( node_buddy == NULL )
 	{
 		return FX_ERROR_XMLPARSE;
@@ -462,22 +466,22 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 		{
 			PCONTACT_LIST p_contact = (PCONTACT_LIST)malloc( sizeof(CONTACT_LIST) );
 			PGROUP_LIST p_temp = *p_contact_list;
-			
+
 			memset( p_contact, 0, sizeof(CONTACT_LIST) );
 			if ( xmlHasProp( node_child, BAD_CAST( "i" ) ) )
 			{
 				xmlChar* sz_attr = NULL;
-				
+
 				sz_attr = xmlGetProp(node_child, BAD_CAST("i"));
 				//sz_asc = ConvertUtf8ToGBK( (char*)sz_attr );
-				
+
 				strcpy( p_contact->sz_user_id, (char*)sz_attr );
 				//free( sz_asc );
 			}
 			if ( xmlHasProp( node_child, BAD_CAST( "u" ) ) )
 			{
 				xmlChar* sz_attr = NULL;
-				
+
 				sz_attr = xmlGetProp(node_child, BAD_CAST("u"));
 				strcpy( p_contact->sz_uri, (char*)sz_attr );
 			}
@@ -485,9 +489,13 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 			{
 				xmlChar* sz_attr = NULL;
 				char* sz_asc = NULL;
-				
+
 				sz_attr = xmlGetProp(node_child, BAD_CAST("n"));
+            #ifdef __WIN32__
 				sz_asc = utf8_to_ansi( (char*)sz_attr );
+            #else
+                sz_asc = sz_attr;
+            #endif
 				strcpy( p_contact->sz_local_name, (char*)sz_asc );
 				free( sz_asc );
 			}
@@ -509,14 +517,14 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 				sz_attr = xmlGetProp(node_child, BAD_CAST("l"));
 				p_contact->n_group_list_id = atoi( (char*)sz_attr );
 			}
-			
+
 			p_contact->id = i;
 			i++;
 
 			/*
 			 *	add to group list
 			 */
-			
+
 			while ( p_temp )
 			{
 				if ( p_temp->n_group_id == p_contact->n_group_list_id )
@@ -524,7 +532,7 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 					/*
 					 *	add to list
 					 */
-					
+
 					if ( p_temp->p_contact == NULL )
 						p_temp->p_contact = p_contact;
 					else
@@ -533,11 +541,11 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 				p_temp = p_temp->next;
 			}
 		}
-		
+
 		/*
 		 *	next
 		 */
-		
+
 		node_child = node_child->next;
 	}
 
@@ -548,25 +556,25 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 {
 	xmlNodePtr node_root = NULL,node_child = NULL, node_person = NULL;
 	xmlDocPtr p_doc = xmlParseMemory( sz_xml, strlen( sz_xml ) );
-	
+
 	/*
 	 *	here use thread to parse the list so we should lock it
 	 */
-	
+
 	fx_get_group_list_mutex_lock();
 
 	/*
 	 *	events
 	 */
-	
+
 	node_root = xmlDocGetRootElement( p_doc );
-	
+
 	/*
 	 *	event
 	 */
 
 	node_child = node_root->children;
-	
+
 	while( node_child )
 	{
 		if (xmlStrcmp(node_child->name, BAD_CAST("event")) == 0){
@@ -574,7 +582,7 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
         }
         node_child = node_child->next;
 	}
-	
+
 	if ( node_child == NULL )
 	{
 		fx_get_group_list_mutex_unlock();
@@ -583,7 +591,7 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 	/*
 	 *	contacts
 	 */
-	
+
 	node_child = node_child->children;
 	while( node_child )
 	{
@@ -592,7 +600,7 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
         }
         node_child = node_child->next;
 	}
-	
+
 	if ( node_child == NULL )
 	{
 		fx_get_group_list_mutex_unlock();
@@ -604,7 +612,7 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 	/*
 	 *	loop contact;
 	 */
-	
+
 	while ( node_child )
 	{
 		if ( xmlStrcmp(node_child->name, BAD_CAST("c")) == 0  )
@@ -616,11 +624,11 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 				PCONTACT_LIST p_dst = NULL;
 
 				sz_attr = xmlGetProp(node_child, BAD_CAST("id"));
-				
+
 				/*
 				 *	去PGROUP_LIST里面比较USERID去
 				 */
-				
+
 				while( p_tmp )
 				{
 					PCONTACT_LIST p_contact = p_tmp->p_contact;
@@ -637,7 +645,7 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 						break;
 					p_tmp = p_tmp->next;
 				}
-				
+
 				if ( p_dst != NULL )
 				{
 					node_person = node_child->children;
@@ -650,7 +658,7 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 							{
 								xmlChar* sz_attr = NULL;
 								sz_attr = xmlGetProp(node_person, BAD_CAST("sid"));
-								
+
 								strcpy( p_dst->user_status.sz_sid, (char*)sz_attr );
 							}
 							if ( xmlHasProp( node_person, BAD_CAST( "su" ) ) )
@@ -664,7 +672,11 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 								xmlChar* sz_attr = NULL;
 								char* sz_asc = NULL;
 								sz_attr = xmlGetProp(node_person, BAD_CAST("n"));
+                            #ifdef __WIN32__
 								sz_asc = utf8_to_ansi( (char*)sz_attr );
+                            #else
+                                sz_asc = sz_attr;
+                            #endif
 								strcpy( p_dst->user_status.sz_nick_name, (char*)sz_asc );
 								free( sz_asc );
 							}
@@ -673,7 +685,11 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 								xmlChar* sz_attr = NULL;
 								char* sz_asc = NULL;
 								sz_attr = xmlGetProp(node_person, BAD_CAST("i"));
+                            #ifdef __WIN32__
 								sz_asc = utf8_to_ansi( (char*)sz_attr );
+                            #else
+                                sz_asc = sz_attr;
+                            #endif
 								strcpy( p_dst->user_status.sz_impresa, (char*)sz_asc );
 								free( sz_asc );
 							}
@@ -701,7 +717,11 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 								xmlChar* sz_attr = NULL;
 								char* sz_asc = NULL;
 								sz_attr = xmlGetProp(node_person, BAD_CAST("d"));
+                            #ifdef __WIN32__
 								sz_asc = utf8_to_ansi( (char*)sz_attr );
+							#else
+                                sz_asc = sz_attr;
+							#endif
 								strcpy( p_dst->user_status.PRESENCE.desc, sz_asc );
 								free( sz_asc );
 							}
@@ -722,28 +742,28 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 						/*
 						 *	next
 						 */
-						
+
 						node_person = node_person->next;
 					}
-				
+
 				}
 			}
-			
+
 		}
-		
+
 		/*
-		 *	next 
+		 *	next
 		 */
-		
+
 		node_child = node_child->next;
 
 	}
-	
+
 	/*
 	 *	unlock it
 	 */
-	
+
 	fx_get_group_list_mutex_unlock();
-	
+
 	return FX_ERROR_OK;
 }

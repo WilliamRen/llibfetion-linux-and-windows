@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.                                        *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
 /*! \file login.c
@@ -94,7 +94,7 @@ pthread_mutex_t fx_get_group_list_mutex()
 
 FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 {
-    
+
 	int n_ret = 0, socket;
     char* sz_proxy = NULL, *sz_find = NULL, *sz_pack = NULL;
 	char* sz_contact_list = NULL;
@@ -103,19 +103,19 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 	PSIPC_MSG sip_msg_list = NULL;
     ushort u_port = 0;
 	g_dlg_helper.p_auth = (PAUTH_DLG_HELPER)malloc( sizeof(AUTH_DLG_HELPER) );
-	
+
 	/*
 	 *	get the login data
 	 */
-	
+
 	memcpy( &g_login_data, l_data, sizeof(LOGIN_DATA) );
-	
-	
+
+
 	/*
 	 *	get the server ip
 	 */
-	
-	
+
+
     sz_proxy = g_sys_conf.sz_sipc_proxy;
     sz_find = strchr( sz_proxy, ':' );
     if ( sz_find == NULL ){
@@ -124,18 +124,18 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
     }
     u_port = atoi( (char*)(sz_find+1) );
     memcpy( sz_ip, sz_proxy, (int)sz_find-(int)sz_proxy );
-    
+
     /*
      *	create socket
      */
-    
-    
+
+
     socket = fx_socket_create( TCP, NULL, 0);
     if ( socket == -1 ){
         log_string( "create socket error!\n" );
         return FX_ERROR_SOCKET;
     }
-	
+
 	g_socket = socket;
 
     /*
@@ -147,14 +147,14 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
         log_string( "fx_login:connect to server error!" );
         return FX_ERROR_SOCKET;
     }
-	
-	
+
+
 	log_string( "==init auth dlg helper==" );
 
 	/*
 	 *	init auth dlg helper
 	 */
-	
+
 	strcpy( g_dlg_helper.p_auth->machine_code, "2F6E7CD33AA1F6928E69DEDD7D6C50B1" );
 	strcpy( g_dlg_helper.p_auth->phone_num, l_data->sz_phone_num );
 	strcpy( g_dlg_helper.p_auth->user_id, l_data->sz_user_id );
@@ -166,25 +166,25 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 	/*
 	 *	generate response and send it
 	 */
-	
+
 	if ( fx_sip_generate_auth_req( g_dlg_helper.p_auth, &sz_pack ) != FX_ERROR_OK )
 	{
 		log_string( "fx_login:fx_sip_generate_auth_req error!\n" );
 		return FX_ERROR_UNKOWN;
 	}
-	
+
 	log_string( "==send data to server 1==" );
 
 	/*
 	 *	send data to server
 	 */
-	
+
 	n_ret = fx_socket_send( socket, sz_pack, strlen(sz_pack) );
     if ( n_ret == -1 ){
         log_string( "fx_login:send data to server error!" );
         return FX_ERROR_SOCKET;
     }
-	
+
 	free( sz_pack );
 	sz_pack = NULL;
 
@@ -193,33 +193,33 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 	/*
 	 *	recv buffer from server
 	 */
-	
+
 	fx_sip_recv( socket, &sip_msg_list );
 	if ( atoi( sip_msg_list->msg->startline->status_code ) != SIP_UNAUTHORIZED )
 	{
 		log_string( "fx_login error!\n" );
 		return FX_ERROR_UNKOWN;
 	}
-	
+
 	log_string( "==generate response package then send it==" );
 
 	/*
 	 *	generate response package then send it
 	 */
-	
+
 	if ( fx_sip_generate_auth_resp( g_dlg_helper.p_auth, sip_msg_list->msg->www_authenticate->key, \
 									sip_msg_list->msg->www_authenticate->nonce, &sz_pack ) != FX_ERROR_OK )
 	{
 		log_string( "fx_login:fx_sip_generate_auth_resp error!\n" );
 		return FX_ERROR_UNKOWN;
 	}
-	
+
 	log_string( "==send data to server2==" );
 
 	/*
 	 *	send data to server
 	 */
-	
+
 	n_ret = fx_socket_send( socket, sz_pack, strlen(sz_pack) );
     if ( n_ret == -1 ){
         log_string( "fx_login:send data to server error!" );
@@ -231,23 +231,27 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 	/*
 	 *	free the msg list above
 	 */
-	
+
 	fx_sip_msg_list_free( sip_msg_list );
 	sip_msg_list = NULL;
-	
+
 	log_string( "recv  data from server2" );
-	
+
 	/*
 	 *	here the sleep i don't understand why, but it is necessary
 	 */
-	
+
+#ifdef __WIN32__
 	Sleep( 500 );
-	
+#else
+    sleep(1);
+#endif
+
 	/*
 	 *	recv buffer from server
 	 */
-	
-	
+
+
 	fx_sip_recv( socket, &sip_msg_list );
 	if ( sip_msg_list->msg->startline->status_code == NULL || \
 		(sip_msg_list->msg->startline->status_code != NULL && \
@@ -260,31 +264,31 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 	/*
 	 *	parse contact list
 	 */
-	
+
 	fx_parse_contact_list( sip_msg_list->msg->body, p_group_list );
-	
+
 	fx_sip_msg_list_free( sip_msg_list );
 	sip_msg_list = NULL;
-	
-	
+
+
 	/*
 	 *	update buddiy status
 	 */
-	
-	
+
+
 	fx_get_buddies_status( socket );
-	
+
 	/*
      *  create new thread to recv data from server
      */
-	
+
 	log_string( "==pthread_create thread_sip_recv==" );
     if ( pthread_create( &g_recv_thread_id, NULL, thread_sip_recv, \
             (void*)socket ) != 0 ){
         log_string( "fx_login:create receive thread error!" );
         return FX_ERROR_THREAD;
     }
-	
+
 #ifdef __WIN32__
 	Sleep( 1000 );
 #endif
