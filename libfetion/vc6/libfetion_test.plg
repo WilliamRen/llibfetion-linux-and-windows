@@ -6,13 +6,7 @@
 --------------------Configuration: libfetion_test - Win32 D_Share--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPB4.tmp" with contents
-[
-/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "__WIN32__" /D "__BUILD_SHARE__" /FR"libfetion_test___Win32_D_Share/" /Fp"libfetion_test___Win32_D_Share/libfetion_test.pch" /YX /Fo"libfetion_test___Win32_D_Share/" /Fd"libfetion_test___Win32_D_Share/" /FD /GZ /c 
-"D:\svn\llibfetion\libfetion\src\process.c"
-]
-Creating command line "cl.exe @C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPB4.tmp" 
-Creating temporary file "C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPB5.tmp" with contents
+Creating temporary file "C:\DOCUME~1\KEVINQ~1.000\LOCALS~1\Temp\RSP25C.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib advapi32.lib ..\lib_link\libcurl_ssl_share.lib wldap32.lib ..\lib_link\pthread_share.lib ..\lib_link\libeay32_share.lib ..\lib_link\ssleay32_share.lib ..\lib_link\libxml2_share.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib /nologo /subsystem:console /incremental:yes /pdb:"libfetion_test___Win32_D_Share/libfetion_test_d_share.pdb" /debug /machine:I386 /out:"bin/libfetion_test_d_share.exe" /pdbtype:sept 
 .\libfetion_test___Win32_D_Share\config.obj
@@ -31,39 +25,14 @@ kernel32.lib user32.lib gdi32.lib advapi32.lib ..\lib_link\libcurl_ssl_share.lib
 .\libfetion_test___Win32_D_Share\utf8.obj
 .\libfetion_test___Win32_D_Share\xml.obj
 ]
-Creating command line "link.exe @C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPB5.tmp"
+Creating command line "link.exe @C:\DOCUME~1\KEVINQ~1.000\LOCALS~1\Temp\RSP25C.tmp"
 <h3>Output Window</h3>
-Compiling...
-process.c
 Linking...
-LINK : fatal error LNK1168: cannot open bin/libfetion_test_d_share.exe for writing
-Error executing link.exe.
-Creating temporary file "C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPB6.tmp" with contents
-[
-/nologo /o"libfetion_test___Win32_D_Share/libfetion_test.bsc" 
-.\libfetion_test___Win32_D_Share\config.sbr
-.\libfetion_test___Win32_D_Share\crypto.sbr
-.\libfetion_test___Win32_D_Share\fxsocket.sbr
-.\libfetion_test___Win32_D_Share\helper.sbr
-.\libfetion_test___Win32_D_Share\initial.sbr
-.\libfetion_test___Win32_D_Share\log.sbr
-.\libfetion_test___Win32_D_Share\login.sbr
-.\libfetion_test___Win32_D_Share\main.sbr
-.\libfetion_test___Win32_D_Share\mem.sbr
-.\libfetion_test___Win32_D_Share\process.sbr
-.\libfetion_test___Win32_D_Share\protocol.sbr
-.\libfetion_test___Win32_D_Share\sipc.sbr
-.\libfetion_test___Win32_D_Share\thread.sbr
-.\libfetion_test___Win32_D_Share\utf8.sbr
-.\libfetion_test___Win32_D_Share\xml.sbr]
-Creating command line "bscmake.exe @C:\DOCUME~1\Achievo\LOCALS~1\Temp\RSPB6.tmp"
-Creating browse info file...
-<h3>Output Window</h3>
 
 
 
 <h3>Results</h3>
-libfetion_test_d_share.exe - 1 error(s), 0 warning(s)
+libfetion_test_d_share.exe - 0 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

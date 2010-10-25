@@ -65,7 +65,7 @@ int main()
 
     FX_RET_CODE fx_ret;
 
-    init_data( "15210281153", "programmeboy521" );
+    init_data( "’À∫≈", "√‹¬Î" );
 
     fx_ret = fx_init();
     if( fx_ret != FX_ERROR_OK){
