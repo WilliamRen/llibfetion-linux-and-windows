@@ -38,6 +38,7 @@
 #include "mem.h"
 #include "utf8.h"
 #include "xml.h"
+#include "mutex.h"
 
 /** \fn
  *  \brief
@@ -678,6 +679,7 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
                                 sz_asc = sz_attr;
                             #endif
 								strcpy( p_dst->user_status.sz_nick_name, (char*)sz_asc );
+								log_string( "get the nick name of %s userid %s\n", sz_asc, p_dst->sz_uri );
 								free( sz_asc );
 							}
 							if ( xmlHasProp( node_person, BAD_CAST( "i" ) ) )

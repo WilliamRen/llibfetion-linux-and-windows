@@ -47,14 +47,13 @@
 #include "utf8.h"
 #include "xml.h"
 #include "login.h"
+#include "mutex.h"
 
 
 extern SYS_CONF_DATA g_sys_conf;
 LOGIN_DATA g_login_data = {0};
 extern DLG_HELPER g_dlg_helper;
 extern PGROUP_LIST g_contact_list;
-
-pthread_mutex_t g_group_list_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 pthread_t g_recv_thread_id = {0};
 pthread_t g_keeplive_thread_id = {0};
@@ -65,31 +64,6 @@ int g_socket = 0;
 PGROUP_LIST fx_get_group_list()
 {
 	return g_contact_list;
-}
-
-int fx_get_group_list_mutex_lock()
-{
-	return pthread_mutex_lock( &g_group_list_mutex );
-}
-
-int fx_get_group_list_mutex_unlock()
-{
-	return pthread_mutex_unlock( &g_group_list_mutex );
-}
-
-void fx_get_group_list_mutex_init()
-{
-	pthread_mutex_init( &g_group_list_mutex, NULL );
-}
-
-void fx_get_group_list_mutex_free()
-{
-	pthread_mutex_destroy( &g_group_list_mutex );
-}
-
-pthread_mutex_t fx_get_group_list_mutex()
-{
-	return g_group_list_mutex;
 }
 
 FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
@@ -303,17 +277,6 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 		log_string( "fx_login:create keeplive thread error!" );
 		return FX_ERROR_THREAD;
     }
-
-	/*
-	 *	create keeplive thread
-	 */
-
-	/*log_string( "==pthread_create thread_sip_keepbusy==" );
-	if ( pthread_create( &g_keepbusy_thread_id, NULL, thread_sip_keep_connection_busy, \
-        (void*)socket ) != 0 ){
-		log_string( "fx_login:create keepbusy thread error!" );
-		return FX_ERROR_THREAD;
-    }*/
 
 #ifdef __WIN32__
 	Sleep( 500 );

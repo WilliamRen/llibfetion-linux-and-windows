@@ -18,13 +18,12 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
  ***************************************************************************/
 
-#ifndef LOGIN_H_INCLUDED
-#define LOGIN_H_INCLUDED
+#ifndef MUTEX_H_INCLUDED
+#define MUTEX_H_INCLUDED
 
-#include "commdef.h"
+int fx_get_group_list_mutex_lock();
+int fx_get_group_list_mutex_unlock();
+void fx_get_group_list_mutex_init();
+void fx_get_group_list_mutex_free();
 
-FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list );
-int fx_get_socket();
-PGROUP_LIST fx_get_group_list();
-
-#endif // LOGIN_H_INCLUDED
+#endif

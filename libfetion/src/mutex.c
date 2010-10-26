@@ -18,13 +18,41 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
  ***************************************************************************/
 
-#ifndef LOGIN_H_INCLUDED
-#define LOGIN_H_INCLUDED
+#include <stdio.h>
+#include <stdlib.h>
+#ifndef __WIN32__
+#include <unistd.h>
+#endif
+#include <string.h>
+#include <pthread.h>
 
-#include "commdef.h"
+#ifdef __WIN32__
+#include <windows.h>
+#endif
 
-FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list );
-int fx_get_socket();
-PGROUP_LIST fx_get_group_list();
+pthread_mutex_t g_group_list_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-#endif // LOGIN_H_INCLUDED
+int fx_get_group_list_mutex_lock()
+{
+	return pthread_mutex_lock( &g_group_list_mutex );
+}
+
+int fx_get_group_list_mutex_unlock()
+{
+	return pthread_mutex_unlock( &g_group_list_mutex );
+}
+
+void fx_get_group_list_mutex_init()
+{
+	pthread_mutex_init( &g_group_list_mutex, NULL );
+}
+
+void fx_get_group_list_mutex_free()
+{
+	pthread_mutex_destroy( &g_group_list_mutex );
+}
+
+pthread_mutex_t fx_get_group_list_mutex()
+{
+	return g_group_list_mutex;
+}

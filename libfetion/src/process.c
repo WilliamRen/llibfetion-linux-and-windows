@@ -174,6 +174,7 @@ int process_sip_notification( sip_message_t* message )
 	/*
 	 *	TODO thread safe
 	 */
+
 	if ( message->event )
 	{
 		if ( strcmp( message->event->element, "PresenceV4" ) == 0 )

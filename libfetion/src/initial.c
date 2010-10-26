@@ -33,6 +33,7 @@
 #include "initial.h"
 #include "login.h"
 #include "log.h"
+#include "mutex.h"
 
 CURL* g_curl;
 
@@ -48,19 +49,22 @@ FX_RET_CODE fx_init()
 	if(!pthread_win32_process_attach_np())
 		return FX_ERROR_INIT;
 #endif
-	log_init();
-	return FX_ERROR_OK;
 #endif
-#ifdef _WINDOWS_
-    /*todo here add the code run on windows*/
-#endif
+
 	
+	/*
+	 *	init log 
+	 */
+	
+		
+	log_init();
+
 	/*
 	 *	initial group list read/write lock mutex
 	 */
 	
 	fx_get_group_list_mutex_init();
-	
+	return FX_ERROR_OK;
 }
 
 FX_RET_CODE fx_curl_init()
@@ -89,5 +93,6 @@ void fx_close()
 	pthread_win32_process_detach_np();
 #endif
 #endif
+	fx_get_group_list_mutex_free();
 }
 

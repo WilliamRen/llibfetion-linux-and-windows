@@ -23,8 +23,8 @@
 #include <string.h>
 
 #ifdef __WIN32__
-#include <windows.h>
 #include <winsock2.h>
+#include <windows.h>
 #endif
 
 #include "commdef.h"

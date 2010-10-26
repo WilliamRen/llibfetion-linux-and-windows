@@ -215,7 +215,6 @@ FX_RET_CODE fx_get_buddies_status( int socket )
 		return FX_ERROR_SOCKET;
 	}
 	
-	
 	/*
 	 *	free resource
 	 */

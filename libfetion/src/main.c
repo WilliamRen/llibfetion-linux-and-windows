@@ -37,6 +37,7 @@
 #include "login.h"
 
 #ifdef __WIN32__
+#include <conio.h>
 #include <windows.h>
 #endif
 
@@ -65,7 +66,7 @@ int main()
 
     FX_RET_CODE fx_ret;
 
-    init_data( "152102XXXX", "XXXX" );
+    init_data( "15210281153", "programmeboy521" );
 
     fx_ret = fx_init();
     if( fx_ret != FX_ERROR_OK){
@@ -98,6 +99,7 @@ int main()
 #ifdef __WIN32__
 	Sleep( 2000 );
 #endif
+
 	/*
 	 *	into command module
 	 */
