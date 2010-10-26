@@ -707,6 +707,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\src\mutex.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\process.c"
 				>
 				<FileConfiguration
@@ -961,6 +965,10 @@
 			</File>
 			<File
 				RelativePath="..\src\mem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\mutex.h"
 				>
 			</File>
 			<File
