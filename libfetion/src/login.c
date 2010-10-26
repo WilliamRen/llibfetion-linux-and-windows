@@ -215,11 +215,11 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 	 *	here the sleep i don't understand why, but it is necessary
 	 */
 
-#ifdef __WIN32__
-	Sleep( 500 );
-#else
-    sleep(1);
-#endif
+//#ifdef __WIN32__
+//	Sleep( 500 );
+//#else
+//    sleep(1);
+//#endif
 
 	/*
 	 *	recv buffer from server

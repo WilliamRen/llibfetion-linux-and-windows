@@ -66,7 +66,7 @@ int main()
 
     FX_RET_CODE fx_ret;
 
-    init_data( "1521028XXXX", "XXXX" );
+    init_data( "ÊÖ»úºÅ", "ÃÜÂë" );
 
     fx_ret = fx_init();
     if( fx_ret != FX_ERROR_OK){
@@ -124,7 +124,7 @@ int main()
 		{
 			print_group_list( g_contact_list );
 		}
-		else if ( memcmp( sz_msg, "TO", 2 ) == 0 )
+		else if ( memcmp( sz_msg, "to", 2 ) == 0 )
 		{
 			char sz_cmd[10] = {0};
 			char sz_msg1[100] = {0};
@@ -137,7 +137,23 @@ int main()
 			fx_send_msg_to_other( socket, sz_msg1, i );
 
 		}
-		else if ( strcmp( sz_msg, "CLOSE" ) == 0 )
+		else if ( memcmp( sz_msg, "whois", 5 ) == 0 )
+		{
+			int id = 0;
+			char sz_cmd[10] = {0};
+			sscanf( sz_msg, "%s %d %s", sz_cmd, &id );
+			
+			print_whois( id );
+		}
+		else if ( memcmp( sz_msg, "cls", 3 ) == 0 )
+		{
+#ifdef __WIN32__
+			system( "cls" );
+#else
+			system( "clear" );
+#endif
+		}
+		else if ( strcmp( sz_msg, "close" ) == 0 )
 		{
 			if ( n_current_chat != -1 )
 			{

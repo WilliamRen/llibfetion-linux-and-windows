@@ -133,7 +133,9 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 		log_string( "recv error!" );
 		return FX_ERROR_SOCKET;
 	}
-
+#ifdef _DEBUG
+	log_string( "fx_sip_recv recv ret = %d", n_ret );
+#endif
 	sz_tmp_recv = sz_recv;
 
 	while ( 1 )
@@ -146,8 +148,8 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 		sip_message_init( &p_msg );
 		n_sip_ret = sip_message_parse( p_msg, sz_tmp_recv );
 
-		if ( n_ret == MAX_SIP_RECV_LENGTH &&
-			 ( n_sip_ret == LIBSIP_NOT_FOUND_HEAD_END || \
+		/*if ( n_ret == MAX_SIP_RECV_LENGTH &&*/
+		 if( ( n_sip_ret == LIBSIP_NOT_FOUND_HEAD_END || \
 			   n_sip_ret == LIBSIP_BODY_NOT_COMPLETE) ){
 
 			/*
@@ -160,9 +162,13 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 
 			n_ret = fx_socket_recv( sock, sz_tmp, MAX_SIP_RECV_LENGTH );
 			if ( n_ret == SOCKET_ERROR ){
-				log_string( "recv error!" );
+				log_string( "==recv error!==" );
 				return FX_ERROR_SOCKET;
 			}
+			
+#ifdef _DEBUG
+			log_string( "fx_sip_recv recv ret = %d", n_ret );
+#endif
 
 			/*
 			 *	add the buffer to the tail
@@ -191,15 +197,18 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 		 *	invalid sip package
 		 */
 
-		if ( n_ret <= MAX_SIP_RECV_LENGTH && \
+		/*if ( n_ret < MAX_SIP_RECV_LENGTH && \
 			 (n_sip_ret == LIBSIP_NOT_FOUND_HEAD_END || \
 			  n_sip_ret == LIBSIP_BODY_NOT_COMPLETE ) )
 		{
 			free( sz_tmp_recv );
 			free( msg_list );
 			sip_message_free( p_msg );
+#ifdef _DEBUG
+			log_string( "invalid sip package break n_ret = %d sip_ret = %d", n_ret, n_sip_ret );
+#endif
 			break;
-		}
+		}*/
 
 		/*
 		 *	the package is ok
@@ -281,9 +290,13 @@ FX_RET_CODE fx_sip_recv( int sock, PSIPC_MSG* msg_list_out )
 				continue;
 
 			}
-		}else
+		}else{
+			
+#ifdef _DEBUG
+			log_string( "else break sip_ret = %d", n_sip_ret );
+#endif
 			break;
-
+		}
 	}
 	return FX_ERROR_OK;
 }

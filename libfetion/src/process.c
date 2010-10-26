@@ -138,9 +138,11 @@ int process_sip_message( sip_message_t* message )
 	if ( strcmp( message->context_type->element, "text/plain" ) == 0 )
 	{
 
-		char* sz_tmp = message->body;
+		char* sz_tmp = NULL;
 #ifdef __WIN32__
-		utf8_to_ansi( message->body );
+		sz_tmp = utf8_to_ansi( message->body );
+#else
+		sz_tmp = message->body;
 #endif
 		printf( " ==> %s\n",  sz_tmp );
 #ifdef __WIN32__

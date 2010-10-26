@@ -78,7 +78,7 @@ int tcp_keep_alive(int socketfd)
 		log_string("set SO_KEEPALIVE failed\n");
 		return -1;
 	}
-
+	
 #ifdef __WIN32__
 	if(setsockopt(socketfd , IPPROTO_TCP, SO_KEEPALIVE
 		,(void *)&keepAlive,sizeof(keepAlive)) == -1){
@@ -123,6 +123,9 @@ int fx_socket_create( int type, char* ip, ushort port )
 	{
 	case TCP:
 		fd = socket( PF_INET, SOCK_STREAM, 0 );
+
+		tcp_keep_alive( fd );
+
 		memset( &addr, 0, sizeof(struct sockaddr_in) );
 		addr.sin_family = PF_INET;
 		if( ip )
@@ -250,7 +253,7 @@ void netaddr_set( char* name, struct sockaddr_in* addr )
 
 int fx_socket_send( int fd, uchar* buf, size_t size )
 {
-	int ret;
+/*	int ret;
 	size_t rest;
 	rest = size;
 	while( rest > 0 )
@@ -263,57 +266,11 @@ int fx_socket_send( int fd, uchar* buf, size_t size )
 		rest -= ret;
 		buf += ret;
 	}
-	return size;
+	return size;*/
+	return send( fd, (char*)buf, size, 0 );
 }
 
 int fx_socket_recv( int fd, uchar* buf, size_t size )
 {
 	return recv( fd, (char*)buf, size, 0 );
 }
-
-#define MAX_RECV_PER    1024
-int fx_socket_recv2( int fd, PMEM_STRUCT mem )
-{
-    int ret = 0;
-    char sz_recv[MAX_RECV_PER];
-
-    while( 1 )
-    {
-        memset( sz_recv, 0, MAX_RECV_PER );
-        ret = recv( fd, sz_recv, MAX_RECV_PER, 0);
-        if ( ret == -1 ){
-            log_string( "fx_socket_recv2:recv data error!" );
-            return ret;
-
-        }
-        if ( ret == 0 ){
-            break;
-
-        }
-
-
-        /*
-
-         *  allocate memory for recv data
-
-         */
-
-
-        if ( ret > 0 ){
-            mem->mem_ptr = myrealloc( mem->mem_ptr, mem->size + ret + 1 );
-            if (mem->mem_ptr) {
-                memcpy(&(mem->mem_ptr[mem->size]), sz_recv, ret);
-                mem->size += ret;
-                mem->mem_ptr[mem->size] = 0;
-            }
-            if ( ret < MAX_RECV_PER ){
-                break;
-
-            }
-
-        }
-
-    }
-    return mem->size;
-}
-

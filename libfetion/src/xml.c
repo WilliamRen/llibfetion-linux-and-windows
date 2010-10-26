@@ -38,6 +38,7 @@
 #include "mem.h"
 #include "utf8.h"
 #include "xml.h"
+#include "helper.h"
 #include "mutex.h"
 
 /** \fn
@@ -287,6 +288,37 @@ PCONTACT_LIST fx_find_contact_by_sip( __in PGROUP_LIST p_group, __in char* sip )
 
 }
 
+void print_whois( __in int id )
+{
+	PCONTACT_LIST p_contact = NULL;
+	
+	/*
+	 *	lock 
+	 */
+	
+	fx_get_group_list_mutex_lock();
+	p_contact = fx_contact_list_find_by_id( id );
+	if ( p_contact == NULL )
+	{
+		fx_get_group_list_mutex_unlock();
+		return;
+	}
+	printf( "*****************************************\n" );
+	printf( "\tid = %d\n", p_contact->id );
+	printf( "\turi = %s\n", p_contact->sz_uri );
+	printf( "\tlocal name = %s\n", p_contact->sz_local_name );
+	printf( "\tgroup id = %d\n", p_contact->n_group_list_id );
+	printf( "\tsid = %s\n", p_contact->user_status.sz_sid );
+	printf( "\tphone number = %s\n", p_contact->user_status.sz_phone_num );
+	printf( "\tnick name = %s\n", p_contact->user_status.sz_nick_name );
+	printf( "\timpresa = %s\n", p_contact->user_status.sz_impresa );
+	printf( "\tonline stat = %d\n", p_contact->user_status.PRESENCE.n_base );
+	printf( "\tdevice type = %s\n", p_contact->user_status.PRESENCE.device_type );
+	printf( "\tdevice caps = %s\n", p_contact->user_status.PRESENCE.device_caps );
+	printf( "*****************************************\n" );
+	fx_get_group_list_mutex_unlock();
+
+}
 void print_group_list( __in PGROUP_LIST p_group )
 {
 	PGROUP_LIST p_temp = p_group;
@@ -695,6 +727,13 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 								strcpy( p_dst->user_status.sz_impresa, (char*)sz_asc );
 								free( sz_asc );
 							}
+							if ( xmlHasProp( node_person, BAD_CAST( "m" ) ) )
+							{
+								xmlChar* sz_attr = NULL;
+								sz_attr = xmlGetProp(node_person, BAD_CAST("m"));
+								
+								strcpy( p_dst->user_status.sz_phone_num, (char*)sz_attr );
+							}
 							if ( xmlHasProp( node_person, BAD_CAST( "sms" ) ) )
 							{
 								xmlChar* sz_attr = NULL;
@@ -708,9 +747,12 @@ FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list
 							if ( xmlHasProp( node_person, BAD_CAST( "b" ) ) )
 							{
 								xmlChar* sz_attr = NULL;
-								sz_attr = xmlGetProp(node_child, BAD_CAST("b"));
+								sz_attr = xmlGetProp(node_person, BAD_CAST("b"));
 								if ( sz_attr != NULL )
 								{
+#ifdef _DEBUG
+									log_string( "get the base code %s\n", sz_attr );
+#endif
 									p_dst->user_status.PRESENCE.n_base = atoi( (char*)sz_attr );
 								}
 							}
