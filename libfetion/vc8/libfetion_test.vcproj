@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="libfetion_test"
 	ProjectGUID="{E5D6B43B-8207-459D-B935-911058984D05}"
+	RootNamespace="libfetion_test"
 	>
 	<Platforms>
 		<Platform
@@ -711,6 +712,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\src\mutex.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\process.c"
 				>
 				<FileConfiguration
@@ -965,6 +970,10 @@
 			</File>
 			<File
 				RelativePath="..\src\mem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\mutex.h"
 				>
 			</File>
 			<File
