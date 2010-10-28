@@ -198,7 +198,7 @@
 
 1287977463 /home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/include/sip_client.h
 
-1287977464 source:/home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/src/sip_common.c
+1288235591 source:/home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/src/sip_common.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -222,7 +222,7 @@
 	<string.h>
 	"../include/sip_def.h"
 
-1287977464 source:/home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/src/sip_message.c
+1288235591 source:/home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/libsip/src/sip_message.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -267,4 +267,19 @@
 	<string.h>
 	"../include/sip_def.h"
 	"../include/sip_www_authenticate.h"
+
+1288235591 source:/home/programmeboy/svn/llibfetion/libfetion/src/sip/SIPC-4/test/main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	<vld.h>
+	"../libsip/include/sip_def.h"
+	"../libsip/include/sip_cseq.h"
+	"../libsip/include/sip_to.h"
+	"../libsip/include/sip_authorization.h"
+	"../libsip/include/sip_www_authenticate.h"
+	"../libsip/include/sip_startline.h"
+	"../libsip/include/sip_client.h"
+	"../libsip/include/sip_message.h"
 
