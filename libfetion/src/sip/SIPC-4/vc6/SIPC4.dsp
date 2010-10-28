@@ -125,7 +125,7 @@ SOURCE=..\libsip\src\sip_www_authenticate.c
 # End Group
 # Begin Source File
 
-SOURCE=..\main.c
+SOURCE=..\test\main.c
 # End Source File
 # End Group
 # Begin Group "Header Files"

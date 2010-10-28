@@ -143,6 +143,7 @@ void sip_support_list_free( sip_support_list_t* sip_k )
 	while ( pos )
 	{
 		sip_support_list_t* tmp = pos->next;
+		sip_common_free( pos->sip_k );
 		free( pos );
 		pos = tmp;
 	}

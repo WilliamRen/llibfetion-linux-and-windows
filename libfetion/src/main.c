@@ -66,7 +66,7 @@ int main()
 
     FX_RET_CODE fx_ret;
 
-    init_data( "ÊÖ»úºÅ", "ÃÜÂë" );
+    init_data( "ÕËºÅ", "ÃÜÂë" );
 
     fx_ret = fx_init();
     if( fx_ret != FX_ERROR_OK){

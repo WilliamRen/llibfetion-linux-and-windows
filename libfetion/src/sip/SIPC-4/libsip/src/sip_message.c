@@ -587,6 +587,8 @@ sip_message_free( sip_message_t* message )
         sip_common_free( message->from );
     if ( message->call_id )
         sip_common_free( message->call_id );
+	if ( message->cseq )
+		sip_cseq_free( message->cseq );
     if ( message->cnonce )
         sip_common_free( message->cnonce );
     if ( message->context_len )

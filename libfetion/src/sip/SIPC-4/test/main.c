@@ -3,6 +3,10 @@
 #include <time.h>
 #include <string.h>
 
+#if HAVE_VISUAL_LEAK_DETECTOR
+#include <vld.h>
+#endif
+
 #include "../libsip/include/sip_def.h"
 #include "../libsip/include/sip_cseq.h"
 #include "../libsip/include/sip_to.h"

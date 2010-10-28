@@ -328,6 +328,8 @@ void print_group_list( __in PGROUP_LIST p_group )
 	 */
 
 	fx_get_group_list_mutex_lock();
+	
+	printf( "*****************************************\n" );
 
 	while ( p_temp )
 	{
@@ -358,6 +360,7 @@ void print_group_list( __in PGROUP_LIST p_group )
 		}
 		p_temp = p_temp->next;
 	}
+	printf( "*****************************************\n" );
 	fx_get_group_list_mutex_unlock();
 }
 
