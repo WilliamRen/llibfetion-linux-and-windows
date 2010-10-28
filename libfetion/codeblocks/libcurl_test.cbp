@@ -81,6 +81,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../src/mem.h" />
+		<Unit filename="../src/mutex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/mutex.h" />
 		<Unit filename="../src/process.c">
 			<Option compilerVar="CC" />
 		</Unit>

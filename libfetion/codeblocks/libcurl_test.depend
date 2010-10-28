@@ -533,7 +533,7 @@
 	"crypto.h"
 	"log.h"
 
-1287978970 source:/home/programmeboy/svn/llibfetion/libfetion/src/fxsocket.c
+1288089270 source:/home/programmeboy/svn/llibfetion/libfetion/src/fxsocket.c
 	<stdio.h>
 	<winsock2.h>
 	<wininet.h>
@@ -563,7 +563,7 @@
 
 1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/helper.h
 
-1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/initial.c
+1288086067 source:/home/programmeboy/svn/llibfetion/libfetion/src/initial.c
 	<stdio.h>
 	<stdlib.h>
 	<pthread.h>
@@ -571,8 +571,9 @@
 	"initial.h"
 	"login.h"
 	"log.h"
+	"mutex.h"
 
-1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/login.h
+1288086068 /home/programmeboy/svn/llibfetion/libfetion/src/login.h
 	"commdef.h"
 
 1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/log.c
@@ -585,7 +586,7 @@
 	<sys/types.h>
 	<fcntl.h>
 
-1287978970 source:/home/programmeboy/svn/llibfetion/libfetion/src/login.c
+1288089355 source:/home/programmeboy/svn/llibfetion/libfetion/src/login.c
 	<stdio.h>
 	<stdlib.h>
 	<unistd.h>
@@ -605,10 +606,11 @@
 	"utf8.h"
 	"xml.h"
 	"login.h"
+	"mutex.h"
 
 1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/thread.h
 
-1287977465 /home/programmeboy/svn/llibfetion/libfetion/src/sipc.h
+1288088848 /home/programmeboy/svn/llibfetion/libfetion/src/sipc.h
 	"../src/sip/SIPC-4/libsip/include/sip.h"
 	"helper.h"
 
@@ -618,7 +620,7 @@
 	"commdef.h"
 	"mem.h"
 
-1287979041 source:/home/programmeboy/svn/llibfetion/libfetion/src/main.c
+1288086393 source:/home/programmeboy/svn/llibfetion/libfetion/src/main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -630,6 +632,7 @@
 	"protocol.h"
 	"sipc.h"
 	"login.h"
+	<conio.h>
 	<windows.h>
 
 1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/mem.c
@@ -638,7 +641,7 @@
 	<memory.h>
 	"mem.h"
 
-1287978989 source:/home/programmeboy/svn/llibfetion/libfetion/src/process.c
+1288086067 source:/home/programmeboy/svn/llibfetion/libfetion/src/process.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -653,7 +656,7 @@
 	"commdef.h"
 	"../src/sip/SIPC-4/libsip/include/sip.h"
 
-1287977465 source:/home/programmeboy/svn/llibfetion/libfetion/src/protocol.c
+1288086067 source:/home/programmeboy/svn/llibfetion/libfetion/src/protocol.c
 	<stdio.h>
 	<time.h>
 	<string.h>
@@ -668,7 +671,7 @@
 	"log.h"
 	"protocol.h"
 
-1287981417 source:/home/programmeboy/svn/llibfetion/libfetion/src/sipc.c
+1288088876 source:/home/programmeboy/svn/llibfetion/libfetion/src/sipc.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -681,12 +684,12 @@
 	"helper.h"
 	"sipc.h"
 
-1287978779 source:/home/programmeboy/svn/llibfetion/libfetion/src/thread.c
+1288086067 source:/home/programmeboy/svn/llibfetion/libfetion/src/thread.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
-	<windows.h>
 	<winsock2.h>
+	<windows.h>
 	"commdef.h"
 	"sipc.h"
 	"log.h"
@@ -705,7 +708,7 @@
 	"utf8.h"
 	"log.h"
 
-1287981417 source:/home/programmeboy/svn/llibfetion/libfetion/src/xml.c
+1288086067 source:/home/programmeboy/svn/llibfetion/libfetion/src/xml.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -719,4 +722,15 @@
 	"mem.h"
 	"utf8.h"
 	"xml.h"
+	"mutex.h"
+
+1288086067 /home/programmeboy/svn/llibfetion/libfetion/src/mutex.h
+
+1288086067 source:/home/programmeboy/svn/llibfetion/libfetion/src/mutex.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<string.h>
+	<pthread.h>
+	<windows.h>
 
