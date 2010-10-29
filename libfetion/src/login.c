@@ -265,6 +265,8 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 
 #ifdef __WIN32__
 	Sleep( 1000 );
+#else
+	Sleep( 1 );
 #endif
 
 	/*
@@ -281,7 +283,7 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 #ifdef __WIN32__
 	Sleep( 500 );
 #else
-	sleep( 1 );
+	usleep( 500 * 1000 );
 #endif
     //pthread_cancel( g_recv_thread_id );
 	//thread_sip_keep_connection_busy

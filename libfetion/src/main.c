@@ -98,6 +98,8 @@ int main()
 	printf( "wait for update buddies list\n" );
 #ifdef __WIN32__
 	Sleep( 2000 );
+#else
+	sleep( 2 );
 #endif
 
 	/*
@@ -169,6 +171,8 @@ int main()
 
 #ifdef __WIN32__
 		Sleep( 10 );
+#else
+		usleep( 10 * 1000 );
 #endif
 	}
 

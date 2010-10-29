@@ -77,6 +77,8 @@ void* thread_sip_recv( void* lparam )
 		fx_sip_recv( socket, &msg_list );
 #ifdef __WIN32__
 		Sleep( 50 );
+#else
+		usleep( 50 * 1000 );
 #endif
 #ifdef _DEBUG
 		/*fx_sip_loop_print( msg_list );*/
@@ -181,9 +183,9 @@ void* thread_sip_keep_connection_busy( void* lparam )
 		free( sz_keeplive );
 
 #ifdef __WIN32__
-		Sleep( 1000 );
+		Sleep( 1000 * 20 );
 #else
-		sleep( 200 );
+		sleep( 20 );
 #endif
 	}
 	return 0;
