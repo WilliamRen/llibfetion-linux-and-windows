@@ -65,8 +65,15 @@ int main()
     MEM_STRUCT mem_user = {0};
 
     FX_RET_CODE fx_ret;
-
-    init_data( "ÕËºÅ", "ÃÜÂë" );
+	char sz_user[20] = {0};
+	char sz_pass[20] = {0};
+	
+	printf( "note: only support phone number + password login\nif you have not a phone number please see the next version\n" );
+	printf( "\nphone number:" );
+	scanf( "%s", sz_user );
+	printf( "\npass word:" );
+	scanf( "%s", sz_pass );
+    init_data( sz_user, sz_pass );
 
     fx_ret = fx_init();
     if( fx_ret != FX_ERROR_OK){
@@ -85,6 +92,7 @@ int main()
     fx_ret = fx_get_user_conf( &g_sys_conf, &mem_user );
     if( fx_ret != FX_ERROR_OK){
         printf( "get user config file error\n" );
+		printf( "maybe you input the wrong phone number or password ^_^\n" );
         return fx_ret;
     }
     fx_ret = fx_parse_user_conf( &mem_user, &l_data );
@@ -101,11 +109,20 @@ int main()
 #else
 	sleep( 2 );
 #endif
+	
+	/*
+	 *	clear the screen
+	 */
+	
+#ifdef __WIN32__
+	system( "cls" );
+#else
+	system( "clear" );
+#endif
 
 	/*
 	 *	into command module
 	 */
-
 
 	printf( "\t\t\tlibfetion v1.0 by programmeboy\n" );
 
@@ -114,9 +131,13 @@ int main()
 		char sz_msg[1024] = {0};
 		int socket = fx_get_socket();
 		int n_current_chat = -1;
-
+		
 		printf( ">>" );
+
 		gets( sz_msg );
+		
+		if ( strlen( sz_msg ) == 0 )
+			continue;
 
 		/*
 		 *	print contact list
@@ -162,10 +183,13 @@ int main()
 				fx_chat_dlg_helper_item_free_by_id( n_current_chat );
 			}
 		}
-		else
+		else if( memcmp( sz_msg, "tome", 4 ) == 0 )
 		{
+			char sz_msg2[100] = {0};
+			char sz_msg1[100] = {0};
+			sscanf( sz_msg, "%s %s", sz_msg1, sz_msg2 );
 			log_string( "==start send msg to myself==" );
-			fx_send_msg_to_yourself( socket, sz_msg );
+			fx_send_msg_to_yourself( socket, sz_msg2 );
 			log_string( "==end send msg to myself==" );
 		}
 
