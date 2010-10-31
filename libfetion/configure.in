@@ -1,0 +1,36 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.64])
+AC_INIT(libfetion_test,1.0,programmeboy@gmail.com)
+AC_CONFIG_SRCDIR([src/main.c])
+AC_CONFIG_HEADERS(config.h)
+
+AM_INIT_AUTOMAKE(libfetion_test,1.0)
+# Checks for programs.
+AC_PROG_CC
+
+# Checks for libraries.
+AC_CHECK_LIB([ssl], [SSL_library_init])
+AC_CHECK_LIB([crypto], [RSA_new])
+AC_CHECK_LIB([pthread], [pthread_create])
+AC_CHECK_LIB([xml2], [xmlParseMemory])
+AC_CHECK_LIB([curl], [curl_easy_init])
+
+AC_PROG_RANLIB
+# Checks for header files.
+AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h memory.h netdb.h netinet/in.h stddef.h stdlib.h string.h sys/socket.h sys/time.h unistd.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_TYPE_MODE_T
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+
+# Checks for library functions.
+AC_FUNC_MALLOC
+AC_FUNC_REALLOC
+AC_CHECK_FUNCS([gethostbyname memset select socket strcasecmp strchr strncasecmp strstr strtol])
+
+AC_CONFIG_SUBDIRS([libsipc4])
+AC_OUTPUT(Makefile
+	  src/Makefile)

@@ -1,0 +1,27 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.64])
+AC_INIT(libsipc4, 1.0, programmeboy@gmail.com)
+AC_CONFIG_SRCDIR([include/sip_message.h])
+AC_CONFIG_HEADERS(config.h)
+
+AM_INIT_AUTOMAKE(libsipc4, 1.0)
+# Checks for programs.
+AC_PROG_CC
+
+# Checks for libraries.
+AC_PROG_RANLIB
+# Checks for header files.
+AC_CHECK_HEADERS([stdlib.h string.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_TYPE_SIZE_T
+
+# Checks for library functions.
+AC_FUNC_MALLOC
+AC_FUNC_REALLOC
+AC_CHECK_FUNCS([memmove memset strchr strdup strstr])
+
+AC_OUTPUT(Makefile 
+	  src/Makefile)

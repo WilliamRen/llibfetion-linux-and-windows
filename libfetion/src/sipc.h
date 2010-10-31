@@ -15,13 +15,13 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.                                        *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
 #ifndef SIPC_H_INCLUDE
 #define SIPC_H_INCLUDE
 
-#include "../src/sip/SIPC-4/libsip/include/sip.h"
+#include "sip.h"
 #include "helper.h"
 
 #define MAX_SIP_RECV_LENGTH		1024
@@ -55,23 +55,23 @@ void fx_sip_loop_print( PSIPC_MSG msg_list );
 int fx_sip_get_callid();
 int fx_sip_increase_callid();
 void fx_sip_msg_list_free( PSIPC_MSG msg_list );
-int fx_sip_generate_auth_req(  __in PAUTH_DLG_HELPER p_auth_helper, 
+int fx_sip_generate_auth_req(  __in PAUTH_DLG_HELPER p_auth_helper,
 							   __out char** auth_req);
 int fx_sip_generate_auth_resp( __in PAUTH_DLG_HELPER p_auth_helper,
 							   __in char* key, __in char* nonce,
 							   __out char** auth_req);
-int fx_sip_generate_keeplive(  __in PKEEPLIVE_DLG_HELPER p_keeplive_helper, 
+int fx_sip_generate_keeplive(  __in PKEEPLIVE_DLG_HELPER p_keeplive_helper,
 							   __out char** auth_req);
 
-int fx_sip_generate_send_msg_yourself( __in PCHAT_DLG_HELPER p_helper, 
-									   __in char* msg, 
+int fx_sip_generate_send_msg_yourself( __in PCHAT_DLG_HELPER p_helper,
+									   __in char* msg,
 									   __out char** sip_msg);
 
 int fx_sip_generate_get_user_status( __in PSUB_DLG_HELPER p_helper, __out char** sip_msg );
-int fx_sip_generate_send_msg_other(	 __in PCHAT_DLG_HELPER p_helper, __in char* msg, 
+int fx_sip_generate_send_msg_other(	 __in PCHAT_DLG_HELPER p_helper, __in char* msg,
 									 __out char** sip_msg);
 
-int fx_sip_generate_resp_recv_msg( __in sip_message_t* message_recv, 
+int fx_sip_generate_resp_recv_msg( __in sip_message_t* message_recv,
 								   __out char** sz_out );
 
 int fx_sip_generate_keep_connection_busy( __in PKEEPLIVE_DLG_HELPER p_keeplive_helper, __out char** auth_req);

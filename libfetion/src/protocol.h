@@ -15,14 +15,14 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.                                        *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
 #ifndef PROTOCOL_H_INCLUDED
 #define PROTOCOL_H_INCLUDED
 
 #include "commdef.h"
-#include "../src/sip/SIPC-4/libsip/include/sip.h"
+#include "sip.h"
 
 char* fx_generate_cnonce();
 FX_RET_CODE fx_send_msg_to_yourself( int socket, char* msg );

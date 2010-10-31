@@ -266,7 +266,7 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 #ifdef __WIN32__
 	Sleep( 1000 );
 #else
-	Sleep( 1 );
+	sleep( 1 );
 #endif
 
 	/*

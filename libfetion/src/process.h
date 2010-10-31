@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.                                        *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
 #ifndef PROCESS_H_INCLUDE
@@ -23,7 +23,7 @@
 
 #include "commdef.h"
 
-#include "../src/sip/SIPC-4/libsip/include/sip.h"
+#include "sip.h"
 
 int process_sip_message( sip_message_t* message );
 int process_sip_notification( sip_message_t* message );
