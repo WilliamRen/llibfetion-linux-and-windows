@@ -70,7 +70,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="..\lib_link\libcurl_ssl_share.lib wldap32.lib ..\lib_link\pthread_share.lib ..\lib_link\libeay32_share.lib ..\lib_link\ssleay32_share.lib ..\lib_link\libxml2_share.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
+				AdditionalDependencies="..\lib_link\libcurl_ssl_share.lib wldap32.lib ..\lib_link\pthread_share.lib ..\lib_link\libeay32_share.lib ..\lib_link\ssleay32_share.lib ..\lib_link\libxml2_share.lib ws2_32.lib ../libsipc4/vc6/LIB_Debug/libsipc4d.lib"
 				OutputFile="bin/libfetion_test_d_share.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -161,7 +161,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="..\lib_link\libcurl_ssl_share.lib wldap32.lib ..\lib_link\pthread_share.lib ..\lib_link\libeay32_share.lib ..\lib_link\ssleay32_share.lib ..\lib_link\libxml2_share.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
+				AdditionalDependencies="..\lib_link\libcurl_ssl_share.lib wldap32.lib ..\lib_link\pthread_share.lib ..\lib_link\libeay32_share.lib ..\lib_link\ssleay32_share.lib ..\lib_link\libxml2_share.lib ws2_32.lib ../libsipc4/vc6/LIB_Debug/libsipc4d.lib"
 				OutputFile="bin/libfetion_test_r_share.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -251,7 +251,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wldap32.lib ..\lib_link\pthread_static.lib ..\lib_link\libeay32_static.lib ..\lib_link\ssleay32_static.lib ..\lib_link\libcurl_ssl_static.lib ..\lib_link\libxml2_static.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
+				AdditionalDependencies="wldap32.lib ..\lib_link\pthread_static.lib ..\lib_link\libeay32_static.lib ..\lib_link\ssleay32_static.lib ..\lib_link\libcurl_ssl_static.lib ..\lib_link\libxml2_static.lib ws2_32.lib ../libsipc4/vc6/LIB_Debug/libsipc4d.lib"
 				OutputFile="bin/libfetion_test_r_static.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -343,7 +343,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/force"
-				AdditionalDependencies="wldap32.lib ..\lib_link\pthread_static.lib ..\lib_link\libeay32_static.lib ..\lib_link\ssleay32_static.lib ..\lib_link\libcurl_ssl_static.lib ..\lib_link\libxml2_static.lib ws2_32.lib ../src/sip/SIPC-4/vc6/LIB_Debug/libsipc4d.lib"
+				AdditionalDependencies="wldap32.lib ..\lib_link\pthread_static.lib ..\lib_link\libeay32_static.lib ..\lib_link\ssleay32_static.lib ..\lib_link\libcurl_ssl_static.lib ..\lib_link\libxml2_static.lib ws2_32.lib ../libsipc4/vc6/LIB_Debug/libsipc4d.lib"
 				OutputFile="bin/libfetion_test_d_static.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
