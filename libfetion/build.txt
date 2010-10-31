@@ -1,8 +1,12 @@
 1.windows 
-将本目录下的lib_include添加到vc的目录设置中
+===============================================================
+1，将<本文件目录>/lib_include添加到vc的目录中.(就是tools->option->directories->include)
+2, 将<本本件目录>/libsipc4/include 添加到vc的目录中.
+点编译即可
+===============================================================
 编译,,ok!
 2.linux
-只支持codeblock工程，双击打开工程文件编译即可
+
 注：编译之前需安装以下库。。
 依赖库：
 
@@ -22,3 +26,23 @@ pthread
 
 for ubuntu : already build in system
 for fedora : already build in system
+
+方式1：
+===================================================================================================
+codeblock工程，双击打开工程文件按下列步骤:
+1,
+project -> build option ->linker setting的other linker options 添加，-lssl -lcurl -lxml2 -lcrypt
+2,
+project -> build option -> search directoies -> 添加 /usr/include/libxml2 和 ../libsipc4/include
+
+然后点编译就行了....
+===================================================================================================
+方式2：
+===================================================================================================
+./configure && make
+注:还不支持 make install
+===================================================================================================
+
+ 
+
+如有问题 联系programmeboy@gmail.com
