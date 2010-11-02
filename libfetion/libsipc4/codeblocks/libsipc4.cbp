@@ -9,7 +9,7 @@
 			<Target title="Debug">
 				<Option output="libsipc4" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="obj/Debug/" />
+				<Option object_output="obj\Debug\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -21,7 +21,7 @@
 			<Target title="Release">
 				<Option output="libsipc4" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="obj/Release/" />
+				<Option object_output="obj\Release\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -34,41 +34,41 @@
 				</Linker>
 			</Target>
 		</Build>
-		<Unit filename="../libsip/include/sip.h" />
-		<Unit filename="../libsip/include/sip_authorization.h" />
-		<Unit filename="../libsip/include/sip_client.h" />
-		<Unit filename="../libsip/include/sip_common.h" />
-		<Unit filename="../libsip/include/sip_cseq.h" />
-		<Unit filename="../libsip/include/sip_def.h" />
-		<Unit filename="../libsip/include/sip_message.h" />
-		<Unit filename="../libsip/include/sip_startline.h" />
-		<Unit filename="../libsip/include/sip_to.h" />
-		<Unit filename="../libsip/include/sip_www_authenticate.h" />
-		<Unit filename="../libsip/src/sip_authorization.c">
+		<Unit filename="..\include\sip.h" />
+		<Unit filename="..\include\sip_authorization.h" />
+		<Unit filename="..\include\sip_client.h" />
+		<Unit filename="..\include\sip_common.h" />
+		<Unit filename="..\include\sip_cseq.h" />
+		<Unit filename="..\include\sip_def.h" />
+		<Unit filename="..\include\sip_message.h" />
+		<Unit filename="..\include\sip_startline.h" />
+		<Unit filename="..\include\sip_to.h" />
+		<Unit filename="..\include\sip_www_authenticate.h" />
+		<Unit filename="..\src\sip_authorization.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../libsip/src/sip_client.c">
+		<Unit filename="..\src\sip_client.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../libsip/src/sip_common.c">
+		<Unit filename="..\src\sip_common.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../libsip/src/sip_cseq.c">
+		<Unit filename="..\src\sip_cseq.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../libsip/src/sip_def.c">
+		<Unit filename="..\src\sip_def.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../libsip/src/sip_message.c">
+		<Unit filename="..\src\sip_message.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../libsip/src/sip_startline.c">
+		<Unit filename="..\src\sip_startline.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../libsip/src/sip_to.c">
+		<Unit filename="..\src\sip_to.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../libsip/src/sip_www_authenticate.c">
+		<Unit filename="..\src\sip_www_authenticate.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

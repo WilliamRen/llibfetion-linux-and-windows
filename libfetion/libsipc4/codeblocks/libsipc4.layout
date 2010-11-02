@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
+	<File name="..\src\sip_def.c" open="1" top="1" tabpos="0">
+		<Cursor position="7029" topLine="208" />
+	</File>
 </CodeBlocks_layout_file>
