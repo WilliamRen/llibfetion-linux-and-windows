@@ -449,7 +449,14 @@ void print_group_list( __in PGROUP_LIST p_group )
 			}
 			else
 			{
-				printf( "\t%d %-20s", p_temp_contact->id, p_temp_contact->user_status.sz_nick_name );
+				if ( strlen( p_temp_contact->user_status.sz_nick_name ) != 0 )
+				{
+					printf( "\t%d %-20s", p_temp_contact->id, p_temp_contact->user_status.sz_nick_name );
+				}
+				else
+				{
+					printf( "\t%d %-20s", p_temp_contact->id, p_temp_contact->user_status.sz_sid );
+				}
 			}
 			printf( "\tbase_code = %d\n", p_temp_contact->user_status.PRESENCE.n_base );
 			p_temp_contact = p_temp_contact->next;
@@ -565,6 +572,23 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 
 		node_child = node_child->next;
 	}
+	
+	/*
+	 *	group == 0 的情况
+	 */
+	
+	{
+		PGROUP_LIST p_group = (PGROUP_LIST)malloc( sizeof(GROUP_LIST) );
+		memset( p_group, 0, sizeof(GROUP_LIST) );
+		
+		p_group->n_group_id = 0;
+		strcpy( p_group->sz_group_name, "not grouped" );
+
+		if ( *p_contact_list == NULL )
+			*p_contact_list = p_group;
+		else
+			group_list_append( *p_contact_list, p_group );
+	}
 
 	/*
 	 *	循环contact 得到buddies
@@ -645,7 +669,15 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 			{
 				xmlChar* sz_attr = NULL;
 				sz_attr = xmlGetProp(node_child, BAD_CAST("l"));
-				p_contact->n_group_list_id = atoi( (char*)sz_attr );
+				
+				/*
+				 *	for buddy-lists is null
+				 */
+				
+				if ( strlen( sz_attr ) == 0 )
+					p_contact->n_group_list_id = 0;
+				else
+					p_contact->n_group_list_id = atoi( (char*)sz_attr );
 			}
 
 			p_contact->id = i;
