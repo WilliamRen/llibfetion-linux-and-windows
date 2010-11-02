@@ -26,6 +26,7 @@ typedef struct sip_www_authenticate
     char* algorithm;
     char* nonce;
     char* key;
+	char* ver_type;
     char* signature;
 
 }sip_www_authenticate_t;

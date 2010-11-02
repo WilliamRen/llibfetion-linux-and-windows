@@ -200,8 +200,6 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
         return FX_ERROR_SOCKET;
     }
 
-	free( sz_pack );
-
 	/*
 	 *	free the msg list above
 	 */
@@ -212,28 +210,91 @@ FX_RET_CODE fx_login( __in PLOGIN_DATA l_data, __out PGROUP_LIST* p_group_list )
 	log_string( "recv  data from server2" );
 
 	/*
-	 *	here the sleep i don't understand why, but it is necessary
-	 */
-
-//#ifdef __WIN32__
-//	Sleep( 500 );
-//#else
-//    sleep(1);
-//#endif
-
-	/*
 	 *	recv buffer from server
 	 */
 
 
 	fx_sip_recv( socket, &sip_msg_list );
-	if ( sip_msg_list->msg->startline->status_code == NULL || \
+
+	while( sip_msg_list->msg->startline->status_code != NULL &&
+		   (atoi( sip_msg_list->msg->startline->status_code ) == SIP_EXTENSION_REQUIRED ||
+		    atoi( sip_msg_list->msg->startline->status_code ) == SIP_BAD_EXTENSION) )
+	{
+		MEM_STRUCT mem = {0};
+		FX_RET_CODE ret;
+		char* sz_chid = NULL, *sz_ver_pack;
+		char sz_verify[20] = {0};
+
+		/*
+		 *	verify first we get the picture
+		 */
+		
+		ret = fx_get_verify_pic( &g_sys_conf, sip_msg_list->msg->www_authenticate->algorithm, &mem );
+		if ( ret != FX_ERROR_OK )
+		{
+			log_string( "get verify pic error!\n" );
+			return FX_ERROR_UNKOWN;
+		}
+		ret = fx_parse_query_pic( &mem, &sz_chid );
+		if ( ret != FX_ERROR_OK )
+		{
+			log_string( "parse verify pic error!\n" );
+			return FX_ERROR_UNKOWN;
+		}
+		printf( "please input the verify number:" );
+		scanf( "%s", sz_verify );
+		
+		/*
+		 *	
+		 */
+
+		if( fx_sip_generate_auth_resp_ver( sz_pack, sz_verify, sip_msg_list->msg->www_authenticate->ver_type,
+									   sz_chid, sip_msg_list->msg->www_authenticate->algorithm, 
+									   &sz_ver_pack ) != FX_ERROR_OK )
+		{
+			log_string( "fx_login:fx_sip_generate_auth_req error!\n" );
+			return FX_ERROR_UNKOWN;
+		}
+		
+		/*
+		 *	send data to server
+		 */
+
+		n_ret = fx_socket_send( socket, sz_ver_pack, strlen(sz_ver_pack) );
+		if ( n_ret == -1 ){
+			log_string( "fx_login:send data to server error!" );
+			return FX_ERROR_SOCKET;
+		}
+		
+		/*
+		 *	free the msg list
+		 */
+		
+		free( sz_ver_pack );
+		fx_sip_msg_list_free( sip_msg_list );
+		sip_msg_list = NULL;
+
+		/*
+		 *	recv buffer from server
+		 */
+
+
+		fx_sip_recv( socket, &sip_msg_list );
+
+	}
+	if ( sip_msg_list->msg->startline->status_code == NULL &&
 		(sip_msg_list->msg->startline->status_code != NULL && \
-		atoi( sip_msg_list->msg->startline->status_code ) != SIP_OK) )
+		atoi( sip_msg_list->msg->startline->status_code ) != SIP_OK ))
 	{
 		log_string( "fx_login failed!\n" );
 		return FX_ERROR_UNKOWN;
 	}
+	
+	/*
+	 *	free buffer
+	 */
+	
+	free( sz_pack );
 
 	/*
 	 *	parse contact list

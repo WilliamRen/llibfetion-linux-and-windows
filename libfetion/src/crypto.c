@@ -30,6 +30,7 @@
 
 #include <openssl/sha.h>
 #include <openssl/rsa.h>
+#include <openssl/evp.h>
 
 #include "commdef.h"
 #include "crypto.h"
@@ -91,6 +92,37 @@ int byte_2_hex_str( __in byte* p_byte, __out char** sz_hex, \
 	return strlen( *sz_hex );
 }
 
+int decode_base64( __in const char* in, __out char** buffer, __out int* len)
+{
+	unsigned int t = 0 , c = 0;
+	int n = 0;
+	unsigned char out[3];
+	unsigned char inp[4];
+	
+	n = strlen(in);
+	if(n % 4 != 0)
+	{
+		return 0;
+	}
+	n = n / 4 * 3;
+	if(len != NULL)
+		*len = n;
+	*buffer = (char*)malloc(n);
+	memset(*buffer , 0 , n);
+	while(1)
+	{
+		memset(inp , 0 , 4);
+		memset(out , 0 , 3);
+		memcpy(inp , in + c , 4);
+		c += 4;
+		n = EVP_DecodeBlock(out , inp , 4 );
+		memcpy( *buffer + t , out, n);
+		t += n;
+		if(c >= strlen(in))
+			break;
+	}
+	return 1;
+}
 
 /** \fn
 	\brief 

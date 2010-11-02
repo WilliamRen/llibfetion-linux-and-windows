@@ -23,10 +23,10 @@
 	\brief for all
 */
 
-#include "sip.h"
-
 #ifndef SIP_MESSAGE_H_INCLUDED
 #define SIP_MESSAGE_H_INCLUDED
+
+#include "sip.h"
 
 typedef struct sip_message
 {
@@ -43,6 +43,7 @@ typedef struct sip_message
     sip_expires_t* expires;                  /*'X'*/
     sip_event_t*   event;                    /*'N'*/
     sip_authorization_t* authorization;      /*'A'*/
+	sip_authorization_t* authorization_ver;  /*'A'*/
     sip_www_authenticate_t* www_authenticate;/*'W'*/
 	sip_date_t* date;
 	sip_support_list_t* support_list;		 /*'K'*/
@@ -63,6 +64,9 @@ sip_message_set_www_authenticate_str(sip_message_t* sip, const char *value);
 
 int
 sip_message_set_authorization_str(sip_message_t* sip, const char *value);
+
+void
+sip_message_set_authorization_ver(sip_message_t* sip, sip_authorization_t* authorization_ver);
 
 int
 sip_message_set_to_str(sip_message_t* sip, const char *value);

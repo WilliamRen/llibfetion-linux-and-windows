@@ -28,11 +28,13 @@
 #define SIP_AUTHORIZATION_DIGEST_SZ			"Digest"
 #define SIP_AUTHORIZATION_CS_SZ				"CS"
 #define SIP_AUTHORIZATION_TICKS_SZ			"TICKS"
+#define SIP_AUTHORIZATION_VERIFY_SZ			"Verify"
 
 enum AUTHORIZATION{
 		SIP_AUTHORIZATION_DIGEST = 0,
 		SIP_AUTHORIZATION_CS,
 		SIP_AUTHORIZATION_TICKS,
+		SIP_AUTHORIZATION_VERIFY,
 		SIP_AUTHORIZATION_UNKOWN
 };
 
@@ -44,6 +46,8 @@ typedef struct sip_authorization
 	char* address;
 	char* credential;
 	char* auth;
+	char* ver_type;
+	char* chid;
 
 }sip_authorization_t;
 
@@ -90,5 +94,10 @@ int sip_authorization_get_type( char* sz_type );
 
 void sip_authorization_set_digest_all( sip_authorization_t* authorization, const char* response, \
 									   const char* algorithm );
+
+void sip_authorization_set_ver_type( sip_authorization_t* authorization, const char* ver_type );
+void sip_authorization_set_chid( sip_authorization_t* authorization, const char* chid );
+void sip_authorization_set_verity_all( sip_authorization_t* authorization, const char* response, \
+									   const char* algorithm, char* ver_type, char* chid );
 
 #endif // SIP_AUTHORIZATION_H_INCLUDED

@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x804 /d "NDEBUG"
 # ADD RSC /l 0x804 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -62,9 +62,10 @@ LINK32=link.exe
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
+# ADD CPP /nologo /MD /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR /YX /FD /GZ /c
 # ADD BASE RSC /l 0x804 /d "_DEBUG"
 # ADD RSC /l 0x804 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -72,7 +73,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /nodefaultlib:"libc.lib libcd.lib" /pdbtype:sept
 
 !ENDIF 
 
@@ -88,39 +89,39 @@ LINK32=link.exe
 # PROP Default_Filter "c"
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_authorization.c
+SOURCE=..\src\sip_authorization.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_client.c
+SOURCE=..\src\sip_client.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_common.c
+SOURCE=..\src\sip_common.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_cseq.c
+SOURCE=..\src\sip_cseq.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_def.c
+SOURCE=..\src\sip_def.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_message.c
+SOURCE=..\src\sip_message.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_startline.c
+SOURCE=..\src\sip_startline.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_to.c
+SOURCE=..\src\sip_to.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_www_authenticate.c
+SOURCE=..\src\sip_www_authenticate.c
 # End Source File
 # End Group
 # Begin Source File
@@ -136,43 +137,43 @@ SOURCE=..\test\main.c
 # PROP Default_Filter "h"
 # Begin Source File
 
-SOURCE=..\libsip\include\sip.h
+SOURCE=..\include\sip.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_authorization.h
+SOURCE=..\include\sip_authorization.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_client.h
+SOURCE=..\include\sip_client.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_common.h
+SOURCE=..\include\sip_common.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_cseq.h
+SOURCE=..\include\sip_cseq.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_def.h
+SOURCE=..\include\sip_def.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_message.h
+SOURCE=..\include\sip_message.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_startline.h
+SOURCE=..\include\sip_startline.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_to.h
+SOURCE=..\include\sip_to.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_www_authenticate.h
+SOURCE=..\include\sip_www_authenticate.h
 # End Source File
 # End Group
 # End Group

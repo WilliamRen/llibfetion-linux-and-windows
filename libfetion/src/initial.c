@@ -64,6 +64,13 @@ FX_RET_CODE fx_init()
 	 */
 	
 	fx_get_group_list_mutex_init();
+	
+	/*
+	 *	init curl
+	 */
+
+	fx_curl_init();
+
 	return FX_ERROR_OK;
 }
 
@@ -94,5 +101,6 @@ void fx_close()
 #endif
 #endif
 	fx_get_group_list_mutex_free();
+	fx_curl_close();
 }
 

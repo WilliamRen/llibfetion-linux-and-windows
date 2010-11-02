@@ -67,17 +67,20 @@ typedef struct _sys_conf_data
 	USER_DATA user_data;
     char sz_user_conf_url[256];
     char sz_sipc_proxy[100];
+	char sz_cookie[256];
 	
 }SYS_CONF_DATA, *PSYS_CONF_DATA;
 
 typedef struct _login_data
 {
-    int nstatu_code;
+    int  nstatu_code;
     int  nstatu_user;
     char sz_uri[20];
 	char sz_uri_full[50];
     char sz_phone_num[20];
     char sz_user_id[20];
+	char sz_algorithm[20];
+	char sz_type[10];
 	
 }LOGIN_DATA, *PLOGIN_DATA;
 

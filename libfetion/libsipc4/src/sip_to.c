@@ -225,12 +225,12 @@ void sip_to_set_all( sip_to_t* to, const char* uid, \
 {
 	if ( to->uid != NULL )
 		sip_free( to->uid );
-	to->uid = strdup( uid );
+	to->uid = sip_strdup( uid );
 	if ( to->host != NULL )
 		sip_free( to->host );
-	to->host = strdup( host );
+	to->host = sip_strdup( host );
 	if ( to->p_value != NULL )
 		sip_free( to->p_value );
-	to->p_value = strdup( p_value );
+	to->p_value = sip_strdup( p_value );
 
 }

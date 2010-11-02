@@ -40,6 +40,8 @@ sip_authorization_init( sip_authorization_t** authorization )
 	(*authorization)->address  = NULL;
 	(*authorization)->credential  = NULL;
 	(*authorization)->auth  = NULL;
+	(*authorization)->ver_type  = NULL;
+	(*authorization)->chid  = NULL;
 
     return LIBSIP_SUCCESS;
 }
@@ -66,6 +68,10 @@ sip_authorization_free( sip_authorization_t* authorization )
     	sip_free( authorization->credential );
 	if ( NULL != authorization->auth )
     	sip_free( authorization->auth );
+	if ( NULL != authorization->ver_type )
+        sip_free( authorization->ver_type );
+	if ( NULL != authorization->chid )
+        sip_free( authorization->chid );
 
     /*
      *  free authorization
@@ -138,6 +144,63 @@ sip_authorization_parse( sip_authorization_t* authorization, const char* value )
 			  space = next;
 			  parse_ok++;
 		  }
+	  }else if ( SIP_AUTHORIZATION_VERIFY == n_type ){
+		  /*
+		   *  get filed
+		   */
+
+		  i = __sip_quoted_string_set( "response", space, &(authorization->response), &next );
+		  if ( i != 0 )
+			return i;
+		  if ( next == NULL )
+			return LIBSIP_SUCCESS;                  /* end of header detected! */
+		  else if ( next != space ){
+			  space = next;
+			  parse_ok++;
+		  }
+
+		  /*
+		   *  next
+		   */
+
+		  i = __sip_quoted_string_set( "algorithm", space, &(authorization->algorithm), &next );
+		  if ( i != 0 )
+			return i;
+		  if ( next == NULL )
+			return LIBSIP_SUCCESS;                  /* end of header detected! */
+		  else if (next != space){
+			  space = next;
+			  parse_ok++;
+		  }
+
+		  /*
+		   *  next
+		   */
+
+		  i = __sip_quoted_string_set( "type", space, &(authorization->ver_type), &next );
+		  if ( i != 0 )
+			return i;
+		  if ( next == NULL )
+			return LIBSIP_SUCCESS;                  /* end of header detected! */
+		  else if (next != space){
+			  space = next;
+			  parse_ok++;
+		  }
+
+		  /*
+		   *  next
+		   */
+
+		  i = __sip_quoted_string_set( "chid", space, &(authorization->chid), &next );
+		  if ( i != 0 )
+			return i;
+		  if ( next == NULL )
+			return LIBSIP_SUCCESS;                  /* end of header detected! */
+		  else if (next != space){
+			  space = next;
+			  parse_ok++;
+		  }
+
 	  }else if ( SIP_AUTHORIZATION_CS == n_type ){
 		  /*
 		   *	get filed 
@@ -275,6 +338,19 @@ sip_authorization_to_str( sip_authorization_t* authorization, char** dest )
 		  }
 	  }
 	  break;
+  case SIP_AUTHORIZATION_VERIFY:
+	  {
+		  if (authorization->response != NULL)
+			 len = len + 11 + strlen(authorization->response) + 2 /*for ""*/;
+		  len = len + 2;
+		  if (authorization->algorithm != NULL)
+			len = len + strlen(authorization->algorithm) + 12 + 2 /*for ""*/;
+		  if ( authorization->ver_type != NULL )
+			len = len + strlen(authorization->ver_type) + 8 + 2 /*for ""*/;
+		  if ( authorization->chid != NULL )
+			len = len + strlen(authorization->chid) + 8 + 2 /*for ""*/;
+	  }
+	  break;
   default:
 	  break;
 
@@ -338,6 +414,34 @@ sip_authorization_to_str( sip_authorization_t* authorization, char** dest )
 		  }
 	  }
 	  break;
+  case SIP_AUTHORIZATION_VERIFY:
+	  {
+		  if (authorization->algorithm != NULL){
+			  
+			  tmp = sip_strn_append(tmp, " algorithm=\"", 12);
+			  tmp = sip_str_append(tmp, authorization->algorithm);
+			  tmp = sip_strn_append(tmp, "\"", 1);
+		  }
+		  if ( authorization->ver_type != NULL )
+		  {
+			  tmp = sip_strn_append(tmp, ",type=\"", 7 );
+			  tmp = sip_str_append(tmp, authorization->ver_type);
+			  tmp = sip_strn_append(tmp, "\"", 1);
+		  }
+		  if (authorization->response != NULL){
+			  
+			  tmp = sip_strn_append(tmp, ",response=\"", 11);
+			  tmp = sip_str_append(tmp, authorization->response);
+			  tmp = sip_strn_append(tmp, "\"", 1);
+		  }
+		  if (authorization->chid != NULL){
+			  
+			  tmp = sip_strn_append(tmp, ",chid=\"", 7);
+			  tmp = sip_str_append(tmp, authorization->chid);
+			  tmp = sip_strn_append(tmp, "\"", 1);
+		  }
+	  }
+	  break;
   default:
 	  break;
   }
@@ -352,6 +456,8 @@ int sip_authorization_get_type( char* sz_type )
 		return SIP_AUTHORIZATION_CS;
 	}else if ( strcmp( sz_type, SIP_AUTHORIZATION_TICKS_SZ ) == 0 ){
 		return SIP_AUTHORIZATION_TICKS;
+	}else if ( strcmp( sz_type, SIP_AUTHORIZATION_VERIFY_SZ ) == 0 ){
+		return SIP_AUTHORIZATION_VERIFY;
 	}else{
 		return SIP_AUTHORIZATION_UNKOWN;
 	}
@@ -363,7 +469,7 @@ void sip_authorization_set_type( sip_authorization_t* authorization, const char*
 	{
 		sip_free( authorization->auth_type );
 	}
-	authorization->auth_type = strdup( auth_type );
+	authorization->auth_type = sip_strdup( auth_type );
 }
 
 void sip_authorization_set_address( sip_authorization_t* authorization, const char* address )
@@ -372,7 +478,7 @@ void sip_authorization_set_address( sip_authorization_t* authorization, const ch
 	{
 		sip_free( authorization->address );
 	}
-	authorization->address = strdup( address );
+	authorization->address = sip_strdup( address );
 }
 
 void sip_authorization_set_algorithm( sip_authorization_t* authorization, const char* algorithm )
@@ -381,7 +487,7 @@ void sip_authorization_set_algorithm( sip_authorization_t* authorization, const 
 	{
 		sip_free( authorization->algorithm );
 	}
-	authorization->algorithm = strdup( algorithm );
+	authorization->algorithm = sip_strdup( algorithm );
 }
 
 void sip_authorization_set_auth( sip_authorization_t* authorization, const char* auth )
@@ -390,7 +496,7 @@ void sip_authorization_set_auth( sip_authorization_t* authorization, const char*
 	{
 		sip_free( authorization->auth );
 	}
-	authorization->auth = strdup( auth );
+	authorization->auth = sip_strdup( auth );
 }
 
 void sip_authorization_set_credential( sip_authorization_t* authorization, const char* credential )
@@ -399,9 +505,26 @@ void sip_authorization_set_credential( sip_authorization_t* authorization, const
 	{
 		sip_free( authorization->credential );
 	}
-	authorization->credential = strdup( credential );
+	authorization->credential = sip_strdup( credential );
 }
 
+void sip_authorization_set_ver_type( sip_authorization_t* authorization, const char* ver_type )
+{
+	if ( authorization->ver_type != NULL )
+	{
+		sip_free( authorization->ver_type );
+	}
+	authorization->ver_type = sip_strdup( ver_type );
+}
+
+void sip_authorization_set_chid( sip_authorization_t* authorization, const char* chid )
+{
+	if ( authorization->chid != NULL )
+	{
+		sip_free( authorization->chid );
+	}
+	authorization->chid = sip_strdup( chid );
+}
 
 void sip_authorization_set_response( sip_authorization_t* authorization, const char* response )
 {
@@ -409,7 +532,7 @@ void sip_authorization_set_response( sip_authorization_t* authorization, const c
 	{
 		sip_free( authorization->response );
 	}
-	authorization->response = strdup( response );
+	authorization->response = sip_strdup( response );
 }
 
 void sip_authorization_set_digest_all( sip_authorization_t* authorization, const char* response, \
@@ -418,4 +541,14 @@ void sip_authorization_set_digest_all( sip_authorization_t* authorization, const
 	sip_authorization_set_type( authorization, "Digest" );
 	sip_authorization_set_response( authorization, response );
 	sip_authorization_set_algorithm( authorization, algorithm );
+}
+
+void sip_authorization_set_verity_all( sip_authorization_t* authorization, const char* response, \
+									   const char* algorithm, char* ver_type, char* chid )
+{
+	sip_authorization_set_type( authorization, "Verify" );
+	sip_authorization_set_response( authorization, response );
+	sip_authorization_set_algorithm( authorization, algorithm );
+	sip_authorization_set_ver_type(authorization, ver_type);
+	sip_authorization_set_chid(authorization, chid);
 }

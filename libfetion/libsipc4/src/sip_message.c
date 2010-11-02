@@ -23,6 +23,7 @@
 
 #include "../include/sip_message.h"
 
+
 int
 sip_message_set_startline_str(sip_message_t* sip, const char *value)
 {
@@ -93,11 +94,12 @@ int
 sip_message_set_authorization_str(sip_message_t* sip, const char *value)
 {
   int i = 0;
+  sip_authorization_t* auth  = NULL;
 
   if ( NULL == value || value[0] == '\0')
     return LIBSIP_SUCCESS;
 
-  if ( NULL != sip->authorization )
+  /*if ( NULL != sip->authorization )
     return LIBSIP_SYNTAXERROR;
   i = sip_authorization_init( &(sip->authorization) );
   if (i != LIBSIP_SUCCESS)
@@ -107,7 +109,22 @@ sip_message_set_authorization_str(sip_message_t* sip, const char *value)
       sip_authorization_free (sip->authorization);
       sip->authorization = NULL;
       return i;
+  }*/
+
+  i = sip_authorization_init( &auth );
+  if (i != LIBSIP_SUCCESS)
+    return i;
+  i = sip_authorization_parse( auth, value );
+  if (i != LIBSIP_SUCCESS){
+      sip_authorization_free (auth);
+      sip->authorization = NULL;
+      return i;
   }
+  if ( strcmp( auth->auth_type, "Verify" ) == 0 )
+	  sip->authorization_ver = auth;
+  else
+	sip->authorization = auth;
+  
   return LIBSIP_SUCCESS;
 }
 
@@ -452,6 +469,24 @@ sip_message_to_str( sip_message_t* message, char** dest )
         sip_free( sz_temp );
 
     }
+	if ( NULL != message->authorization_ver ){
+		
+        n_ret = sip_authorization_to_str( message->authorization_ver, &sz_temp );
+        if ( LIBSIP_SUCCESS != n_ret )
+			return LIBSIP_SYNTAXERROR;
+		
+        n_len = strlen( sz_temp ) + 1 + 2/*for \r\n*/ + 3/*for 'Q: '*/;
+        n_total = strlen( *dest ) + n_len;
+		
+        *dest = (char*)sip_realloc( *dest, n_total );
+		
+        strcat( *dest, "A: " );
+        strcat( *dest, sz_temp );
+        strcat( *dest, "\r\n" );
+		
+        sip_free( sz_temp );
+		
+    }
     /****************************************************
      *                       W:                         *
      ****************************************************/
@@ -557,7 +592,8 @@ int sip_message_init( sip_message_t** message )
      *  initialize
      */
 
-    (*message)->authorization	= NULL;
+    (*message)->authorization	 = NULL;
+	(*message)->authorization_ver= NULL;
     (*message)->body			= NULL;
     (*message)->call_id			= NULL;
 	(*message)->client			= NULL;
@@ -607,6 +643,8 @@ sip_message_free( sip_message_t* message )
         sip_common_free( message->event );
     if ( message->authorization )
         sip_authorization_free( message->authorization );
+	if ( message->authorization_ver )
+        sip_authorization_free( message->authorization_ver );
     if ( message->www_authenticate )
         sip_www_authenticate_free( message->www_authenticate );
     if ( message->body )
@@ -900,7 +938,7 @@ sip_message_set_body(sip_message_t* sip, const char* body )
 	{
 		sip_free( sip->body );
 	}
-	sip->body = strdup( body );
+	sip->body = sip_strdup( body );
 }
 
 void
@@ -921,6 +959,16 @@ sip_message_set_authorization(sip_message_t* sip, sip_authorization_t* authoriza
 		sip_authorization_free( sip->authorization );
 	}
 	sip->authorization = authorization;
+}
+
+void
+sip_message_set_authorization_ver(sip_message_t* sip, sip_authorization_t* authorization_ver)
+{
+	if ( sip->authorization_ver != NULL )
+	{
+		sip_authorization_free( sip->authorization_ver );
+	}
+	sip->authorization_ver = authorization_ver;
 }
 
 void

@@ -102,7 +102,7 @@ sip_common_set_element( sip_common_t* common, const char* element )
 		return;
 	if ( common->element != NULL )
 		sip_free( common->element );
-	common->element = strdup( element );
+	common->element = sip_strdup( element );
 }
 
 int sip_common_to_str( sip_common_t* common, char** dest )
@@ -162,5 +162,3 @@ void sip_support_list_append( sip_support_list_t* sip_k, sip_support_list_t* add
 		pos = pos->next;
 	}
 }
-
-

@@ -40,5 +40,6 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 FX_RET_CODE fx_parse_event( __in char* sz_xml, __out PGROUP_LIST* p_contact_list );
 
 PCONTACT_LIST fx_find_contact_by_sip( __in PGROUP_LIST p_group, __in char* sip );
+FX_RET_CODE fx_parse_query_pic( __in  PMEM_STRUCT mem, __out char** sz_chid );
 
 #endif // XML_H_INCLUDED

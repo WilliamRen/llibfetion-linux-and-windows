@@ -388,6 +388,44 @@ int fx_sip_generate_auth_req( __in PAUTH_DLG_HELPER p_auth_helper, __out char** 
 
 }
 
+int fx_sip_generate_auth_resp_ver( __in char* sz_pack, 
+							   __in char* sz_response,
+							   __in char* sz_type,
+							   __in char* sz_chid, 
+							   __in char* algorithm,
+							   __out char** sz_req )
+{
+	sip_message_t* message = NULL;
+	int n_ret = 0;
+	sip_authorization_t* authorization_ver = NULL;
+
+	/*
+	 *	init message
+	 */
+
+	sip_message_init( &message );
+	n_ret = sip_message_parse( message, sz_pack );
+	if ( n_ret != LIBSIP_SUCCESS )
+	{
+		return FX_ERROR_UNKOWN;
+	}
+	
+	sip_authorization_init( &authorization_ver );
+	sip_authorization_set_verity_all( authorization_ver, sz_response, algorithm, sz_type, sz_chid );
+	sip_message_set_authorization_ver( message, authorization_ver );
+	message->cseq->number ++;
+
+	n_ret = sip_message_to_str( message, sz_req );
+	
+	sip_message_free( message );
+
+	if ( n_ret == LIBSIP_SUCCESS )
+		return FX_ERROR_OK;
+	else
+		return FX_ERROR_UNKOWN;
+
+}
+
 int fx_sip_generate_auth_resp( __in PAUTH_DLG_HELPER p_auth_helper,
 							   __in char* key, __in char* nonce,
 							   __out char** auth_req)

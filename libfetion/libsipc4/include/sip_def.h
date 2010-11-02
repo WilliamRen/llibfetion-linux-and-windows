@@ -131,6 +131,8 @@ sip_free (void *ptr);
 	\return
 */
 
+char* sip_strdup( const char* s );
+
 void *
 sip_malloc (size_t size);
 

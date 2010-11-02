@@ -43,5 +43,6 @@ FX_RET_CODE fx_ssi_get_v4digest_1( __in byte* sz_fd1, __in int n_fd1_len,	\
 								   __in byte* sz_fd2, __in int n_fd2_len,	\
 								   __out byte** hex_out );
 
+int decode_base64( __in const char* in, __out char** buffer, __out int* len);
 
 #endif

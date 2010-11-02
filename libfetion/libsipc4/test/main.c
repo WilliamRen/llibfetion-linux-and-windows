@@ -3,19 +3,19 @@
 #include <time.h>
 #include <string.h>
 
-#if HAVE_VISUAL_LEAK_DETECTOR
+//#if HAVE_VISUAL_LEAK_DETECTOR
 #include <vld.h>
-#endif
+//#endif
 
-#include "../libsip/include/sip_def.h"
-#include "../libsip/include/sip_cseq.h"
-#include "../libsip/include/sip_to.h"
-#include "../libsip/include/sip_authorization.h"
-#include "../libsip/include/sip_www_authenticate.h"
-#include "../libsip/include/sip_startline.h"
-#include "../libsip/include/sip_client.h"
+#include "../include/sip_def.h"
+#include "../include/sip_cseq.h"
+#include "../include/sip_to.h"
+#include "../include/sip_authorization.h"
+#include "../include/sip_www_authenticate.h"
+#include "../include/sip_startline.h"
+#include "../include/sip_client.h"
 
-#include "../libsip/include/sip_message.h"
+#include "../include/sip_message.h"
 
 #define __in
 #define __out
@@ -28,7 +28,6 @@
 #define TEST_HEAD "R fetion.com.cn SIP-C/4.0"
 #define TEST_HEAD1 "SIP-C/4.0 401 Unauthoried"
 #define TEST_CLIENT "type=\"pc\",version=\"4.0.2510\""
-
 #define TEST_MESSAGE  "SIP-C/4.0 401 Unauthoried\r\n" \
                       "F: 879534138\r\n" \
                       "I: 1\r\n" \
@@ -41,16 +40,9 @@
                       "Q: 1 R\r\n" \
 					  "D: oct, 2010 01:01:01\r\n" \
 					  "AL: daskds\r\n" \
-                      "W: Digest algorithm=\"SHA1-sess-v4\",nonce=\"660702E04DB7BC69666436271C4D9F7B\",key=\"AD3D7038\",signature=\"D528E11\"\r\n" \
-                      "A: TICKS auth=\"2025669365.557049008\"\r\n" \
-					  "\r\n" \
-					  "SIP-C/4.0 401 Unauthoried\r\n" \
-					  "F: 879534138\r\n" \
-					  "CN: 123456\r\n" \
-					  "Q: 1 R\r\n" \
+                      "W: Verify algorithm=\"picc-WeakPassword\",type=\"GeneralPic\"\r\n" \
+                      "A: Digest algorithm=\"SHA1-sess-v4\",response=\"67d4703ba6a1cb\"\r\n" \
 					  "\r\n"
-
-
 
 typedef struct _auth_dlg_helper
 {
@@ -294,7 +286,7 @@ int main()
 
     sip_message_t* msg;
     char* sz_test = NULL;
-
+	sip_authorization_t* authorization_ver = NULL;
 	int n_ret = 0;
 
     //msg = (sip_message_t*)sip_malloc( sizeof( sip_message_t ) );
@@ -312,6 +304,7 @@ int main()
 		return 0;
 
     }
+	//printf( "%s\n", msg->www_authenticate->ver_type );
 //
 //
 // 	if ( n_ret == LIBSIP_BODY_BEYOND )
@@ -373,6 +366,16 @@ int main()
 // 	printf( "len = %d \n", sip_message_get_body_length( msg ) );
 //
 //
+
+	/*
+	 *	init message
+	 */
+
+	
+	sip_authorization_init( &authorization_ver );
+	sip_authorization_set_verity_all( authorization_ver, "response", "algorithm", "sz_type", "sz_chid" );
+	sip_message_set_authorization_ver( msg, authorization_ver );
+
     sip_message_to_str( msg, &sz_test );
 
     printf( "%s\n", sz_test );

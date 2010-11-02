@@ -68,8 +68,7 @@ int main()
 	char sz_user[20] = {0};
 	char sz_pass[20] = {0};
 	
-	printf( "note: only support phone number + password login\nif you have not a phone number please see the next version\n" );
-	printf( "\nphone number:" );
+	printf( "\nphone number(or fetion number):" );
 	scanf( "%s", sz_user );
 	printf( "\npass word:" );
 	scanf( "%s", sz_pass );
@@ -100,6 +99,23 @@ int main()
         printf( "parse config file error\n" );
         return fx_ret;
     }
+	while ( l_data.nstatu_code == 421 )
+	{
+		MEM_STRUCT mem_ver={0};
+		MEM_STRUCT mem_user_ver={0};
+		char* sz_chid = NULL;
+		char sz_test[20] = {0};
+
+		fx_get_verify_pic( &g_sys_conf, l_data.sz_algorithm, &mem_ver );
+		fx_parse_query_pic( &mem_ver, &sz_chid );
+		
+		printf( "please input the verify number:" );
+		scanf( "%s", sz_test );
+
+		fx_get_user_conf_ver( &g_sys_conf, sz_chid, sz_test, l_data.sz_algorithm, &mem_user_ver );
+		fx_ret = fx_parse_user_conf( &mem_user_ver, &l_data );
+		free( sz_chid );
+	}
 	log_string( "=start login=" );
     fx_ret = fx_login( &l_data, &g_contact_list );
 

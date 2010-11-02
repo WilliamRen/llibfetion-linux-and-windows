@@ -40,6 +40,7 @@ sip_www_authenticate_init( sip_www_authenticate_t** www_authenticate )
     (*www_authenticate)->key       = NULL;
     (*www_authenticate)->nonce     = NULL;
     (*www_authenticate)->signature = NULL;
+	(*www_authenticate)->ver_type  = NULL;
 
     return LIBSIP_SUCCESS;
 }
@@ -64,6 +65,8 @@ sip_www_authenticate_free( sip_www_authenticate_t* www_authenticate )
     	sip_free( www_authenticate->nonce );
     if ( NULL != www_authenticate->signature )
     	sip_free( www_authenticate->signature );
+	if ( NULL != www_authenticate->ver_type )
+    	sip_free( www_authenticate->ver_type );
 
     /*
      *  free www_authenticate
@@ -116,6 +119,20 @@ sip_www_authenticate_parse( sip_www_authenticate_t* www_authenticate, \
         return i;
       if ( next == NULL )
         return LIBSIP_SUCCESS;                  /* end of header detected! */
+      else if ( next != space ){
+          space = next;
+          parse_ok++;
+      }
+	  
+	  /*
+	   *	
+	   */
+	  
+	  i = __sip_quoted_string_set( "type", space, &(www_authenticate->ver_type), &next );
+      if ( i != 0 )
+		  return i;
+      if ( next == NULL )
+		  return LIBSIP_SUCCESS;                  /* end of header detected! */
       else if ( next != space ){
           space = next;
           parse_ok++;
@@ -227,6 +244,8 @@ int sip_www_authenticate_to_str( sip_www_authenticate_t* www_authenticate, \
     len = len + strlen(www_authenticate->algorithm) + 12 + 2/*for "" */;
   if(www_authenticate->key != NULL)
     len = len + strlen( www_authenticate->key ) + 6;
+  if(www_authenticate->ver_type != NULL)
+    len = len + strlen( www_authenticate->ver_type ) + 8;
   if(www_authenticate->signature!=NULL)
     len = len + strlen( www_authenticate->signature ) + 12 + 2/*for "" */;
 
@@ -255,6 +274,12 @@ int sip_www_authenticate_to_str( sip_www_authenticate_t* www_authenticate, \
 
       tmp = sip_strn_append(tmp, ", nonce=\"", 9);
       tmp = sip_str_append(tmp, www_authenticate->nonce);
+      tmp = sip_strn_append(tmp, "\"", 1);
+  }
+  if (www_authenticate->ver_type != NULL){
+	  
+      tmp = sip_strn_append(tmp, ", type=\"", 8);
+      tmp = sip_str_append(tmp, www_authenticate->ver_type);
       tmp = sip_strn_append(tmp, "\"", 1);
   }
   if (www_authenticate->key != NULL){

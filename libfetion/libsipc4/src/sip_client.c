@@ -182,8 +182,8 @@ void sip_client_set_all( sip_client_t* client, const char* type, const char* ver
 		return;
 	if ( client->type != NULL )
 		sip_free( client->type );
-	client->type = strdup( type );
+	client->type = sip_strdup( type );
 	if ( client->version != NULL )
 		sip_free( client->version );
-	client->version = strdup( version );
+	client->version = sip_strdup( version );
 }

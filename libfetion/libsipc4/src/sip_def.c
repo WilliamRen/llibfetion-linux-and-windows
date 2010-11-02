@@ -336,3 +336,25 @@ __sip_token_set (const char *name, const char *str, char **result,
     *next = str;                /* next element start here */
   return LIBSIP_SUCCESS;
 }
+
+char* sip_strdup( const char* s )
+{	
+	int n_len = 0;
+	char* sz_out;
+	
+	if( s == NULL ){
+		return NULL;
+	}
+	
+	n_len = strlen( s );
+	if ( n_len == 0 ){
+		return NULL;
+	}
+	
+	sz_out = (char*)sip_malloc( n_len + 1 );
+	
+	memcpy( sz_out, s, n_len );
+	
+	return sz_out;
+	
+}

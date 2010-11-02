@@ -88,39 +88,39 @@ LIB32=link.exe -lib
 # PROP Default_Filter "c"
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_authorization.c
+SOURCE=..\src\sip_authorization.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_client.c
+SOURCE=..\src\sip_client.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_common.c
+SOURCE=..\src\sip_common.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_cseq.c
+SOURCE=..\src\sip_cseq.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_def.c
+SOURCE=..\src\sip_def.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_message.c
+SOURCE=..\src\sip_message.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_startline.c
+SOURCE=..\src\sip_startline.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_to.c
+SOURCE=..\src\sip_to.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\src\sip_www_authenticate.c
+SOURCE=..\src\sip_www_authenticate.c
 # End Source File
 # End Group
 # End Group
@@ -132,43 +132,43 @@ SOURCE=..\libsip\src\sip_www_authenticate.c
 # PROP Default_Filter "h"
 # Begin Source File
 
-SOURCE=..\libsip\include\sip.h
+SOURCE=..\include\sip.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_authorization.h
+SOURCE=..\include\sip_authorization.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_client.h
+SOURCE=..\include\sip_client.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_common.h
+SOURCE=..\include\sip_common.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_cseq.h
+SOURCE=..\include\sip_cseq.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_def.h
+SOURCE=..\include\sip_def.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_message.h
+SOURCE=..\include\sip_message.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_startline.h
+SOURCE=..\include\sip_startline.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_to.h
+SOURCE=..\include\sip_to.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\libsip\include\sip_www_authenticate.h
+SOURCE=..\include\sip_www_authenticate.h
 # End Source File
 # End Group
 # End Group

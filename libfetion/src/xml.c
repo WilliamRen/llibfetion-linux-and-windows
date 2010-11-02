@@ -27,19 +27,29 @@
 
 #include <string.h>
 
-#include <libxml/parser.h>
 #include <libxml/tree.h>
+#include <libxml/parser.h>
 
 #include "commdef.h"
 #include "initial.h"
 #include "log.h"
 #include "login.h"
+#include "crypto.h"
 #include "config.h"
 #include "mem.h"
 #include "utf8.h"
 #include "xml.h"
 #include "helper.h"
 #include "mutex.h"
+
+#ifdef __WIN32__
+
+/*
+ *	i don't know where the xmlReadMemory defined
+ */
+
+extern xmlDocPtr xmlReadMemory(const char * buffer, int size, const char * URL, const char * encoding, int options);
+#endif
 
 /** \fn
  *  \brief
@@ -91,6 +101,59 @@ FX_RET_CODE fx_parse_sys_conf( __in  PMEM_STRUCT mem, \
     return FX_ERROR_OK;
 }
 
+FX_RET_CODE fx_parse_query_pic( __in  PMEM_STRUCT mem, __out char** sz_chid )
+{
+	xmlDocPtr xml_doc;
+    xmlNodePtr node_root = NULL,node_child = NULL;
+	char* sz_attr = NULL, *p_pic = NULL, *base64de = NULL;
+	int n_len = 0;
+
+	*sz_chid = NULL;
+
+
+	xml_doc = xmlParseMemory(mem->mem_ptr , mem->size);
+	if (xml_doc == NULL){
+        log_string( "fx_parse_conf:parse xml buffer error!" );
+        return FX_ERROR_XMLPARSE;
+    }
+	node_child = xmlDocGetRootElement(xml_doc);
+	node_child = node_child->xmlChildrenNode;
+	
+	/*
+	 *	get chid of pic
+	 */
+	
+	sz_attr = (char*)xmlGetProp(node_child , BAD_CAST "id");
+	*sz_chid = (char*)malloc( strlen(sz_attr) + 1 );
+	memset( *sz_chid, 0,  strlen(sz_attr) + 1 );
+	strcpy( *sz_chid, sz_attr );
+	
+	/*
+	 *	get the length of encode string of pic
+	 */
+	
+	p_pic = (char*)xmlGetProp(node_child , BAD_CAST "pic");
+	
+	/*
+	 *	decode base64 buffer
+	 */
+	
+	decode_base64( p_pic, &base64de, &n_len );
+	{
+		
+		/*
+		 *	write to file
+		 */
+		
+		FILE* pfile = fopen( "pic.gif", "w+b" );
+		fwrite( base64de, sizeof(char), n_len, pfile );
+		fclose( pfile );
+
+	}
+	xmlFreeDoc(xml_doc);
+	return FX_ERROR_OK;
+}
+
 /** \fn
  *  \brief
  *  \param
@@ -104,7 +167,8 @@ FX_RET_CODE fx_parse_user_conf( __in  PMEM_STRUCT mem, \
     xmlNodePtr node_root = NULL,node_child = NULL;
 
     /*load the xml file*/
-    xml_doc = xmlParseMemory( mem->mem_ptr, mem->size );
+    //xml_doc = xmlParseMemory( mem->mem_ptr, mem->size );
+	xml_doc = xmlReadMemory(mem->mem_ptr , mem->size, NULL , "UTF-8" , 1);
     if (xml_doc == NULL){
         log_string( "fx_parse_conf:parse xml buffer error!" );
         return FX_ERROR_XMLPARSE;
@@ -123,70 +187,102 @@ FX_RET_CODE fx_parse_user_conf( __in  PMEM_STRUCT mem, \
         log_string("fx_parse_conf:can't find the status-code!");
         return FX_ERROR_XMLPARSE;
     }
-    /*step 2, get the uri*/
-    node_child = node_root->children;
-    /*first we should find the "uri" element*/
-    while(node_child != NULL){
-        if (xmlStrcmp(node_child->name, BAD_CAST("user")) == 0){
-            break;
-        }
-        node_child = node_child->next;
-    }
-    if (node_child != NULL){
-        /*found*/
-        /*get uri*/
-        if(xmlHasProp(node_child, BAD_CAST("uri"))){
-            char sz_num[20] = {0};
-            int i = 0;
-            char* sz_first = NULL;
-            char* sz_next = NULL;
-
-            xmlChar* sz_attr = xmlGetProp(node_child, BAD_CAST("uri"));
-            /*save to struct*/
-            /*we should do some operation for uri*/
-            sz_next  = strchr( sz_attr, '@' );
-            sz_first = strchr( sz_attr, ':' );
-            if ( sz_next == NULL || sz_first == NULL ){
-                log_string( "fx_parse_conf:can't find the uri" );
-                return FX_ERROR_XMLPARSE;
-            }
-            memcpy(l_data->sz_uri, (char*)(sz_first+1), (int)sz_next-(int)sz_first-1 );
-			memcpy( l_data->sz_uri_full, sz_attr, strlen((char*)sz_attr) );
-        }else{
-            log_string("fx_parse_conf:can't find the uri!");
-            return FX_ERROR_XMLPARSE;
-        }
-        /*get mobile-no*/
-        if(xmlHasProp(node_child, BAD_CAST("mobile-no"))){
-            xmlChar* sz_attr = xmlGetProp(node_child, BAD_CAST("mobile-no"));
-            /*save to struct*/
-            memcpy(l_data->sz_phone_num, sz_attr, strlen((char*)sz_attr) );
-        }else{
-            log_string("fx_parse_conf:can't find the mobile-no!");
-            return FX_ERROR_XMLPARSE;
-        }
-        /*get user-status*/
-        if(xmlHasProp(node_child, BAD_CAST("user-status"))){
-            xmlChar* sz_attr = xmlGetProp(node_child, BAD_CAST("user-status"));
-            /*save to struct*/
-            l_data->nstatu_user = atoi((char*)sz_attr);
-        }else{
-            log_string("fx_parse_conf:can't find the user-status!");
-            return FX_ERROR_XMLPARSE;
-        }
-        /*get user-id*/
-        if(xmlHasProp(node_child, BAD_CAST("user-id"))){
-            xmlChar* sz_attr = xmlGetProp(node_child, BAD_CAST("user-id"));
-            /*save to struct*/
-            memcpy(l_data->sz_user_id, sz_attr, strlen((char*)sz_attr) );
-        }else{
-            log_string("fx_parse_conf:can't find the user-id!");
-            return FX_ERROR_XMLPARSE;
-        }
-    }else{
-        log_string("fx_parse_conf:can't find the user element!");
-        return FX_ERROR_XMLPARSE;
-    }
+	if ( l_data->nstatu_code == 200 )
+	{
+		/*step 2, get the uri*/
+		node_child = node_root->children;
+		/*first we should find the "uri" element*/
+		while(node_child != NULL){
+			if (xmlStrcmp(node_child->name, BAD_CAST("user")) == 0){
+				break;
+			}
+			node_child = node_child->next;
+		}
+		if (node_child != NULL){
+			/*found*/
+			/*get uri*/
+			if(xmlHasProp(node_child, BAD_CAST("uri"))){
+				char sz_num[20] = {0};
+				int i = 0;
+				char* sz_first = NULL;
+				char* sz_next = NULL;
+				
+				xmlChar* sz_attr = xmlGetProp(node_child, BAD_CAST("uri"));
+				/*save to struct*/
+				/*we should do some operation for uri*/
+				sz_next  = strchr( sz_attr, '@' );
+				sz_first = strchr( sz_attr, ':' );
+				if ( sz_next == NULL || sz_first == NULL ){
+					log_string( "fx_parse_conf:can't find the uri" );
+					return FX_ERROR_XMLPARSE;
+				}
+				memcpy(l_data->sz_uri, (char*)(sz_first+1), (int)sz_next-(int)sz_first-1 );
+				memcpy( l_data->sz_uri_full, sz_attr, strlen((char*)sz_attr) );
+			}else{
+				log_string("fx_parse_conf:can't find the uri!");
+				return FX_ERROR_XMLPARSE;
+			}
+			/*get mobile-no*/
+			if(xmlHasProp(node_child, BAD_CAST("mobile-no"))){
+				xmlChar* sz_attr = xmlGetProp(node_child, BAD_CAST("mobile-no"));
+				/*save to struct*/
+				memcpy(l_data->sz_phone_num, sz_attr, strlen((char*)sz_attr) );
+			}else{
+				log_string("fx_parse_conf:can't find the mobile-no!");
+				return FX_ERROR_XMLPARSE;
+			}
+			/*get user-status*/
+			if(xmlHasProp(node_child, BAD_CAST("user-status"))){
+				xmlChar* sz_attr = xmlGetProp(node_child, BAD_CAST("user-status"));
+				/*save to struct*/
+				l_data->nstatu_user = atoi((char*)sz_attr);
+			}else{
+				log_string("fx_parse_conf:can't find the user-status!");
+				return FX_ERROR_XMLPARSE;
+			}
+			/*get user-id*/
+			if(xmlHasProp(node_child, BAD_CAST("user-id"))){
+				xmlChar* sz_attr = xmlGetProp(node_child, BAD_CAST("user-id"));
+				/*save to struct*/
+				memcpy(l_data->sz_user_id, sz_attr, strlen((char*)sz_attr) );
+			}else{
+				log_string("fx_parse_conf:can't find the user-id!");
+				return FX_ERROR_XMLPARSE;
+			}
+		}else{
+			log_string("fx_parse_conf:can't find the user element!");
+			return FX_ERROR_XMLPARSE;
+		}
+	}else{
+		/*step 2, get the algorithmuri*/
+		node_child = node_root->children;
+		/*first we should find the "verification" element*/
+		while(node_child != NULL){
+			if (xmlStrcmp(node_child->name, BAD_CAST("verification")) == 0){
+				break;
+			}
+			node_child = node_child->next;
+		}
+		if (node_child != NULL){
+			if(xmlHasProp(node_child, BAD_CAST("algorithm"))){
+				xmlChar* sz_attr = xmlGetProp(node_child, BAD_CAST("algorithm"));
+				/*save to struct*/
+				memcpy(l_data->sz_algorithm, sz_attr, strlen((char*)sz_attr) );
+			}else{
+				log_string("fx_parse_conf:can't find the algorithm!");
+				return FX_ERROR_XMLPARSE;
+			}
+			if(xmlHasProp(node_child, BAD_CAST("type"))){
+				xmlChar* sz_attr = xmlGetProp(node_child, BAD_CAST("type"));
+				/*save to struct*/
+				memcpy(l_data->sz_type, sz_attr, strlen((char*)sz_attr) );
+			}else{
+				log_string("fx_parse_conf:can't find the type!");
+				return FX_ERROR_XMLPARSE;
+			}
+		}	
+	}
+	
     /*free it*/
     xmlFreeDoc(xml_doc);
     return FX_ERROR_OK;
@@ -509,10 +605,8 @@ FX_RET_CODE fx_parse_contact_list( __in const char* sz_xml, __out PGROUP_LIST* p
 				xmlChar* sz_attr = NULL;
 
 				sz_attr = xmlGetProp(node_child, BAD_CAST("i"));
-				//sz_asc = ConvertUtf8ToGBK( (char*)sz_attr );
 
 				strcpy( p_contact->sz_user_id, (char*)sz_attr );
-				//free( sz_asc );
 			}
 			if ( xmlHasProp( node_child, BAD_CAST( "u" ) ) )
 			{

@@ -171,7 +171,7 @@ void sip_cseq_set_all( sip_cseq_t* cseq, int num, const char* method )
 	cseq->number = num;
 	if ( cseq->method != NULL )
 		sip_free( cseq->method );
-	cseq->method = strdup( method );
+	cseq->method = sip_strdup( method );
 }
 
 

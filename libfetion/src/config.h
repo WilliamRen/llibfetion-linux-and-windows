@@ -26,8 +26,13 @@
 
 #define FX_SYS_CONF_QUERY_URL "http://nav.fetion.com.cn/nav/getsystemconfig.aspx"
 
+#define FX_LOGIN_TYPE_PHONE_NUM_CONFIG   "mobile-no"
+#define FX_LOGIN_TYPE_SID				 "sid"
+#define FX_LOGIN_TYPE_PHONE_NUM			 "mobileno"
+
+
 #define FX_QUERY_SYS_CONF   "<config>"                                                      \
-                            "<user mobile-no=\"%s\" />"                                     \
+                            "<user %s=\"%s\" />"                                     \
                             "<client type=\"PC\" version=\"3.6.2000\" platform=\"W5.1\" />" \
                             "<servers version=\"0\" />"                                     \
                             "<service-no version=\"0\" />"                                  \
@@ -37,17 +42,32 @@
                             "<client-config version=\"0\" />"                               \
                             "</config>"
 
-#define FX_SSI_FORMAT   "%s?mobileno=%s"                                                    \
+#define FX_SSI_FORMAT   "%s?%s=%s"                                                    \
                         "&domains=fetion.com.cn"											\
                         "&v4digest-type=1"                                                  \
                         "&v4digest=%s"
 
+#define FX_SSI_FORMAT1   "%s?%s=%s"                                                    \
+						"&domains=fetion.com.cn&pid=%s&pic=%s&algorithm=%s"					\
+						"&v4digest-type=1"                                                  \
+                        "&v4digest=%s"
+
+
+#define FX_QUERY_PIC	"http://nav.fetion.com.cn/nav/GetPicCodeV4.aspx?algorithm=%s"
 /*function definition*/
 
 FX_RET_CODE fx_get_sys_conf( __in char* sz_phone_num, \
                              __in __out PMEM_STRUCT mem  );
 
 FX_RET_CODE fx_get_user_conf( __in PSYS_CONF_DATA sys_data, \
+                              __in __out PMEM_STRUCT mem );
+
+FX_RET_CODE fx_get_verify_pic( __in PSYS_CONF_DATA sys_data, \
+							  __in char* algorithm,
+                              __in __out PMEM_STRUCT mem );
+
+FX_RET_CODE fx_get_user_conf_ver( __in PSYS_CONF_DATA sys_data, \
+								 __in char* sz_chid, __in char* sz_code, __in char* sz_a,
                               __in __out PMEM_STRUCT mem );
 
 #endif // CONFIG_H_INCLUDED
