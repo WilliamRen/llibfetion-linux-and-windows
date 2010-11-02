@@ -31,10 +31,10 @@ for fedora : already build in system
 ===================================================================================================
 codeblock工程，双击打开工程文件按下列步骤:
 1,
-project -> build option ->linker setting的other linker options 添加，-lssl -lcurl -lxml2 -lcrypt
-2,
+project -> build option ->linker setting -> other linker options 添加 -lssl -lcurl -lxml2 -lcrypt
+2,project -> build option ->linker setting ->linking libraries 中添加 ../libsipc4/codeblocks/libsipc4.a
+3,
 project -> build option -> search directoies -> 添加 /usr/include/libxml2 和 ../libsipc4/include
-
 然后点编译就行了....
 ===================================================================================================
 方式2：
